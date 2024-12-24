@@ -70,8 +70,10 @@ void CObjectX::Uninit()
 			m_pTexture[nCnt] = nullptr;
 		}
 	}
-	Release();
+	//Release();
 
+	//Ž€–Sƒtƒ‰ƒO
+	SetDeath();
 }
 
 //=============================================

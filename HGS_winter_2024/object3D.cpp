@@ -58,7 +58,10 @@ void CObject3D::Uninit()
 		m_pVtxBuff = nullptr;
 	}
 
-	Release();
+	//Release();
+
+	//Ž€–Sƒtƒ‰ƒO
+	SetDeath();
 }
 
 //=============================================

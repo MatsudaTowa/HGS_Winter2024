@@ -64,6 +64,9 @@ public:
 	void SetType(OBJECT_TYPE type);
 
 	OBJECT_TYPE m_type;
+
+	void SetDeath() { m_bDeath = true; }//オブジェクトの死亡フラグを立てる
+	bool GetDeath() { return m_bDeath; }//オブジェクトの死亡判定の取得
 	
 protected:
 	void Release(); //自分自身の解放
@@ -76,5 +79,12 @@ private:
 	static int m_nNumAll; //総数
 
 	int m_nID; //オブジェクトのID
+
+	static CObject* m_pTop[MAX_PRIORITY];	//先頭のオブジェクトポインタ
+	static CObject* m_pCur[MAX_PRIORITY];	//現在（最後尾）のポインタ
+	CObject* m_pPrev;						//前のオブジェクトのポインタ
+	CObject* m_pNext;						//次のオブジェクトのポインタ
+
+	bool m_bDeath;							//死亡フラグ
 };
 #endif
