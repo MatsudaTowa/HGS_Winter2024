@@ -61,7 +61,7 @@ void CGame::Update()
     }
 	//if (m_bEdit == false)
 	//{
-	CObject::UpdateAll();
+	//CObject::UpdateAll();
 }
 
 
