@@ -312,6 +312,8 @@ void CPlayer::Input()
 
 	CCamera* pCamera = CManager::GetInstance()->GetCamera();
 
+	CInputPad* pInput = CManager::GetInstance()->GetPad();
+
 	//移動の方向の単位ベクトル変数
 	D3DXVECTOR3 vecDirection(0.0f, 0.0f, 0.0f);
 	if (pKeyboard->GetPress(DIK_W))
@@ -330,6 +332,7 @@ void CPlayer::Input()
 	{
 		vecDirection.x += 1.0f;
 	}
+	vecDirection = { pInput->GetJoyStickVecL().x,0.0f, pInput->GetJoyStickVecL().y };
 
 	float rotMoveY = CManager::GetInstance()->GetCamera()->GetRot().y + atan2f(vecDirection.x, vecDirection.z);
 
