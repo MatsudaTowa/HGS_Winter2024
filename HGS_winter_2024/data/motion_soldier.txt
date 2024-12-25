@@ -719,4 +719,4 @@ MOTIONSET
 		END_KEY
 	END_KEYSET
 END_MOTIONSET
-END		# この行は絶対消さないこと！
+END_SCRIPT		# この行は絶対消さないこと！

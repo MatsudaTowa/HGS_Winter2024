@@ -80,11 +80,11 @@ void CLockView::LockView(CCamera* camera)
 
 //サードビュー時の補正値
 const float CThirdView::THIRDVIEW_CORRECT_X = 20.0f;
-const float CThirdView::THIRDVIEW_CORRECT_Y = 105.0f;
+const float CThirdView::THIRDVIEW_CORRECT_Y = 115.0f;
 const float CThirdView::THIRDVIEW_CORRECT_Z = 20.0f;
 
 //距離
-const float CThirdView::THIRDVIEW_LENGTH = 120.0f;
+const float CThirdView::THIRDVIEW_LENGTH = 200.0f;
 
 //サードパーソンビュー時のXの最大可動域
 const float CThirdView::MAX_TURN_X = 0.5f;

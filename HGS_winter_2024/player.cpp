@@ -66,7 +66,7 @@ HRESULT CPlayer::Init()
 	SetRot(PLAYER_SPAWN_ROT);
 
 	//ÉpÅ[Écì«Ç›çûÇ›
-	Load_Parts("data\\motion_soldier.txt");
+	Load_Parts("data\\TEXT\\motion_HGSPlayer.txt");
 
 	SetMotion(MOTION_NEUTRAL);
 	return S_OK;
