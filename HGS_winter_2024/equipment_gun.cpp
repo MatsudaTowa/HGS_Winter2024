@@ -8,6 +8,7 @@
 #include "equipment_gun.h"
 #include "object.h"
 #include "player.h"
+#include "bullet.h"
 
 //=============================================
 //‰Šú‰»
@@ -35,5 +36,5 @@ void CEquipment_Gun::Update()
 	CPlayer* pPlayer = GetPlayer();
 
 	//“S–C‚Ì’e‚ð¶¬—\’è(Œü‚«‚ÍƒvƒŒƒCƒ„[AƒXƒs[ƒh‚à)
-	pPlayer->GetRot();
+	CBullet::Create({ pPlayer->GetPos().x, 30.0f, pPlayer->GetPos().z }, pPlayer->GetRot().y + D3DX_PI);
 }

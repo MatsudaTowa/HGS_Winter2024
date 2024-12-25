@@ -8,6 +8,7 @@
 #include "equipment_holy.h"
 #include "object.h"
 #include "player.h"
+#include "leasepower.h"
 
 //=============================================
 //‰Šú‰»
@@ -26,5 +27,16 @@ void CEquipment_Holy::Init()
 //=============================================
 void CEquipment_Holy::Update()
 {
-	
+	m_nCount++;
+
+	if (m_nCount <= TIME_SHOT)
+	{
+		return;
+	}
+
+	m_nCount = 0;
+
+	//•Ï”éŒ¾
+	CPlayer* pPlayer = GetPlayer();
+	CLeasepower::Create(pPlayer->GetPos());
 }

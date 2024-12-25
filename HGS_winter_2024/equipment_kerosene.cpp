@@ -8,6 +8,7 @@
 #include "equipment_kerosene.h"
 #include "object.h"
 #include "player.h"
+#include "kerosene.h"
 
 //=============================================
 //‰Šú‰»
@@ -22,6 +23,16 @@ void CEquipment_Kerosene::Init()
 //=============================================
 void CEquipment_Kerosene::Update()
 {
+	m_nCount++;
+
+	if (m_nCount <= TIME_SHOT)
+	{
+		return;
+	}
+
+	m_nCount = 0;
+
 	//•Ï”éŒ¾
 	CPlayer* pPlayer = GetPlayer();
+	CKerosene::Create(pPlayer->GetPos());
 }

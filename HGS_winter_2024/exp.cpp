@@ -70,7 +70,14 @@ void CExp::Update()
 			//敵を見つけて速度を上げる
 			if (pObj->GetType() == CObject::OBJECT_TYPE_PLAYER)
 			{
+				
 				CPlayer* pPlayer = dynamic_cast<CPlayer*>(pObj);
+				if (JudgeBallCollision(GetPos(), pPlayer->GetPos(), 20.0f))
+				{
+					pPlayer->AddExp(m_Info.Value);
+					Uninit();
+				}
+			
 			}
 
 			pObj = pNext;							//ポインタを進める
@@ -86,7 +93,7 @@ CExp* CExp::Create(D3DXVECTOR3 pos, EXP_TYPE type)
 	CExp* pObject = new CExp(3);
 
 	pObject->m_Info = Info[type];
-
+	pObject->SetPos(pos);
 	pObject->Init();
 	return pObject;
 }

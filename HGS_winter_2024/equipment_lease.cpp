@@ -8,6 +8,7 @@
 #include "equipment_lease.h"
 #include "object.h"
 #include "player.h"
+#include "kerosene.h"
 
 //=============================================
 //‰Šú‰»
@@ -35,5 +36,5 @@ void CEquipment_Lease::Update()
 	CPlayer* pPlayer = GetPlayer();
 
 	//“S–C‚Ì’e‚ð¶¬—\’è(Œü‚«‚ÍƒvƒŒƒCƒ„[AƒXƒs[ƒh‚à)
-	pPlayer->GetRot();
+	CKerosene::Create(pPlayer->GetPos());
 }
