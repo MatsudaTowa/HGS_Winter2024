@@ -9,39 +9,28 @@
 #include "manager.h"
 #include "object.h"
 
-//通常の移動速度
-const float CCamera::DEFAULT_MOVE = 1.0f;
+//カメラの設定用名前空間
+namespace CameraInfo
+{
+	const float DEFAULT_MOVE = 1.0f;				// 通常時の移動
+	const float DAMPING_COEFFICIENT = 0.2f;			// 移動抵抗
 
-//通常の移動速度
-const float CCamera::DAMPING_COEFFICIENT = 0.2f;
+	const float DEFAULT_LENGTH_Y = 200.0f;			//通常状態のYの距離
+	const float DEFAULT_LENGTH_Z = 500.0f;			//通常状態のZの距離
 
-//通常状態のYの距離
-const float CCamera::DEFAULT_LENGTH_Y = 200.0f;
+	const float BIRDVIEW_LENGTH_Y = 300.0f;			//バードビュー時のYの距離
 
-//通常状態のZの距離
-const float CCamera::DEFAULT_LENGTH_Z = 500.0f;
+	const float SIDEVIEW_LENGTH_X = 20.0f;			//サイドビュー時のXの距離
+	const float SIDEVIEW_LENGTH_Y = 50.0f;			//サイドビュー時のYの距離
+	const float SIDEVIEW_LENGTH_Z = 200.0f;			//サイドビュー時のZの距離
 
-//バードビュー時のYの距離
-const float CCamera::BIRDVIEW_LENGTH_Y = 300.0f;
+	const float THIRDVIEW_CORRECT_X = 20.0f; 		//サードパーソンビュー時の補正値X
+	const float THIRDVIEW_CORRECT_Y = 105.0f;		//サードパーソンビュー時の補正値Y
+	const float THIRDVIEW_CORRECT_Z = 20.0f; 		//サードパーソンビュー時の補正値Z
 
-//サイドビュー時のXの距離
-const float CCamera::SIDEVIEW_LENGTH_X = 20.0f;
-
-//サイドビュー時のYの距離
-const float CCamera::SIDEVIEW_LENGTH_Y = 50.0f;
-
-//サイドビュー時のZの距離
-const float CCamera::SIDEVIEW_LENGTH_Z = 200.0f;
-
-//サードビュー時の補正値
-const float CCamera::THIRDVIEW_CORRECT_X = 20.0f;
-const float CCamera::THIRDVIEW_CORRECT_Y = 105.0f;
-const float CCamera::THIRDVIEW_CORRECT_Z = 20.0f;
-
-//サードパーソンビュー時のXの最大可動域
-const float CCamera::MAX_TURN_X = 0.5f;
-//サードパーソンビュー時のXの最小可動域
-const float CCamera::MIN_TURN_X = -0.15f;
+	const float MAX_TURN_X = 0.5f;					//サードパーソンビュー時のXの最大可動域
+	const float MIN_TURN_X = -0.15f;				//サードパーソンビュー時のXの最小可動域
+}
 
 //=============================================
 //コンストラクタ
@@ -115,6 +104,8 @@ void CCamera::Uninit()
 //=============================================
 void CCamera::Update()
 {
+	using namespace CameraInfo;	//名前空間の使用宣言
+
 	if (m_pCameraState != nullptr)
 	{
 		m_pCameraState->FreeView(this);
@@ -170,6 +161,8 @@ void CCamera::Update()
 //=============================================
 void CCamera::InputMove()
 {
+	using namespace CameraInfo;	//名前空間の使用宣言
+
 	//キーボード情報取得
 	CInputKeyboard* pKeyboard = CManager::GetInstance()->GetKeyboard();
 
@@ -308,6 +301,8 @@ void CCamera::ChangeCameraState(CCameraState* state)
 //=============================================
 void CCamera::CameraMove()
 {
+	using namespace CameraInfo;	//名前空間の使用宣言
+
 	//キーボード情報取得
 	CInputKeyboard* pKeyboard = CManager::GetInstance()->GetKeyboard();
 	D3DXVECTOR3 vecDirection(0.0f, 0.0f, 0.0f);

@@ -71,24 +71,6 @@ public:
 
 	CCameraState* m_pCameraState;
 private:
-	static const float DEFAULT_MOVE; //通常時の移動
-	static const float DAMPING_COEFFICIENT; //移動抵抗
-
-	static const float DEFAULT_LENGTH_Y; //通常状態のYの距離
-	static const float DEFAULT_LENGTH_Z; //通常状態のZの距離
-
-	static const float BIRDVIEW_LENGTH_Y; //バードビュー時のYの距離
-
-	static const float SIDEVIEW_LENGTH_X; //サイドビュー時のXの距離
-	static const float SIDEVIEW_LENGTH_Y; //サイドビュー時のYの距離
-	static const float SIDEVIEW_LENGTH_Z; //サイドビュー時のZの距離
-
-	static const float THIRDVIEW_CORRECT_X; //サードパーソンビュー時の補正値X
-	static const float THIRDVIEW_CORRECT_Y; //サードパーソンビュー時の補正値Y
-	static const float THIRDVIEW_CORRECT_Z; //サードパーソンビュー時の補正値Z
-
-	static const float MAX_TURN_X; //サードパーソンビュー時のXの最大可動域
-	static const float MIN_TURN_X; //サードパーソンビュー時のXの最小可動域
 
 	void CameraMove(); //カメラ移動処理
 
