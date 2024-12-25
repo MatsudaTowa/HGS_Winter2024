@@ -155,17 +155,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="enemy.cpp" />
     <ClCompile Include="equipment.cpp" />
     <ClCompile Include="billboard.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="camera_state.cpp" />
     <ClCompile Include="character.cpp" />
+    <ClCompile Include="equipment_childattack.cpp" />
+    <ClCompile Include="equipment_childcircle.cpp" />
+    <ClCompile Include="equipment_gloves.cpp" />
+    <ClCompile Include="equipment_gun.cpp" />
+    <ClCompile Include="equipment_holy.cpp" />
+    <ClCompile Include="equipment_kerosene.cpp" />
+    <ClCompile Include="equipment_lease.cpp" />
+    <ClCompile Include="equipment_magnum.cpp" />
     <ClCompile Include="equipment_shoes.cpp" />
     <ClCompile Include="exp.cpp" />
     <ClCompile Include="fade.cpp" />
     <ClCompile Include="field.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="input.cpp" />
+    <ClCompile Include="kerosene.cpp" />
     <ClCompile Include="light.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="manager.cpp" />
@@ -192,19 +202,30 @@
     <ClCompile Include="title.cpp" />
     <ClCompile Include="title_screen.cpp" />
     <ClCompile Include="useful.cpp" />
+    <ClCompile Include="weak_enemy.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="enemy.h" />
     <ClInclude Include="equipment.h" />
     <ClInclude Include="billboard.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="camera_state.h" />
     <ClInclude Include="character.h" />
+    <ClInclude Include="equipment_childattack.h" />
+    <ClInclude Include="equipment_childcircle.h" />
+    <ClInclude Include="equipment_gloves.h" />
+    <ClInclude Include="equipment_gun.h" />
+    <ClInclude Include="equipment_holy.h" />
+    <ClInclude Include="equipment_kerosene.h" />
+    <ClInclude Include="equipment_lease.h" />
+    <ClInclude Include="equipment_magnum.h" />
     <ClInclude Include="equipment_shoes.h" />
     <ClInclude Include="exp.h" />
     <ClInclude Include="fade.h" />
     <ClInclude Include="field.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="input.h" />
+    <ClInclude Include="kerosene.h" />
     <ClInclude Include="light.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="manager.h" />
@@ -228,6 +249,7 @@
     <ClInclude Include="title.h" />
     <ClInclude Include="title_screen.h" />
     <ClInclude Include="useful.h" />
+    <ClInclude Include="weak_enemy.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -203,7 +203,7 @@ void CCharacter::Load_Parts(const char* FileName)
 	{
 		fscanf(pFile, "%s", aDataSearch); //ŒŸõ
 
-		if (!strcmp(aDataSearch, "END"))
+		if (!strcmp(aDataSearch, "END_SCRIPT"))
 		{//“Ç‚İ‚İ‚ğI—¹
 			fclose(pFile);
 			break;

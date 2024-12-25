@@ -10,9 +10,10 @@
 //=============================================
 //¶¬
 //=============================================
-CEquipment* CEquipment::Create(CEquipment* equipment)
+CEquipment* CEquipment::Create(CEquipment* equipment, CPlayer* player)
 {
 	CEquipment* Equipment = equipment;
-	equipment->Init();
+	Equipment->Init();
+	Equipment->m_pPlayer = player;
 	return equipment;
 }
