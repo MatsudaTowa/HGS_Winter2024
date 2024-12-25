@@ -23,12 +23,9 @@ const float CPlayer::DEFAULT_COOLTIME = 120.0f;
 //=============================================
 CPlayer::CPlayer(int nPriority):CCharacter(nPriority)
 ,m_pPlayerState(nullptr)		//ステートポインター初期化
-<<<<<<< HEAD
 ,m_LifeUI(nullptr)
-=======
 ,m_fAttackCoolTime(0.0f)		//クールタイム
 ,m_fAttackCoolCnt(0.0f)			//クールタイムカウント
->>>>>>> aca345994a80ef3cda6c7e1ef51159d7e4a59e4d
 {
 }
 
