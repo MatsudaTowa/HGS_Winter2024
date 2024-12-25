@@ -101,5 +101,3 @@ CMelee* CMelee::Create(D3DXVECTOR3 pos, float fRadius)
 
 	return pMelee;
 }
-
-

@@ -112,6 +112,11 @@ public:
 		m_bLoopFinish = bFinish;
 	}
 
+	void SetSpeed(float speed)
+	{
+		m_speed = speed;
+	}
+
 	//‰ß‹Ž‚ÌˆÊ’uŽæ“¾
 	D3DXVECTOR3& GetOldPos();
 
