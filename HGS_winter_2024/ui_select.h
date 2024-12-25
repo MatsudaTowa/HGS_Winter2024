@@ -13,7 +13,7 @@
 class CUi_Select : public CObject2D
 {
 public:
-	CUi_Select(int nPriority = 97);
+	CUi_Select(int nPriority = 3);
 	~CUi_Select()override;
 	HRESULT Init()override;
 	void Uninit()override;

@@ -21,7 +21,7 @@ const D3DXVECTOR3 CGame::FIELD_SIZE = { 100.0f,0.0f,100.0f };
 //=============================================
 //コンストラクタ
 //=============================================
-CGame::CGame():m_nResultDelay(0)
+CGame::CGame():m_nResultDelay(0), m_pLevelupSelect(0)
 {//イニシャライザーでプライオリティ設定、エディットしてない状態に変更
 }
 
@@ -76,6 +76,19 @@ void CGame::Update()
 	//if (m_bEdit == false)
 	//{
 	//CObject::UpdateAll();
+
+    if (pKeyboard->GetTrigger(DIK_K))
+    {
+        if (m_pLevelupSelect == nullptr)
+        {
+            m_pLevelupSelect = CLevelupSelect::Create();
+        }
+    }
+
+    if (m_pLevelupSelect != nullptr)
+    {
+        m_pLevelupSelect->Update();
+    }
 }
 
 

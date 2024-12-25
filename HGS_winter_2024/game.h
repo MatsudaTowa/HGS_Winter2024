@@ -10,6 +10,7 @@
 #include "main.h"
 #include "scene.h"
 #include "score.h"
+#include "levelupselect.h"
 
 class CGame:public CScene
 {
@@ -26,5 +27,7 @@ private:
 	static const D3DXVECTOR3 FIELD_SIZE; //フィールドサイズ
 	int m_nResultDelay; //リザルトへのディレイ
 	void LoadBlock(const std::string* pFileName);
+
+	CLevelupSelect* m_pLevelupSelect;
 };
 #endif

@@ -181,6 +181,7 @@
     <ClCompile Include="input.cpp" />
     <ClCompile Include="kerosene.cpp" />
     <ClCompile Include="leasepower.cpp" />
+    <ClCompile Include="levelupselect.cpp" />
     <ClCompile Include="light.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="manager.cpp" />
@@ -209,6 +210,7 @@
     <ClCompile Include="title.cpp" />
     <ClCompile Include="title_screen.cpp" />
     <ClCompile Include="UI_player_life.cpp" />
+    <ClCompile Include="ui_select.cpp" />
     <ClCompile Include="useful.cpp" />
     <ClCompile Include="weak_enemy.cpp" />
   </ItemGroup>
@@ -239,6 +241,7 @@
     <ClInclude Include="input.h" />
     <ClInclude Include="kerosene.h" />
     <ClInclude Include="leasepower.h" />
+    <ClInclude Include="levelupselect.h" />
     <ClInclude Include="light.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="manager.h" />
@@ -264,6 +267,7 @@
     <ClInclude Include="title.h" />
     <ClInclude Include="title_screen.h" />
     <ClInclude Include="UI_player_life.h" />
+    <ClInclude Include="ui_select.h" />
     <ClInclude Include="useful.h" />
     <ClInclude Include="weak_enemy.h" />
   </ItemGroup>

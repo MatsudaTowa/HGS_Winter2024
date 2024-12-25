@@ -61,7 +61,7 @@ void CUi_Select::Uninit()
 //=============================================
 void CUi_Select::Update()
 {
-	
+	CObject2D::Update();
 }
 
 //=============================================
@@ -78,6 +78,8 @@ CUi_Select* CUi_Select::Create(D3DXVECTOR3 pos, int num)
 	p->SetSize(SIZE);	 //サイズ設定
 	p->BindTexture(pTexture->GetAddress(pTexture->Regist(&Path[num]))); //テクスチャ設定
 	p->SetColor({ 0.2f, 0.2f, 0.2f, 1.0f });
+	p->Init();
+	p->SetVtx(1.0f);
 	p->m_nNum = num;
 
 	return p;
