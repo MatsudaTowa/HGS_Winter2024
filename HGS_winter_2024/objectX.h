@@ -39,6 +39,12 @@ public:
 		m_pos = pos;
 	}
 
+	//move‚Ì‘ã“ü
+	void SetMove(D3DXVECTOR3 move)
+	{
+		m_move = move;
+	}
+
 	//rot‚Ì‘ã“ü
 	void SetRot(D3DXVECTOR3 rot)
 	{
@@ -74,6 +80,9 @@ public:
 	//pos‚Ìæ“¾
 	D3DXVECTOR3& GetPos();
 
+	//move‚Ìæ“¾
+	D3DXVECTOR3& GetPos() { return m_move; }
+
 	//rot‚Ìæ“¾
 	D3DXVECTOR3& GetRot();
 
@@ -104,6 +113,7 @@ private:
 
 	D3DXVECTOR3 m_scale;
 	D3DXVECTOR3 m_pos;
+	D3DXVECTOR3 m_move;
 	D3DXVECTOR3 m_rot;
 	D3DXVECTOR3 m_minpos; //posÅ¬’l
 	D3DXVECTOR3 m_maxpos; //posÅ‘å’l

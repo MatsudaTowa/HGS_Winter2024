@@ -13,6 +13,7 @@
 CObjectX::CObjectX(int nPriority):CObject(nPriority),
 m_scale({ 1.0f,1.0f,1.0f }),			//スケール初期化
 m_pos({ 0.0f,0.0f,0.0f }),				//位置初期化
+m_move({VEC3_RESET_ZERO}),				//移動量の初期化
 m_rot({ 0.0f,0.0f,0.0f }),				//方向初期化
 m_minpos({ 0.0f,0.0f,0.0f }),			//最小の頂点座標初期化
 m_maxpos({ 0.0f,0.0f,0.0f }),			//最大の頂点座標初期化
@@ -81,6 +82,10 @@ void CObjectX::Uninit()
 //=============================================
 void CObjectX::Update()
 {
+	//移動量を位置に追加
+	D3DXVECTOR3 pos = GetPos();
+	pos += m_move;
+	SetPos(pos);
 }
 
 //=============================================
