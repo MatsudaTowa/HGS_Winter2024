@@ -8,6 +8,8 @@
 #include "UI_player_life.h"
 #include "manager.h"
 #include "player_state.h"
+#include "equipment_shoes.h"
+#include "equipment_gloves.h"
 
 //スポーン位置
 const D3DXVECTOR3 CPlayer::PLAYER_SPAWN_POS = { 0.0f, 0.5f, 0.0f };
@@ -21,11 +23,12 @@ const float CPlayer::DEFAULT_COOLTIME = 120.0f;
 //=============================================
 //コンストラクタ
 //=============================================
-CPlayer::CPlayer(int nPriority):CCharacter(nPriority)
-,m_pPlayerState(nullptr)		//ステートポインター初期化
-,m_LifeUI(nullptr)
-,m_fAttackCoolTime(0.0f)		//クールタイム
-,m_fAttackCoolCnt(0.0f)			//クールタイムカウント
+CPlayer::CPlayer(int nPriority) :CCharacter(nPriority)
+, m_pPlayerState(nullptr)		//ステートポインター初期化
+, m_LifeUI(nullptr)
+, m_fAttackCoolTime(0.0f)		//クールタイム
+, m_fAttackCoolCnt(0.0f)			//クールタイムカウント
+,m_pEquipment()
 {
 }
 
@@ -105,6 +108,40 @@ void CPlayer::Update()
 	}
 
 	CCharacter::Update();
+
+#ifdef _DEBUG
+	if (CManager::GetInstance()->GetKeyboard()->GetTrigger(DIK_1) == true)
+	{
+		for (int nCnt = 0; nCnt < NUM_SLOT; nCnt++)
+		{
+			if (m_pEquipment[nCnt] == nullptr)
+			{
+				m_pEquipment[nCnt] = CEquipment::Create(new CEquipment_Shoes, this);
+			}
+		}
+	}
+
+	if (CManager::GetInstance()->GetKeyboard()->GetTrigger(DIK_2) == true)
+	{
+		for (int nCnt = 0; nCnt < NUM_SLOT; nCnt++)
+		{
+			if (m_pEquipment[nCnt] == nullptr)
+			{
+				m_pEquipment[nCnt] = CEquipment::Create(new CEquipment_Gloves, this);
+			}
+		}
+	}
+#endif // _DEBUG
+
+
+
+	for (int nCnt = 0; nCnt < NUM_SLOT; nCnt++)
+	{
+		if (m_pEquipment[nCnt] != nullptr)
+		{
+			m_pEquipment[nCnt]->Update();
+		}
+	}
 
 	if (m_pPlayerState != nullptr)
 	{

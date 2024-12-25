@@ -13,7 +13,8 @@
 CEquipment* CEquipment::Create(CEquipment* equipment, CPlayer* player)
 {
 	CEquipment* Equipment = equipment;
-	Equipment->Init();
 	Equipment->m_pPlayer = player;
+
+	Equipment->Init();
 	return equipment;
 }

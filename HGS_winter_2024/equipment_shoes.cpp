@@ -21,7 +21,7 @@ void CEquipment_Shoes::Init()
 
 	float speed = pPlayer->GetSpeed();
 
-	speed += 0.5f;
+	speed += 0.25f;
 
 	pPlayer->SetSpeed(speed);
 }

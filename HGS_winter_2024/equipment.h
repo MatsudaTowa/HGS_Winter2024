@@ -9,6 +9,7 @@
 #include "main.h"
 #include "player.h"
 
+class CPlayer;
 //‘•”õƒNƒ‰ƒX
 class CEquipment
 {

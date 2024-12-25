@@ -15,6 +15,15 @@
 void CEquipment_Gloves::Init()
 {
 	SetType(CEquipment::EQUIPMENT_TYPE_GLOVES);
+
+	//•Ï”éŒ¾
+	CPlayer* pPlayer = GetPlayer();
+
+	float f = pPlayer->GetAttackCoolTime();
+
+	f -= 3a0.0f;
+
+	pPlayer->SetAttackCoolTime(f);
 }
 
 //=============================================
@@ -22,6 +31,5 @@ void CEquipment_Gloves::Init()
 //=============================================
 void CEquipment_Gloves::Update()
 {
-	//•Ï”éŒ¾
-	CPlayer* pPlayer = GetPlayer();
+
 }

@@ -10,9 +10,11 @@
 #include "main.h"
 #include "model_parts.h"
 #include "character.h"
+#include "equipment.h"
 
 class CPlayerState;
 class UI_PlayerLife;
+class CEquipment;
 
 //プレイヤークラス
 class CPlayer :public CCharacter
@@ -45,6 +47,11 @@ public:
 
 	void ChangePlayerState(CPlayerState* state);
 
+	float& GetAttackCoolTime()
+	{
+		return m_fAttackCoolTime;
+	}
+
 	//クールタイム設定
 	void SetAttackCoolTime(float cooltime)
 	{
@@ -56,6 +63,7 @@ private:
 	//プレイヤーの移動関連
 	static const float DAMPING_COEFFICIENT; //移動抵抗
 	static const int MAX_JUMPCNT; //ジャンプ回数
+	static const int NUM_SLOT = 6;
 	static const int IGNORE_COLLISION_FRAME; //当たり判定無視フレーム
 	static const int SMOKE_RECAST_FRAME; //スモーク復活フレーム
 	static const float DEADZONE_Y; //これを過ぎたらプレイヤー破棄
@@ -71,6 +79,8 @@ private:
 	void Input(); //入力処理
 
 	CPlayerState* m_pPlayerState;
+
+	CEquipment* m_pEquipment[NUM_SLOT];
 
 	float m_fAttackCoolTime;	//クールタイム
 
