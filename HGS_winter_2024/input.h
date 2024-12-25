@@ -69,92 +69,62 @@ private:
 class CInputPad :public CInput
 {
 public:
-	//キーの種類
 	typedef enum
 	{
-		JOYKEY_UP = 0,
-		JOYKEY_DOWN,
-		JOYKEY_LEFT,
-		JOYKEY_RIGHT,
-		JOYKEY_START,
-		JOYKEY_BACK,
-		JOYKEY_L3,
-		JOYKEY_R3,
-		JOYKEY_LB,
-		JOYKEY_RB,
-		JOYKEY_LT,
-		JOYKEY_RT,
-		JOYKEY_A,
-		JOYKEY_B,
-		JOYKEY_X,
-		JOYKEY_Y,
-		JOYKEY_MAX
+		JOYPAD_DPAD_UP = 0,
+		JOYPAD_DPAD_DOWN,
+		JOYPAD_DPAD_LEFT,
+		JOYPAD_DPAD_RIGHT,
+		JOYPAD_START,
+		JOYPAD_BACK,
+		JOYPAD_LEFT_THUMB,
+		JOYPAD_RIGHT_THUMB,
+		JOYPAD_LEFT_SHOULDER,
+		JOYPAD_RIGHT_SHOULDER,
+		JOYPAD_RIGHT_TRIGGER,
+		JOYPAD_LEFT_TRIGGER,
+		JOYPAD_A,
+		JOYPAD_B,
+		JOYPAD_X,
+		JOYPAD_Y,
+		JOYPAD_MAX
 	}JOYKEY;
 
-	//スティックの番号
 	typedef enum
 	{
-		STICKTYPE_LEFT = 0, // 左スティック
-		STICKTYPE_RIGHT, // 右スティック
-		STICKTYPE_MAX
-	}STICKTYPE;
-
-	//スティックの方向
-	typedef enum
-	{
-		STICKANGLE_UP = 0, // 上
-		STICKANGLE_DOWN,   // 下
-		STICKANGLE_LEFT,   // 左
-		STICKANGLE_RIGHT,  // 右
-		STICKANGLE_MAX,
-	}STICKANGLE;
-
-	//スティックの入力情報
-	typedef struct
-	{
-		float afTplDiameter[STICKTYPE_MAX];                      // スティックの倒し具合
-		float afAngle[STICKTYPE_MAX];                            // スティックの角度
-		bool abAnglePress[STICKTYPE_MAX][STICKANGLE_MAX];        // スティックの方向プレス情報
-		bool abAngleTrigger[STICKTYPE_MAX][STICKANGLE_MAX];      // スティックの方向トリガー情報
-		bool abAngleRepeat[STICKTYPE_MAX][STICKANGLE_MAX];       // スティックの方向リピート情報
-		bool abAngleRelease[STICKTYPE_MAX][STICKANGLE_MAX];      // スティックの方向リリース情報
-	}STICKINPUT;
-
-	//マクロ定義
-	static const int JOYPAD_ZONE = 1;
-	static const int JOYPAD_SPEED = 15;
+		JOYSTICK_DLEFT = 0,
+		JOYSTICK_DRIGHT,
+		JOYSTICK_DUP,
+		JOYSTICK_DDOWN
+	}JOYSTICK;
 
 	CInputPad();
 	~CInputPad();
-	HRESULT Init(HINSTANCE hInstance, HWND hWnd) override;
-	void Uninit() override;
-	void Update() override;//端末ごとに
-	bool GetConnet();
-	bool GetPress(JOYKEY Key);
-	bool GetTrigger(JOYKEY Key);
-	bool GetRelease(JOYKEY Key);
-	XINPUT_STATE* GetXInputState(void);
-	void UpdateStick(XINPUT_STATE state);
-	STICKINPUT GetStick(void);
-	float FindAngle(D3DXVECTOR3 pos, D3DXVECTOR3 TargetPos);
-	WORD GetJoypadStick(SHORT sThumbX, SHORT sThumbY, SHORT sDeadZone);
+	HRESULT Init(HINSTANCE hInstace, HWND hWnd)override;
+
+	void Uninit()override;
+	void Update()override;
+
+	bool GetPress(JOYKEY key);		//キーのプレス情報
+	bool GetTrigger(JOYKEY key);	//キーのトリガー情報
+	bool GetRelease(JOYKEY key);	//キーのリリース情報
+	bool GetRepeat(JOYKEY key);		//キーのリピート情報
+
+	bool GetJoyStickL(JOYSTICK joystick);						//左スティックの入力情報
+	bool GetJoyStickR(JOYSTICK joystick);						//右スティックの入力情報
+	bool GetJoyStickTrigger(JOYKEY joykey, JOYSTICK joystick);	//スティックのトリガー情報
+	bool GetJoyStickRelease(JOYKEY joykey, JOYSTICK joystick);	//スティックのリリース情報
+	bool GetJoyStickRepeat(JOYKEY joykey, JOYSTICK joystick);	//スティックのリピート情報
+
+	D3DXVECTOR2 GetJoyStickVecL();
+	D3DXVECTOR2 GetJoyStickVecR();
+
 private:
-	//コントローラー
-	bool m_Connect; //接続されてるかどうか
-	WORD m_joyKeyState; //ジョイパッドのプレス情報
-	WORD m_joyKeyStateTrigger; //ジョイパッドのトリガー情報
-	WORD m_joyKeyStateRepeat; //ジョイパッドのリピート情報
-	WORD m_ajoyKeyStateRelease; //コントローラーのリリース情報
-	WORD m_aJoypadCurrentTime; //コントローラーの現在の時間
-	WORD m_aJoypadExecLastTime; //コントローラーの最後に真を返した時間
-	WORD m_JoypadInput; //コントローラーの入力情報
-	D3DXVECTOR3 m_joyStickPos; //スティックの傾き
-	bool m_bAngle[STICKTYPE_MAX][STICKANGLE_MAX]; //スティックの入力情報
-	DWORD m_aStickCurrentTime[STICKTYPE_MAX][STICKANGLE_MAX]; //スティックの現在の時間
-	DWORD m_aStickExecLastTime[STICKTYPE_MAX][STICKANGLE_MAX]; //スティックの現在の時間
-	STICKINPUT m_stick; //スティックの入力情報
-	XINPUT_STATE m_XInput; //入力情報
-	XINPUT_VIBRATION m_JoypadMotor;
-	int m_nCntkey;
+
+	XINPUT_STATE m_joyKeyState;				//キーの入力情報
+	XINPUT_STATE m_joyKeyOldState;			//キーの過去の入力情報
+	XINPUT_STATE m_joyKeyStateTrigger;		//キーのトリガー判定情報
+	XINPUT_STATE m_joyKeyStateRelease;		//キーのリリース判定情報
+	XINPUT_STATE m_joyKeyStateRepeat;		//キーのリピート判定情報
 };
 #endif // _INPUT_H_ //定義されてなかったら
