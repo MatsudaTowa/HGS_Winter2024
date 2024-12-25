@@ -16,12 +16,12 @@
 #include "enemy.h"
 
 //床のサイズ
-const D3DXVECTOR3 CGame::FIELD_SIZE = { 100.0f,0.0f,100.0f };
+const D3DXVECTOR3 CGame::FIELD_SIZE = { 10000.0f,0.0f,10000.0f };
 
 //=============================================
 //コンストラクタ
 //=============================================
-CGame::CGame() :m_nResultDelay(0), m_pLevelupSelect(0)
+CGame::CGame() :m_nResultDelay(0), m_pLevelupSelect(0), m_pTimer()
 {//イニシャライザーでプライオリティ設定、エディットしてない状態に変更
 }
 
@@ -41,6 +41,14 @@ HRESULT CGame::Init()
 
     CPlayer::Create();
 
+    //タイマー初期化
+    if (m_pTimer == nullptr)
+    {
+        m_pTimer = new CTimer;
+
+        m_pTimer->Init();
+    }
+
     for (int nCnt = 0; nCnt < 10; nCnt++)
     {
         std::random_device seed;
@@ -58,6 +66,11 @@ HRESULT CGame::Init()
 //=============================================
 void CGame::Uninit()
 {
+    if (m_pTimer != nullptr)
+    {
+        m_pTimer->Uninit();
+        m_pTimer = nullptr;
+    }
     CManager::GetInstance()->GetSound()->StopSound(CSound::SOUND_LABEL_BGM_GAME);
     CObject::ReleaseAll();
 }
@@ -72,6 +85,10 @@ void CGame::Update()
     CInputPad* pPad = CManager::GetInstance()->GetPad();
     CInputMouse* pMouse = CManager::GetInstance()->GetMouse();
 
+    if (m_pTimer != nullptr)
+    {
+        m_pTimer->Update();
+    }
     if (pKeyboard->GetTrigger(DIK_RETURN)
         || pMouse->GetTrigger(0))
     {

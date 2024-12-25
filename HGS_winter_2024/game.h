@@ -11,6 +11,7 @@
 #include "scene.h"
 #include "score.h"
 #include "levelupselect.h"
+#include "timer.h"
 
 class CGame:public CScene
 {
@@ -28,6 +29,7 @@ private:
 	int m_nResultDelay; //リザルトへのディレイ
 	void LoadBlock(const std::string* pFileName);
 
+	CTimer* m_pTimer;
 	CLevelupSelect* m_pLevelupSelect;
 };
 #endif
