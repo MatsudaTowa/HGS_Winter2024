@@ -15,7 +15,7 @@
 bool JudgeBallCollision(D3DXVECTOR3 pos1, D3DXVECTOR3 pos2, float length);	//円の当たり判定(位置、位置、判定する長さ)
 
 //計算系
-
+float Ratio(float value, float max);	//割合を算出
 
 //カラー初期化
 #define COLOR_RESET_ZERO (0.0f,0.0f,0.0f,0.0f)

@@ -13,7 +13,7 @@
 //=============================================
 bool JudgeBallCollision(D3DXVECTOR3 pos1, D3DXVECTOR3 pos2, float length)
 {
-    D3DXVECTOR3 Vector;     //ベクトル
+    D3DXVECTOR3 Vector = { 0.0f, 0.0f, 0.0f };     //ベクトル
     float fDistance = 0.0f; //距離
     bool bHit = false;      //当たっているか
 
@@ -30,4 +30,16 @@ bool JudgeBallCollision(D3DXVECTOR3 pos1, D3DXVECTOR3 pos2, float length)
     }
 
     return bHit;
+}
+
+//==================================================================
+//計算系
+//==================================================================
+
+//=============================================
+//割合を算出
+//=============================================
+float Ratio(float value, float max)
+{
+    return value / max;
 }
