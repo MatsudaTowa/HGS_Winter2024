@@ -1,18 +1,18 @@
 //=============================================
 //
-//3DTemplate[equipment_gun.cpp]
+//3DTemplate[equipment_childattack.cpp]
 //Auther Matsuda Towa
 //
 //=============================================
 
-#include "equipment_gun.h"
+#include "equipment_childattack.h"
 #include "object.h"
 #include "player.h"
 
 //=============================================
 //‰Šú‰»
 //=============================================
-void CEquipment_Gun::Init()
+void CEquipment_ChildAttack::Init()
 {
 	
 }
@@ -20,7 +20,7 @@ void CEquipment_Gun::Init()
 //=============================================
 //XV
 //=============================================
-void CEquipment_Gun::Update()
+void CEquipment_ChildAttack::Update()
 {
 	m_Count++;
 
