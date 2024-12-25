@@ -19,7 +19,7 @@ public:
 	CEquipment_Gun() : m_Count(0){}		//コンストラクタ
 	~CEquipment_Gun() override {}		//デストラクタ
 
-	void Init() override {}	//初期化
+	void Init() override;	//初期化
 	void Update() override;	//更新
 
 private:

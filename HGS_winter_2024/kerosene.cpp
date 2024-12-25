@@ -32,6 +32,8 @@ HRESULT CKerosene::Init()
 	//テクスチャ取得
 	CTexture* pTexture = CManager::GetInstance()->GetTexture();
 	BindTexture(pTexture->GetAddress(pTexture->Regist(&TEXTURE_NAME))); //テクスチャ設定
+
+	return S_OK;
 }
 
 //=============================================
