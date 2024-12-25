@@ -13,11 +13,14 @@
 class CLevelupSelect
 {
 public:
-	CLevelupSelect() : m_pSelect(), m_nSelect(0){}		//コンストラクタ
+	CLevelupSelect() : m_pSelect(), m_nSelect(0), m_End(false){}		//コンストラクタ
 	~CLevelupSelect() {}	//デストラクタ
 
 	void Init() {}	//初期化
+	void Uninit();
 	void Update(); //更新
+
+	bool GetEnd() { return m_End; }
 
 	static CLevelupSelect* Create();	//生成
 
@@ -25,5 +28,6 @@ private:
 	
 	CUi_Select* m_pSelect[3];
 	int m_nSelect;
+	bool m_End;
 };
 #endif

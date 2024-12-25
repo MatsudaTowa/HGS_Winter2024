@@ -88,6 +88,13 @@ void CGame::Update()
     if (m_pLevelupSelect != nullptr)
     {
         m_pLevelupSelect->Update();
+
+        if (m_pLevelupSelect->GetEnd())
+        {
+            m_pLevelupSelect->Uninit();
+            delete m_pLevelupSelect;
+            m_pLevelupSelect = nullptr;
+        }
     }
 }
 

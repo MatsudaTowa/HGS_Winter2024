@@ -9,6 +9,21 @@
 #include "manager.h"
 
 //=============================================
+//èIóπ
+//=============================================
+void CLevelupSelect::Uninit()
+{
+	for (int i = 0; i < 3; i++)
+	{
+		if (m_pSelect[i] != nullptr)
+		{
+			m_pSelect[i]->Uninit();
+			m_pSelect[i] = nullptr;
+		}
+	}
+}
+
+//=============================================
 //çXêV
 //=============================================
 void CLevelupSelect::Update()
@@ -45,6 +60,14 @@ void CLevelupSelect::Update()
 		{
 			m_pSelect[i]->SetColor({ 0.2f, 0.2f, 0.2f, 1.0f });
 		}
+
+		m_pSelect[i]->SetVtx(1.0f);
+	}
+
+	if (pKeyboard->GetTrigger(DIK_M)
+		|| pPad->GetTrigger(CInputPad::JOYKEY::JOYKEY_A))
+	{
+		m_End = true;
 	}
 }
 

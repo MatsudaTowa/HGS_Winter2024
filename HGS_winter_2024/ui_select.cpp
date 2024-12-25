@@ -23,7 +23,7 @@ const std::string CUi_Select::Path[9] =
 };
 
 //定数
-const D3DXVECTOR2 CUi_Select::SIZE = { 300.0f, 150.0f};
+const D3DXVECTOR2 CUi_Select::SIZE = { 300.0f, 75.0f};
 
 //=============================================
 //コンストラクタ
