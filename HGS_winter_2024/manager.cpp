@@ -149,6 +149,13 @@ void CManager::Uninit()
 		m_pModel = nullptr;
 	}
 
+	if (m_pScene != nullptr)
+	{
+		m_pScene->Uninit();
+		delete m_pScene;
+		m_pScene = nullptr;
+	}
+
 	if (m_pSound != nullptr)
 	{
 		m_pSound->UninitSound();
@@ -161,13 +168,6 @@ void CManager::Uninit()
 		m_pRenderer->Uninit();
 		delete m_pRenderer;
 		m_pRenderer = nullptr;
-	}
-
-	if (m_pScene != nullptr)
-	{
-		m_pScene->Uninit();
-		delete m_pScene;
-		m_pScene = nullptr;
 	}
 
 	//キーボードの終了処理
