@@ -36,6 +36,7 @@ CPlayer::CPlayer(int nPriority) :CCharacter(nPriority)
 , m_fAttackCoolTime(0.0f)		//クールタイム
 , m_fAttackCoolCnt(0.0f)			//クールタイムカウント
 , m_pEquipment()
+, m_ExpUI(nullptr)
 {
 }
 
@@ -86,6 +87,7 @@ HRESULT CPlayer::Init()
 	CCharacter::SetLife(PLAYER_LIFE);
 
 	m_LifeUI = UI_PlayerLife::Create({ 150.0f,SCREEN_HEIGHT - 30.0f,0.0f }, PLAYER_LIFE);
+	m_ExpUI = UI_PlayerExp::Create({ SCREEN_WIDTH - 150.0f,SCREEN_HEIGHT - 30.0f,0.0f }, (int)LEVEL_WINDOW);
 
 	SetMotion(MOTION_NEUTRAL);
 	return S_OK;
@@ -113,6 +115,9 @@ void CPlayer::Update()
 		CCharacter::SetLife(nLife);
 		m_LifeUI->SetLife(nLife);
 	}
+
+	int exp = (int)m_fExp;
+	m_ExpUI->SetExp(exp);
 
 	CCharacter::Update();
 

@@ -27,4 +27,22 @@ private:
 	static LPDIRECT3DTEXTURE9 m_pTexture;
 	int m_Life;
 };
+
+//2Dオブジェクトクラス
+class UI_PlayerExp : public CObject2D
+{
+public:
+	UI_PlayerExp() {};
+	~UI_PlayerExp()override = default;
+	HRESULT Init()override;
+	void Uninit()override;
+	void Update()override;
+	void Draw()override;
+
+	static UI_PlayerExp* Create(D3DXVECTOR3 pos, int MaxExp);
+	void SetExp(int value) { m_Exp = value; }
+private:
+	static LPDIRECT3DTEXTURE9 m_pTexture;
+	int m_Exp;
+};
 #endif

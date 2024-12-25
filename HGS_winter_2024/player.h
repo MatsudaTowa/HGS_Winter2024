@@ -14,6 +14,7 @@
 
 class CPlayerState;
 class UI_PlayerLife;
+class UI_PlayerExp;
 class CEquipment;
 
 //プレイヤークラス
@@ -101,6 +102,7 @@ private:
 	float m_fAttackCoolTime;	//クールタイム
 
 	UI_PlayerLife* m_LifeUI;
+	UI_PlayerExp* m_ExpUI;
 	float m_fAttackCoolCnt;	//クールタイム
 };
 #endif
