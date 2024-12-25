@@ -13,6 +13,7 @@
 #include "manager.h"
 #include "exp.h"
 #include "player.h"
+#include "enemy.h"
 
 //è∞ÇÃÉTÉCÉY
 const D3DXVECTOR3 CGame::FIELD_SIZE = { 100.0f,0.0f,100.0f };
@@ -39,6 +40,8 @@ HRESULT CGame::Init()
     CField::Create(VEC3_RESET_ZERO, FIELD_SIZE);
 
     CPlayer::Create();
+
+    CEnemy::Create({ 5.0f,0.5f,100.0f }, VEC3_RESET_ZERO, CEnemy::ENEMY_TYPE_WEAK);
 
     return S_OK;
 }
