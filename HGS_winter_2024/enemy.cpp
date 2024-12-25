@@ -7,6 +7,7 @@
 #include "enemy.h"
 #include "weak_enemy.h"
 #include "exp.h"
+#include "player.h"
 
 //エネミー総数
 int CEnemy::m_NumEnemy = 0;
@@ -14,7 +15,7 @@ int CEnemy::m_NumEnemy = 0;
 //=============================================
 //コンストラクタ
 //=============================================
-CEnemy::CEnemy(int nPriority):CCharacter(nPriority)
+CEnemy::CEnemy(int nPriority) :CCharacter(nPriority)
 {
 	//総数追加
 	m_NumEnemy++;
@@ -67,6 +68,67 @@ void CEnemy::Uninit()
 void CEnemy::Update()
 {
 	CCharacter::Update();
+
+	//敵との当たり判定
+	for (int i = 0; i < MAX_PRIORITY; i++)
+	{
+		CObject* pObj = CObject::Getobject(i);	//先頭取得
+
+		//最大数が不明なのでwhileを使用
+		while (pObj != nullptr)
+		{
+			CObject* pNext = pObj->GetNextobject();	//次のポインタを取得
+
+			//敵を見つけて速度を上げる
+			if (pObj->GetType() == CObject::OBJECT_TYPE_ENEMY)
+			{
+				CEnemy* pEnemy = dynamic_cast<CEnemy*>(pObj);
+
+				if (pEnemy == this)
+				{
+					pObj = pNext;	//ポインタを進める
+					continue;
+				}
+
+				//円の中に入ったらダメージ
+				if (JudgeBallCollision(GetPos(), pEnemy->GetPos(), 15.0f * 2.0f))
+				{
+					SetPos(CObjectX::GetOldPos());
+				}
+
+			}
+
+			pObj = pNext;							//ポインタを進める
+		}
+	}
+
+	//敵との当たり判定
+	for (int i = 0; i < MAX_PRIORITY; i++)
+	{
+		CObject* pObj = CObject::Getobject(i);	//先頭取得
+
+		//最大数が不明なのでwhileを使用
+		while (pObj != nullptr)
+		{
+			CObject* pNext = pObj->GetNextobject();	//次のポインタを取得
+
+			//敵を見つけて速度を上げる
+			if (pObj->GetType() == CObject::OBJECT_TYPE_PLAYER)
+			{
+				CPlayer* pEnemy = dynamic_cast<CPlayer*>(pObj);
+
+				//円の中に入ったらダメージ
+				if (JudgeBallCollision(GetPos(), pEnemy->GetPos(), 15.0f * 2.0f))
+				{
+					//SetPos(CObjectX::GetOldPos());
+					pEnemy->GetLife()--;
+				}
+
+			}
+
+			pObj = pNext;							//ポインタを進める
+		}
+	}
 }
 
 //=============================================
@@ -90,10 +152,10 @@ CEnemy* CEnemy::Create(const D3DXVECTOR3& pos, const D3DXVECTOR3& rot, const ENE
 	case ENEMY_TYPE::ENEMY_TYPE_WEAK:
 		pEnemy = new CWeakEnemy;
 		break;
-	//case ENEMY_TYPE::ENEMY_TYPE_BOSS:
-	//	pEnemy = new CBossEnemy;
-	//	pEnemy->Load_Parts("data\\motion_boss.txt");
-	//	break;
+		//case ENEMY_TYPE::ENEMY_TYPE_BOSS:
+		//	pEnemy = new CBossEnemy;
+		//	pEnemy->Load_Parts("data\\motion_boss.txt");
+		//	break;
 	default:
 		assert(false);
 		break;

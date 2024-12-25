@@ -21,7 +21,7 @@ const D3DXVECTOR3 CGame::FIELD_SIZE = { 10000.0f,0.0f,10000.0f };
 //=============================================
 //コンストラクタ
 //=============================================
-CGame::CGame() :m_nResultDelay(0), m_pLevelupSelect(0), m_pTimer()
+CGame::CGame() :m_nResultDelay(0), m_pLevelupSelect(0)
 {//イニシャライザーでプライオリティ設定、エディットしてない状態に変更
 }
 
@@ -41,14 +41,6 @@ HRESULT CGame::Init()
 
     CPlayer::Create();
 
-    //タイマー初期化
-    if (m_pTimer == nullptr)
-    {
-        m_pTimer = new CTimer;
-
-        m_pTimer->Init();
-    }
-
     for (int nCnt = 0; nCnt < 10; nCnt++)
     {
         std::random_device seed;
@@ -66,11 +58,6 @@ HRESULT CGame::Init()
 //=============================================
 void CGame::Uninit()
 {
-    if (m_pTimer != nullptr)
-    {
-        m_pTimer->Uninit();
-        m_pTimer = nullptr;
-    }
     CManager::GetInstance()->GetSound()->StopSound(CSound::SOUND_LABEL_BGM_GAME);
     CObject::ReleaseAll();
 }
@@ -85,10 +72,6 @@ void CGame::Update()
     CInputPad* pPad = CManager::GetInstance()->GetPad();
     CInputMouse* pMouse = CManager::GetInstance()->GetMouse();
 
-    if (m_pTimer != nullptr)
-    {
-        m_pTimer->Update();
-    }
     if (pKeyboard->GetTrigger(DIK_RETURN)
         || pMouse->GetTrigger(0))
     {
@@ -102,8 +85,8 @@ void CGame::Update()
         {
             std::random_device seed;
             std::mt19937 random(seed());
-            std::uniform_int_distribution<int> number(0, 150);
-            CEnemy::Create({ (float)number(random),0.5f,100.0f }, VEC3_RESET_ZERO, CEnemy::ENEMY_TYPE_WEAK);
+            std::uniform_int_distribution<int> number(0, 1150);
+            CEnemy::Create({ (float)number(random),0.5f,(float)number(random) }, VEC3_RESET_ZERO, CEnemy::ENEMY_TYPE_WEAK);
         }
     }
     //if (m_bEdit == false)
