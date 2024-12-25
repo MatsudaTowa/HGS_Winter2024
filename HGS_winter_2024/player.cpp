@@ -219,37 +219,41 @@ void CPlayer::SetSoubi(int num)
 			{
 				m_pEquipment[nCnt] = CEquipment::Create(new CEquipment_Shoes, this);
 			}
-			if (nCnt == 1)
+			else if (nCnt == 1)
 			{
 				m_pEquipment[nCnt] = CEquipment::Create(new CEquipment_Gloves, this);
 			}
-			if (nCnt == 2)
+			else if (nCnt == 2)
 			{
 				m_pEquipment[nCnt] = CEquipment::Create(new CEquipment_Kerosene, this);
 			}
-			if (nCnt == 3)
+			else if (nCnt == 3)
 			{
 				m_pEquipment[nCnt] = CEquipment::Create(new CEquipment_Holy, this);
 			}
-			if (nCnt == 4)
+			else if (nCnt == 4)
 			{
 				m_pEquipment[nCnt] = CEquipment::Create(new CEquipment_Gun, this);
 			}
-			if (nCnt == 5)
+			else if (nCnt == 5)
 			{
 				m_pEquipment[nCnt] = CEquipment::Create(new CEquipment_Magnum, this);
 			}
-			if (nCnt == 6)
+			else if (nCnt == 6)
 			{
 				m_pEquipment[nCnt] = CEquipment::Create(new CEquipment_ChildCircle, this);
 			}
-			if (nCnt == 7)
+			else if (nCnt == 7)
 			{
 				m_pEquipment[nCnt] = CEquipment::Create(new CEquipment_Lease, this);
 			}
-			if (nCnt == 8)
+			else if (nCnt == 8)
 			{
 				m_pEquipment[nCnt] = CEquipment::Create(new CEquipment_ChildAttack, this);
+			}
+			else
+			{
+
 			}
 
 			break;

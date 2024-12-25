@@ -14,7 +14,7 @@ class CExplosion : public CBillboard
 {
 public:
 
-	static constexpr float SIZE_RADIUS{ 30.0f };
+	static constexpr float SIZE_RADIUS{ 10.0f };
 	static constexpr int LIFE{ 30 };
 
 	CExplosion(int nPriority);

@@ -58,7 +58,10 @@ void CKerosene::Update()
 			if (pObj->GetType() == CObject::OBJECT_TYPE_ENEMY)
 			{
 				CEnemy* pEnemy = dynamic_cast<CEnemy*>(pObj);
-				pEnemy->Damage(1);
+				if (JudgeBallCollision(GetPos(), pEnemy->GetPos(), 20.0f))
+				{
+					pEnemy->Damage(1);
+				}
 			}
 
 			pObj = pNext;							//ポインタを進める
