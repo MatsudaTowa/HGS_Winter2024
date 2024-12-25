@@ -16,12 +16,12 @@ class CFreeView;
 class CCamera
 {
 public:
-	//カメラタイプ宣言 TODO:ステートパターンで
+	//カメラタイプ宣言
 	enum CANERA_TYPE
 	{
 		TYPE_FREE = 0,
 		TYPE_LOCK,
-		TYPE_DEBUG,
+		TYPE_TPS,
 		TYPE_MAX,
 	};
 

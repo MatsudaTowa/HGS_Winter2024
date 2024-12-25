@@ -36,19 +36,19 @@ namespace CameraInfo
 //コンストラクタ
 //=============================================
 CCamera::CCamera():
-m_fAngle(0.0f),
-m_fLength(0.0f),
-m_moveR({0.0f,0.0f,0.0f}),
-m_moveV({0.0f,0.0f,0.0f}),
+m_fAngle( FLOAT_ZERO ),
+m_fLength( FLOAT_ZERO ),
+m_moveR({ VEC3_RESET_ZERO }),
+m_moveV({ VEC3_RESET_ZERO }),
 m_mtxProjection(),
 m_mtxView(),
 m_pFreeView(),
 m_pCameraState(),
-m_posR({0.0f,0.0f,0.0f}),
-m_posV({0.0f,0.0f,0.0f}),
-m_rot({0.0f,0.0,0.0f}),
-m_rotmove({0.0f,0.0f,0.0f}),
-m_vecU({0.0f,0.0f,0.0f})
+m_posR({ VEC3_RESET_ZERO }),
+m_posV({ VEC3_RESET_ZERO }),
+m_rot({ VEC3_RESET_ZERO }),
+m_rotmove({ VEC3_RESET_ZERO }),
+m_vecU({ VEC3_RESET_ZERO })
 {
 }
 
@@ -66,7 +66,7 @@ HRESULT CCamera::Init()
 {
 	if (m_pCameraState == nullptr)
 	{
-		m_pCameraState = new CFreeView;
+		m_pCameraState = new CThirdView;
 	}
 	m_posV = D3DXVECTOR3(0.0f, 200.0f, -180.0f); //視点
 	m_posR = D3DXVECTOR3(0.0f, 0.0f, 0.0f); //注視
@@ -130,7 +130,6 @@ void CCamera::Update()
 	if (m_rot.x > D3DX_PI)
 	{
 		m_rot.x = -D3DX_PI;
-		//		m_rot.y -= D3DX_PI* 2.0f;
 	}
 
 	if (m_rot.x < -D3DX_PI)
