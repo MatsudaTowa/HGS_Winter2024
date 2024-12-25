@@ -52,6 +52,16 @@ public:
 		return m_fAttackCoolTime;
 	}
 
+	float& GetExp()
+	{
+		return m_fExp;
+	}
+
+	void AddExp(float exp)
+	{
+		m_fExp += exp;
+	}
+
 	//クールタイム設定
 	void SetAttackCoolTime(float cooltime)
 	{
@@ -70,6 +80,8 @@ private:
 	static const int SMOKE_RECAST_FRAME; //スモーク復活フレーム
 	static const float DEADZONE_Y; //これを過ぎたらプレイヤー破棄
 	static const float DEFAULT_COOLTIME; //デフォルトのクールタイム
+	static constexpr float LEVEL_EXP = 1.05f;
+	static constexpr float LEVEL_WINDOW = 50.0f;
 
 	static const D3DXVECTOR3 PLAYER_SPAWN_POS; //スポーン位置
 	static const D3DXVECTOR3 PLAYER_SPAWN_ROT; //スポーン方向
@@ -83,6 +95,8 @@ private:
 	CPlayerState* m_pPlayerState;
 
 	CEquipment* m_pEquipment[NUM_SLOT];
+
+	float m_fExp; //経験値
 
 	float m_fAttackCoolTime;	//クールタイム
 
