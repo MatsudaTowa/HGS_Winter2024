@@ -155,10 +155,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="equipment.cpp" />
     <ClCompile Include="billboard.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="camera_state.cpp" />
     <ClCompile Include="character.cpp" />
+    <ClCompile Include="equipment_shoes.cpp" />
     <ClCompile Include="exp.cpp" />
     <ClCompile Include="fade.cpp" />
     <ClCompile Include="field.cpp" />
@@ -169,6 +171,7 @@
     <ClCompile Include="manager.cpp" />
     <ClCompile Include="model.cpp" />
     <ClCompile Include="model_parts.cpp" />
+    <ClCompile Include="movebillboard.cpp" />
     <ClCompile Include="number.cpp" />
     <ClCompile Include="object.cpp" />
     <ClCompile Include="object2D.cpp" />
@@ -191,10 +194,12 @@
     <ClCompile Include="useful.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="equipment.h" />
     <ClInclude Include="billboard.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="camera_state.h" />
     <ClInclude Include="character.h" />
+    <ClInclude Include="equipment_shoes.h" />
     <ClInclude Include="exp.h" />
     <ClInclude Include="fade.h" />
     <ClInclude Include="field.h" />
@@ -205,6 +210,7 @@
     <ClInclude Include="manager.h" />
     <ClInclude Include="model.h" />
     <ClInclude Include="model_parts.h" />
+    <ClInclude Include="movebillboard.h" />
     <ClInclude Include="number.h" />
     <ClInclude Include="object.h" />
     <ClInclude Include="object2D.h" />

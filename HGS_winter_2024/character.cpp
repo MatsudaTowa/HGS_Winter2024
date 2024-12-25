@@ -15,6 +15,8 @@ const float CCharacter::GRAVITY_MOVE = 1.5f;
 //重力最大値
 const float CCharacter::GRAVITY_MAX = 20.0f;
 
+const float CCharacter::DAMPING_COEFFICIENT = 0.3f;
+
 //=============================================
 //コンストラクタ
 //=============================================
@@ -30,7 +32,7 @@ CCharacter::CCharacter(int nPriority):
 	m_nKeySetCnt(INT_ZERO),
 	m_Motion(INT_ZERO),
 	m_bLoopFinish(),
-	m_Speed(), 
+	m_speed(), 
 	m_Jump(),
 	m_MotionSet(),
 	m_nJumpCnt(INT_ZERO)
@@ -83,6 +85,25 @@ void CCharacter::Update()
 	{
 		m_apModel[nCnt]->SetOldPos({ m_apModel[nCnt]->GetMtxWorld()._41,m_apModel[nCnt]->GetMtxWorld()._42,m_apModel[nCnt]->GetMtxWorld()._43 });
 	}
+
+	//位置取得
+	D3DXVECTOR3 pos = GetPos();
+
+	//過去の位置を設定
+	SetOldPos(pos);
+
+	//移動量取得
+	D3DXVECTOR3 move = GetMove();
+
+	//移動量を位置に追加
+	pos += move;
+
+	//移動量を更新(減速）
+	move *= 1.0f - DAMPING_COEFFICIENT;
+
+	SetMove(move);
+
+	SetPos(pos);
 
 	//最大最小値取得
 	D3DXVECTOR3 minpos = GetMinPos();
@@ -221,7 +242,7 @@ void CCharacter::Load_Parts(const char* FileName)
 				else if (!strcmp(aDataSearch, "MOVE"))
 				{
 					fscanf(pFile, "%s", &aEqual[0]);
-					fscanf(pFile, "%f", &m_Speed);
+					fscanf(pFile, "%f", &m_speed);
 				}
 				else if (!strcmp(aDataSearch, "JUMP"))
 				{
@@ -494,7 +515,7 @@ int& CCharacter::GetNumParts()
 //=============================================
 float& CCharacter::GetSpeed()
 {
-	return m_Speed;	
+	return m_speed;	
 }
 
 //=============================================

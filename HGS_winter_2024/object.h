@@ -59,6 +59,9 @@ public:
 	static void DrawAll(); //全オブジェクト描画
 
 	static CObject* Getobject(int nPri,int nIdx);
+	static CObject* Getobject(int nPri);
+
+	CObject* GetNextobject() { return m_pNext; }
 
 	OBJECT_TYPE GetType();
 

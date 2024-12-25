@@ -24,9 +24,9 @@ namespace CameraInfo
 	const float SIDEVIEW_LENGTH_Y = 50.0f;			//サイドビュー時のYの距離
 	const float SIDEVIEW_LENGTH_Z = 200.0f;			//サイドビュー時のZの距離
 
-	const float THIRDVIEW_CORRECT_X = 20.0f; 		//サードパーソンビュー時の補正値X
+	const float THIRDVIEW_CORRECT_X = 10.0f; 		//サードパーソンビュー時の補正値X
 	const float THIRDVIEW_CORRECT_Y = 105.0f;		//サードパーソンビュー時の補正値Y
-	const float THIRDVIEW_CORRECT_Z = 20.0f; 		//サードパーソンビュー時の補正値Z
+	const float THIRDVIEW_CORRECT_Z = 10.0f; 		//サードパーソンビュー時の補正値Z
 
 	const float MAX_TURN_X = 0.5f;					//サードパーソンビュー時のXの最大可動域
 	const float MIN_TURN_X = -0.15f;				//サードパーソンビュー時のXの最小可動域
@@ -110,6 +110,7 @@ void CCamera::Update()
 	{
 		m_pCameraState->FreeView(this);
 		m_pCameraState->LockView(this);
+		m_pCameraState->ThirdPersonView(this);
 	}
 
 	//マウス情報取得

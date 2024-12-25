@@ -261,6 +261,14 @@ CObject* CObject::Getobject(int nPri, int nIdx)
 }
 
 //=============================================
+//オブジェクト取得
+//=============================================
+CObject* CObject::Getobject(int nPri)
+{
+	return m_pTop[nPri];
+}
+
+//=============================================
 //タイプ取得
 //=============================================
 CObject::OBJECT_TYPE CObject::GetType()
