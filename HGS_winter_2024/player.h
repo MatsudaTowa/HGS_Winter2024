@@ -12,6 +12,7 @@
 #include "character.h"
 
 class CPlayerState;
+class UI_PlayerLife;
 
 //プレイヤークラス
 class CPlayer :public CCharacter
@@ -72,6 +73,12 @@ private:
 	CPlayerState* m_pPlayerState;
 
 	float m_fAttackCoolTime;	//クールタイム
+<<<<<<< HEAD
+
+
+	UI_PlayerLife* m_LifeUI;
+=======
 	float m_fAttackCoolCnt;	//クールタイム
+>>>>>>> aca345994a80ef3cda6c7e1ef51159d7e4a59e4d
 };
 #endif

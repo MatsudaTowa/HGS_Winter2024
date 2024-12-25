@@ -85,6 +85,9 @@ public:
 
 	LPDIRECT3DVERTEXBUFFER9& GetVtxBuff();
 
+	void SetMaxGauge(int Max) { m_MaxGauge = Max; }
+	void SetGauge(int value) { m_GaugeValue = value; }	//ゲージのサイズ変更
+	void UpdateGauge();
 private:
 
 	LPDIRECT3DTEXTURE9 m_pTexture; //テクスチャへのポインタ
@@ -95,5 +98,6 @@ private:
 	D3DXVECTOR2 m_size;
 	D3DXVECTOR2 m_tex_pos; //tex座標
 	D3DXCOLOR m_col;
+	int m_GaugeValue,m_MaxGauge;	//ゲージ現在地 / 最大値
 };
 #endif
