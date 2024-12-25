@@ -6,6 +6,7 @@
 //=============================================
 #include "enemy.h"
 #include "weak_enemy.h"
+#include "exp.h"
 
 //エネミー総数
 int CEnemy::m_NumEnemy = 0;
@@ -53,6 +54,9 @@ HRESULT CEnemy::Init()
 //=============================================
 void CEnemy::Uninit()
 {
+	int nRand = rand() % 3;
+	CExp::Create(GetPos(), (CExp::EXP_TYPE)nRand); //ランダム)
+
 	//親クラスの終了処理を呼ぶ
 	CCharacter::Uninit();
 }

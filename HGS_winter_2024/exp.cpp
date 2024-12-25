@@ -6,13 +6,14 @@
 //=============================================
 #include "exp.h"
 #include "manager.h"
+#include "player.h"
 
 //経験値の情報
 const CExp::ExpInfo CExp::Info[EXP_TYPE_MAX] =
 {
-	{1, "data\\MODEL\\c.x"},
-	{3, ""},
-	{5, ""},
+	{1, "data\\MODEL\\giftbox.x"},
+	{3, "data\\MODEL\\giftbox.x"},
+	{5, "data\\MODEL\\giftbox.x"},
 };
 
 //=============================================
@@ -55,6 +56,26 @@ HRESULT CExp::Init()
 void CExp::Update()
 {
 	CObjectX::Update();
+
+	//敵との当たり判定
+	for (int i = 0; i < MAX_PRIORITY; i++)
+	{
+		CObject* pObj = CObject::Getobject(i);	//先頭取得
+
+		//最大数が不明なのでwhileを使用
+		while (pObj != nullptr)
+		{
+			CObject* pNext = pObj->GetNextobject();	//次のポインタを取得
+
+			//敵を見つけて速度を上げる
+			if (pObj->GetType() == CObject::OBJECT_TYPE_PLAYER)
+			{
+				CPlayer* pPlayer = dynamic_cast<CPlayer*>(pObj);
+			}
+
+			pObj = pNext;							//ポインタを進める
+		}
+	}
 }
 
 //=============================================

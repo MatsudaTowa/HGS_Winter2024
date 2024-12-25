@@ -67,8 +67,7 @@ void CGame::Update()
     CInputMouse* pMouse = CManager::GetInstance()->GetMouse();
 
     if (pKeyboard->GetTrigger(DIK_RETURN)
-        || pMouse->GetTrigger(0)
-        || pPad->GetTrigger(CInputPad::JOYKEY::JOYKEY_A))
+        || pMouse->GetTrigger(0))
     {
         //ƒ^ƒCƒgƒ‹‚É–ß‚é
         CManager::GetInstance()->GetFade()->SetFade(CScene::MODE::MODE_RESULT);
