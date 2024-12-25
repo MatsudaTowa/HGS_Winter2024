@@ -35,6 +35,29 @@ public:
 		CHARACTER_STATE_MAX,
 	};
 
+	//キー情報構造体
+	typedef struct
+	{
+		D3DXVECTOR3 pos;
+		D3DXVECTOR3 rot;
+		D3DXVECTOR3 Trot;
+	}Key;
+
+	//キー設定構造体
+	typedef struct
+	{
+		int nFrame; //フレーム数
+		Key key[MAX_KEY];
+	}KeySet;
+
+	//モーション設定構造体
+	typedef struct
+	{
+		int nLoop; //ループするかどうか
+		int nNumKey; //キー数
+		KeySet keySet[MAX_PARTS];
+	}MotionSet;
+
 	CCharacter(int nPriority = CHARACTER_PRIORITY);
 	~CCharacter()override;
 	HRESULT Init()override;
@@ -109,6 +132,12 @@ public:
 
 	float& GetSpeed();
 
+	float& GetRadius() { return m_Radius; };
+
+	bool& GetMotionFinish() { return m_bLoopFinish; }
+
+	int& GetKeyCnt() { return m_nKeySetCnt; }
+
 	//状態取得
 	CHARACTER_STATE& GetState();
 
@@ -140,31 +169,9 @@ private:
 	int m_Motion; //モーション(各オブジェクトから列挙を受け取る)
 	float m_speed; //スピード
 	float m_Jump; //ジャンプ
+	float m_Radius; //半径
 	CHARACTER_STATE m_State; //プレイヤー状態
 	D3DXCOLOR m_col; //カラー
-
-	//キー情報構造体
-	typedef struct
-	{
-		D3DXVECTOR3 pos;
-		D3DXVECTOR3 rot;
-		D3DXVECTOR3 Trot;
-	}Key;
-
-	//キー設定構造体
-	typedef struct
-	{
-		int nFrame; //フレーム数
-		Key key[MAX_KEY];
-	}KeySet;
-
-	//モーション設定構造体
-	typedef struct
-	{
-		int nLoop; //ループするかどうか
-		int nNumKey; //キー数
-		KeySet keySet[MAX_PARTS];
-	}MotionSet;
 
 	MotionSet m_MotionSet[MAX_MOTION]; //モーション設定
 };

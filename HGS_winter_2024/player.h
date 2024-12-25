@@ -72,6 +72,6 @@ private:
 	CPlayerState* m_pPlayerState;
 
 	float m_fAttackCoolTime;	//クールタイム
-
+	float m_fAttackCoolCnt;	//クールタイム
 };
 #endif

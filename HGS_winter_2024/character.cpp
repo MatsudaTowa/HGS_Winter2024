@@ -34,6 +34,7 @@ CCharacter::CCharacter(int nPriority):
 	m_bLoopFinish(),
 	m_speed(), 
 	m_Jump(),
+	m_Radius(FLOAT_ZERO),
 	m_MotionSet(),
 	m_nJumpCnt(INT_ZERO)
 {//イニシャライザーでプライオリティ設定、各メンバ変数初期化
@@ -85,6 +86,8 @@ void CCharacter::Update()
 	{
 		m_apModel[nCnt]->SetOldPos({ m_apModel[nCnt]->GetMtxWorld()._41,m_apModel[nCnt]->GetMtxWorld()._42,m_apModel[nCnt]->GetMtxWorld()._43 });
 	}
+
+	m_Radius = (GetMinPos().x + GetMaxPos().x) * 0.5f;
 
 	//位置取得
 	D3DXVECTOR3 pos = GetPos();
@@ -432,7 +435,7 @@ void CCharacter::Motion(int NumParts)
 		if (m_nKeySetCnt == 0 && m_MotionSet[m_Motion].nLoop == 0)
 		{//キーが終わりループモーションじゃなければ
 			//モーションをニュートラルに
-			SetMotion(0);
+			//SetMotion(0);
 			//終わった判定
 			m_bLoopFinish = true;
 		}

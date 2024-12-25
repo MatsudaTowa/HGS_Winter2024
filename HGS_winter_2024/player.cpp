@@ -6,6 +6,7 @@
 //=============================================
 #include "player.h"
 #include "manager.h"
+#include "player_state.h"
 
 //スポーン位置
 const D3DXVECTOR3 CPlayer::PLAYER_SPAWN_POS = { 0.0f, 0.5f, 0.0f };
@@ -21,6 +22,8 @@ const float CPlayer::DEFAULT_COOLTIME = 120.0f;
 //=============================================
 CPlayer::CPlayer(int nPriority):CCharacter(nPriority)
 ,m_pPlayerState(nullptr)		//ステートポインター初期化
+,m_fAttackCoolTime(0.0f)		//クールタイム
+,m_fAttackCoolCnt(0.0f)			//クールタイムカウント
 {
 }
 
@@ -44,7 +47,7 @@ HRESULT CPlayer::Init()
 
 	if (m_pPlayerState == nullptr)
 	{
-		//m_pPlayerState = new CDefaultState;
+		m_pPlayerState = new CMoveState;
 	}
 
 	//クールタイム代入
@@ -87,6 +90,20 @@ void CPlayer::Uninit()
 void CPlayer::Update()
 {
 	CCharacter::Update();
+
+	if (m_pPlayerState != nullptr)
+	{
+		m_pPlayerState->Move(this);
+		m_pPlayerState->Attack(this);
+	}
+
+	m_fAttackCoolCnt += 1.0f;
+
+	if (m_fAttackCoolCnt > m_fAttackCoolTime)
+	{
+		m_fAttackCoolCnt = 0.0f;
+		ChangePlayerState(new CAttackState);
+	}
 
 	Input();
 
@@ -201,15 +218,6 @@ void CPlayer::Input()
 
 	float rotMoveY = CManager::GetInstance()->GetCamera()->GetRot().y + atan2f(vecDirection.x, vecDirection.z);
 
-	if (vecDirection.x == 0.0f && vecDirection.z == 0.0f)
-	{ // 動いてない。
-		SetMotion(CPlayer::MOTION_NEUTRAL);
-	}
-	else
-	{
-		SetMotion(CPlayer::MOTION_MOVE);
-	}
-
 	//移動量
 	D3DXVECTOR3 move = GetMove();
 
@@ -229,5 +237,5 @@ void CPlayer::Input()
 	//rotを代入
 	SetRot(rot);
 	//移動量代入
-	SetMove(move);
+	SetMove(move);	
 }
