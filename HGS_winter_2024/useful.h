@@ -17,6 +17,23 @@ bool JudgeBallCollision(D3DXVECTOR3 pos1, D3DXVECTOR3 pos2, float length);	//‰~‚
 //ŒvZŒn
 
 
+//ƒJƒ‰[‰Šú‰»
+#define COLOR_RESET_ZERO (0.0f,0.0f,0.0f,0.0f)
+#define COLOR_RESET_ONE (1.0f,1.0f,1.0f,1.0f)
+
+//’¸“_3D‰Šú‰»
+#define VEC3_RESET_ZERO (0.0f,0.0f,0.0f)
+#define VEC3_RESET_ONE (1.0f,1.0f,1.0f)
+
+//’¸“_2D‰Šú‰»
+#define VEC2_RESET_ZERO (0.0f,0.0f)
+#define VEC2_RESET_ONE (1.0f,1.0f)
+
+//”¼‰~
+#define HALF_PI	(D3DX_PI * 0.5f)
+//1/4‰~
+#define QRTR_PI	(D3DX_PI * 0.25f)
+
 //©“®ŠJ•ú
 template<class T>
 constexpr void SafeDelete(T& p)
