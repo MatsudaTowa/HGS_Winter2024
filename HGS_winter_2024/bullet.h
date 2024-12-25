@@ -16,7 +16,7 @@ public:
 
 	static constexpr float SIZE_RADIUS{ 30.0f };
 	static constexpr int LIFE{ 300 };
-	static constexpr float SPEED{ 1.0f };
+	static constexpr float SPEED{ 10.0f };
 
 	CBullet(int nPriority);
 	~CBullet() override;
