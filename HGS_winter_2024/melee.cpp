@@ -66,7 +66,8 @@ void CMelee::Update()
 
 				if (bHit)
 				{
-					pEnemy->Damage(100);
+					pEnemy->Damage(1);
+					break;
 				}
 				
 			}

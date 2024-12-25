@@ -24,6 +24,7 @@ public:
 	static const int PLAYER_LIFE = 150; //体力
 	static const int PLAYER_PRIORITY = 8; //描画順
 	static const char* MODEL_FAIL; //モデルのファイルパス
+	static constexpr float LEVEL_WINDOW = 50.0f;
 
 
 	//モーションの種類の列挙
@@ -81,7 +82,6 @@ private:
 	static const float DEADZONE_Y; //これを過ぎたらプレイヤー破棄
 	static const float DEFAULT_COOLTIME; //デフォルトのクールタイム
 	static constexpr float LEVEL_EXP = 1.05f;
-	static constexpr float LEVEL_WINDOW = 50.0f;
 
 	static const D3DXVECTOR3 PLAYER_SPAWN_POS; //スポーン位置
 	static const D3DXVECTOR3 PLAYER_SPAWN_ROT; //スポーン方向
