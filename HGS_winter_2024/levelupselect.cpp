@@ -33,7 +33,7 @@ void CLevelupSelect::Update()
 	CInputPad* pPad = CManager::GetInstance()->GetPad();
 
 	if (pKeyboard->GetTrigger(DIK_UP)
-		|| pPad->GetTrigger(CInputPad::JOYKEY::JOYKEY_UP))
+		|| pPad->GetTrigger(CInputPad::JOYPAD_DPAD_UP))
 	{
 		if (m_nSelect > 0)
 		{
@@ -41,7 +41,7 @@ void CLevelupSelect::Update()
 		}
 	}
 	else if (pKeyboard->GetTrigger(DIK_DOWN)
-		|| pPad->GetTrigger(CInputPad::JOYKEY::JOYKEY_DOWN))
+		|| pPad->GetTrigger(CInputPad::JOYPAD_DPAD_DOWN))
 	{
 	
 		if (m_nSelect < 2)
@@ -65,7 +65,7 @@ void CLevelupSelect::Update()
 	}
 
 	if (pKeyboard->GetTrigger(DIK_M)
-		|| pPad->GetTrigger(CInputPad::JOYKEY::JOYKEY_A))
+		|| pPad->GetTrigger(CInputPad::JOYPAD_A))
 	{
 		m_End = true;
 	}

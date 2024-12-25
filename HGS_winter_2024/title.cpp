@@ -70,7 +70,7 @@ void CTitle::Update()
     CInputPad* pPad = CManager::GetInstance()->GetPad();
     CInputMouse* pMouse = CManager::GetInstance()->GetMouse();
 
-    if (pKeyboard->GetTrigger(DIK_RETURN) || pPad->GetTrigger(CInputPad::JOYKEY::JOYKEY_A) || pMouse->GetTrigger(0))
+    if (pKeyboard->GetTrigger(DIK_RETURN) || pPad->GetTrigger(CInputPad::JOYPAD_A) || pMouse->GetTrigger(0))
     {
 		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE::MODE_GAME);
     }

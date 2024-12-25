@@ -21,7 +21,7 @@ void CEquipment_Gloves::Init()
 
 	float f = pPlayer->GetAttackCoolTime();
 
-	f -= 3a0.0f;
+	f -= 30.0f;
 
 	pPlayer->SetAttackCoolTime(f);
 }
