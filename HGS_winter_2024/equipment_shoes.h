@@ -15,7 +15,7 @@ public:
 	CEquipment_Shoes() {}				//コンストラクタ
 	~CEquipment_Shoes() override {}		//デストラクタ
 
-	void Init() override {}	//初期化
+	void Init() override; //初期化
 	void Update() override;	//更新
 };
 #endif

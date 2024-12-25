@@ -10,6 +10,14 @@
 #include "player.h"
 
 //=============================================
+//èâä˙âª
+//=============================================
+void CEquipment_Kerosene::Init()
+{
+	SetType(CEquipment::EQUIPMENT_TYPE_KEROSENE);
+}
+
+//=============================================
 //çXêV
 //=============================================
 void CEquipment_Kerosene::Update()

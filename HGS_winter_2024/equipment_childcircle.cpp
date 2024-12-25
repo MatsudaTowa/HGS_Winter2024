@@ -14,7 +14,7 @@
 //=============================================
 void CEquipment_ChildCircle::Init()
 {
-
+	SetType(CEquipment::EQUIPMENT_TYPE_CHILED_CIRCLE);
 }
 
 //=============================================

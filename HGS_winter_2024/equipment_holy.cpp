@@ -14,6 +14,8 @@
 //=============================================
 void CEquipment_Holy::Init()
 {
+	SetType(CEquipment::EQUIPMENT_TYPE_HOLY);
+
 	//•Ï”éŒ¾
 	CPlayer* pPlayer = GetPlayer();
 

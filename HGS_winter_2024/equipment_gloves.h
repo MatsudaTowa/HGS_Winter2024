@@ -15,7 +15,7 @@ public:
 	CEquipment_Gloves() {}				//コンストラクタ
 	~CEquipment_Gloves() override {}		//デストラクタ
 
-	void Init() override {}	//初期化
+	void Init() override;//初期化
 	void Update() override;	//更新
 };
 #endif

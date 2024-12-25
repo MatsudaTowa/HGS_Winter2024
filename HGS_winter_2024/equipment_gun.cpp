@@ -14,7 +14,7 @@
 //=============================================
 void CEquipment_Gun::Init()
 {
-	
+	SetType(CEquipment::EQUIPMENT_TYPE_GUN);
 }
 
 //=============================================

@@ -14,6 +14,8 @@
 //=============================================
 void CEquipment_Shoes::Init()
 {
+	SetType(CEquipment::EQUIPMENT_TYPE_SHOES);
+
 	//•Ï”éŒ¾
 	CPlayer* pPlayer = GetPlayer();
 

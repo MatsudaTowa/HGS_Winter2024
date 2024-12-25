@@ -37,9 +37,19 @@ public:
 	//ÉvÉåÉCÉÑÅ[
 	CPlayer* GetPlayer() { return m_pPlayer; }
 
+	void SetType(EQUIPMENT_TYPE type)
+	{
+		m_type = type;
+	}
+
+	EQUIPMENT_TYPE GetType()
+	{
+		return m_type;
+	}
+
 private:
 	CPlayer* m_pPlayer;
-	EQUIPMENT_TYPE type;
+	EQUIPMENT_TYPE m_type;
 	
 };
 #endif

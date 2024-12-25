@@ -14,7 +14,7 @@
 //=============================================
 void CEquipment_Lease::Init()
 {
-
+	SetType(CEquipment::EQUIPMENT_TYPE_LEASE);
 }
 
 //=============================================

@@ -14,7 +14,7 @@
 //=============================================
 void CEquipment_ChildAttack::Init()
 {
-	
+	SetType(CEquipment::EQUIPMENT_TYPE_CHILED_ATTACK);
 }
 
 //=============================================
