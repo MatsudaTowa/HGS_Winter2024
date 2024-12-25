@@ -10,6 +10,13 @@
 #include "player_state.h"
 #include "equipment_shoes.h"
 #include "equipment_gloves.h"
+#include "equipment_childattack.h"
+#include "equipment_childcircle.h"
+#include "equipment_gun.h"
+#include "equipment_lease.h"
+#include "equipment_magnum.h"
+#include "equipment_kerosene.h"
+#include "equipment_holy.h"
 
 //スポーン位置
 const D3DXVECTOR3 CPlayer::PLAYER_SPAWN_POS = { 0.0f, 0.5f, 0.0f };
@@ -28,7 +35,7 @@ CPlayer::CPlayer(int nPriority) :CCharacter(nPriority)
 , m_LifeUI(nullptr)
 , m_fAttackCoolTime(0.0f)		//クールタイム
 , m_fAttackCoolCnt(0.0f)			//クールタイムカウント
-,m_pEquipment()
+, m_pEquipment()
 {
 }
 
@@ -195,6 +202,57 @@ CPlayer* CPlayer::Create()
 }
 
 //=============================================
+//装備
+//=============================================
+void CPlayer::SetSoubi(int num)
+{
+	for (int nCnt = 0; nCnt < NUM_SLOT; nCnt++)
+	{
+		if (m_pEquipment[nCnt] == nullptr)
+		{
+			if (nCnt == 0)
+			{
+				m_pEquipment[nCnt] = CEquipment::Create(new CEquipment_Shoes, this);
+			}
+			if (nCnt == 1)
+			{
+				m_pEquipment[nCnt] = CEquipment::Create(new CEquipment_Gloves, this);
+			}
+			if (nCnt == 2)
+			{
+				m_pEquipment[nCnt] = CEquipment::Create(new CEquipment_Kerosene, this);
+			}
+			if (nCnt == 3)
+			{
+				m_pEquipment[nCnt] = CEquipment::Create(new CEquipment_Holy, this);
+			}
+			if (nCnt == 4)
+			{
+				m_pEquipment[nCnt] = CEquipment::Create(new CEquipment_Gun, this);
+			}
+			if (nCnt == 5)
+			{
+				m_pEquipment[nCnt] = CEquipment::Create(new CEquipment_Magnum, this);
+			}
+			if (nCnt == 6)
+			{
+				m_pEquipment[nCnt] = CEquipment::Create(new CEquipment_ChildCircle, this);
+			}
+			if (nCnt == 7)
+			{
+				m_pEquipment[nCnt] = CEquipment::Create(new CEquipment_Lease, this);
+			}
+			if (nCnt == 8)
+			{
+				m_pEquipment[nCnt] = CEquipment::Create(new CEquipment_ChildAttack, this);
+			}
+
+			break;
+		}
+	}
+}
+
+//=============================================
 //状態変更
 //=============================================
 void CPlayer::ChangePlayerState(CPlayerState* state)
@@ -289,5 +347,5 @@ void CPlayer::Input()
 	//rotを代入
 	SetRot(rot);
 	//移動量代入
-	SetMove(move);	
+	SetMove(move);
 }

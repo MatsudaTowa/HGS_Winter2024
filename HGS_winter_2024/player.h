@@ -58,6 +58,8 @@ public:
 		m_fAttackCoolTime = cooltime;
 	}
 
+	void SetSoubi(int num);
+
 private:
 
 	//プレイヤーの移動関連
