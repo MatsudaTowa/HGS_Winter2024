@@ -1,38 +1,34 @@
 //=============================================
 //
-//3DTemplate[kerosene.cpp]
+//3DTemplate[explosion.cpp]
 //Auther Matsuda Towa
 //
 //=============================================
-#include "kerosene.h"
+#include "explosion.h"
 #include "manager.h"
 #include "enemy.h"
-
-//texパス
-const std::string CKerosene::TEXTURE_NAME = "data\\TEXTURE\\field.jpg";
 
 //=============================================
 //コンストラクタ
 //=============================================
-CKerosene::CKerosene(int nPriority) :CObject3D(nPriority),m_nCount(0)
+CExplosion::CExplosion(int priority) : CBillboard(priority)
 {
 }
 
 //=============================================
 //デストラクタ
 //=============================================
-CKerosene::~CKerosene()
+CExplosion::~CExplosion()
 {
 }
 
 //=============================================
 //初期化
 //=============================================
-HRESULT CKerosene::Init()
+HRESULT CExplosion::Init()
 {
-	//テクスチャ取得
-	CTexture* pTexture = CManager::GetInstance()->GetTexture();
-	BindTexture(pTexture->GetAddress(pTexture->Regist(&TEXTURE_NAME))); //テクスチャ設定
+	//初期化
+	CBillboard::Init();
 
 	return S_OK;
 }
@@ -40,9 +36,11 @@ HRESULT CKerosene::Init()
 //=============================================
 //更新
 //=============================================
-void CKerosene::Update()
+void CExplosion::Update()
 {
-	m_nCount++;
+	CBillboard::Update();
+
+	m_nLife++;
 
 	//敵との当たり判定
 	for (int i = 0; i < MAX_PRIORITY; i++)
@@ -58,14 +56,20 @@ void CKerosene::Update()
 			if (pObj->GetType() == CObject::OBJECT_TYPE_ENEMY)
 			{
 				CEnemy* pEnemy = dynamic_cast<CEnemy*>(pObj);
-				pEnemy->Damage(1);
+
+				//円の中に入ったらダメージ
+				if (JudgeBallCollision(GetPos(), pEnemy->GetPos(), SIZE_RADIUS * 2.0f))
+				{
+					pEnemy->Damage(1);
+				}
+
 			}
 
 			pObj = pNext;							//ポインタを進める
 		}
 	}
 
-	if (m_nCount > TIME_END)
+	if (m_nLife > LIFE)
 	{
 		Uninit();
 	}
@@ -74,12 +78,13 @@ void CKerosene::Update()
 //=============================================
 //生成
 //=============================================
-CKerosene* CKerosene::Create(D3DXVECTOR3 pos)
+CExplosion* CExplosion::Create(D3DXVECTOR3 pos)
 {
-	CKerosene* pObject = new CKerosene(3);
+	CExplosion* pObject = new CExplosion(3);
 	pObject->SetPos(pos);
-	pObject->SetSize({ SIZE_RADIUS * 2.0f, 0.0f, SIZE_RADIUS * 2.0f });
+	pObject->SetSize({ SIZE_RADIUS, SIZE_RADIUS,0.0f });
 	pObject->SetVtx(D3DXVECTOR3(0.0f, 1.0f, 0.0f));
 	pObject->Init();
+	
 	return pObject;
 }

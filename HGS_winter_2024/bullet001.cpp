@@ -1,34 +1,35 @@
 //=============================================
 //
-//3DTemplate[kerosene.cpp]
+//3DTemplate[bullet001.cpp]
 //Auther Matsuda Towa
 //
 //=============================================
-#include "kerosene.h"
+#include "bullet001.h"
 #include "manager.h"
 #include "enemy.h"
+#include "explosion.h"
 
 //texパス
-const std::string CKerosene::TEXTURE_NAME = "data\\TEXTURE\\field.jpg";
+const std::string CBullet001::TEXTURE_NAME = "data\\TEXTURE\\field.jpg";
 
 //=============================================
 //コンストラクタ
 //=============================================
-CKerosene::CKerosene(int nPriority) :CObject3D(nPriority),m_nCount(0)
+CBullet001::CBullet001(int nPriority) :CMoveBillboard(nPriority), m_nLife(0), m_fGravity(0.0f)
 {
 }
 
 //=============================================
 //デストラクタ
 //=============================================
-CKerosene::~CKerosene()
+CBullet001::~CBullet001()
 {
 }
 
 //=============================================
 //初期化
 //=============================================
-HRESULT CKerosene::Init()
+HRESULT CBullet001::Init()
 {
 	//テクスチャ取得
 	CTexture* pTexture = CManager::GetInstance()->GetTexture();
@@ -40,33 +41,23 @@ HRESULT CKerosene::Init()
 //=============================================
 //更新
 //=============================================
-void CKerosene::Update()
+void CBullet001::Update()
 {
-	m_nCount++;
+	m_fGravity += GRAVITY;;
+	GetPos().y -= m_fGravity;
+	CMoveBillboard::Update();
 
-	//敵との当たり判定
-	for (int i = 0; i < MAX_PRIORITY; i++)
+	m_nLife++;
+
+	if (m_nLife > LIFE)
 	{
-		CObject* pObj = CObject::Getobject(i);	//先頭取得
-
-		//最大数が不明なのでwhileを使用
-		while (pObj != nullptr)
-		{
-			CObject* pNext = pObj->GetNextobject();	//次のポインタを取得
-
-			//敵を見つけて速度を上げる
-			if (pObj->GetType() == CObject::OBJECT_TYPE_ENEMY)
-			{
-				CEnemy* pEnemy = dynamic_cast<CEnemy*>(pObj);
-				pEnemy->Damage(1);
-			}
-
-			pObj = pNext;							//ポインタを進める
-		}
+		Uninit();
 	}
 
-	if (m_nCount > TIME_END)
+	//当たり判定の生成
+	if (GetPos().y <= 0.0f)
 	{
+		CExplosion::Create(GetPos());
 		Uninit();
 	}
 }
@@ -74,12 +65,13 @@ void CKerosene::Update()
 //=============================================
 //生成
 //=============================================
-CKerosene* CKerosene::Create(D3DXVECTOR3 pos)
+CBullet001* CBullet001::Create(D3DXVECTOR3 pos, float angle)
 {
-	CKerosene* pObject = new CKerosene(3);
+	CBullet001* pObject = new CBullet001(3);
 	pObject->SetPos(pos);
-	pObject->SetSize({ SIZE_RADIUS * 2.0f, 0.0f, SIZE_RADIUS * 2.0f });
+	pObject->SetSize({ SIZE_RADIUS, SIZE_RADIUS,0.0f });
 	pObject->SetVtx(D3DXVECTOR3(0.0f, 1.0f, 0.0f));
 	pObject->Init();
+	pObject->SetMove(D3DXVECTOR3(sinf(angle) * SPEED, 0.0f, cosf(angle) * SPEED));
 	return pObject;
 }

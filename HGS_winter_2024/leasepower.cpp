@@ -1,34 +1,34 @@
 //=============================================
 //
-//3DTemplate[kerosene.cpp]
+//3DTemplate[leasepower.cpp]
 //Auther Matsuda Towa
 //
 //=============================================
-#include "kerosene.h"
+#include "leasepower.h"
 #include "manager.h"
 #include "enemy.h"
 
 //texパス
-const std::string CKerosene::TEXTURE_NAME = "data\\TEXTURE\\field.jpg";
+const std::string CLeasepower::TEXTURE_NAME = "data\\TEXTURE\\field.jpg";
 
 //=============================================
 //コンストラクタ
 //=============================================
-CKerosene::CKerosene(int nPriority) :CObject3D(nPriority),m_nCount(0)
+CLeasepower::CLeasepower(int nPriority) :CObject3D(nPriority), m_nCount(0)
 {
 }
 
 //=============================================
 //デストラクタ
 //=============================================
-CKerosene::~CKerosene()
+CLeasepower::~CLeasepower()
 {
 }
 
 //=============================================
 //初期化
 //=============================================
-HRESULT CKerosene::Init()
+HRESULT CLeasepower::Init()
 {
 	//テクスチャ取得
 	CTexture* pTexture = CManager::GetInstance()->GetTexture();
@@ -40,7 +40,7 @@ HRESULT CKerosene::Init()
 //=============================================
 //更新
 //=============================================
-void CKerosene::Update()
+void CLeasepower::Update()
 {
 	m_nCount++;
 
@@ -58,7 +58,13 @@ void CKerosene::Update()
 			if (pObj->GetType() == CObject::OBJECT_TYPE_ENEMY)
 			{
 				CEnemy* pEnemy = dynamic_cast<CEnemy*>(pObj);
-				pEnemy->Damage(1);
+				
+				//円の中に入ったらダメージ
+				if (JudgeBallCollision(GetPos(), pEnemy->GetPos(), SIZE_RADIUS * 2.0f))
+				{
+					pEnemy->Damage(1);
+				}
+				
 			}
 
 			pObj = pNext;							//ポインタを進める
@@ -72,11 +78,28 @@ void CKerosene::Update()
 }
 
 //=============================================
+//描画
+//=============================================
+void CLeasepower::Draw()
+{
+	//デバイスの取得
+	LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
+
+	//カリング方法を変更
+	pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+
+	CObject3D::Draw();
+
+	//カリング方法を変更
+	pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+}
+
+//=============================================
 //生成
 //=============================================
-CKerosene* CKerosene::Create(D3DXVECTOR3 pos)
+CLeasepower* CLeasepower::Create(D3DXVECTOR3 pos)
 {
-	CKerosene* pObject = new CKerosene(3);
+	CLeasepower* pObject = new CLeasepower(3);
 	pObject->SetPos(pos);
 	pObject->SetSize({ SIZE_RADIUS * 2.0f, 0.0f, SIZE_RADIUS * 2.0f });
 	pObject->SetVtx(D3DXVECTOR3(0.0f, 1.0f, 0.0f));

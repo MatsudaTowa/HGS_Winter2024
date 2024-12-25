@@ -1,34 +1,34 @@
 //=============================================
 //
-//3DTemplate[kerosene.cpp]
+//3DTemplate[bullet.cpp]
 //Auther Matsuda Towa
 //
 //=============================================
-#include "kerosene.h"
+#include "bullet.h"
 #include "manager.h"
 #include "enemy.h"
 
 //texパス
-const std::string CKerosene::TEXTURE_NAME = "data\\TEXTURE\\field.jpg";
+const std::string CBullet::TEXTURE_NAME = "data\\TEXTURE\\field.jpg";
 
 //=============================================
 //コンストラクタ
 //=============================================
-CKerosene::CKerosene(int nPriority) :CObject3D(nPriority),m_nCount(0)
+CBullet::CBullet(int nPriority) :CMoveBillboard(nPriority), m_nLife(0)
 {
 }
 
 //=============================================
 //デストラクタ
 //=============================================
-CKerosene::~CKerosene()
+CBullet::~CBullet()
 {
 }
 
 //=============================================
 //初期化
 //=============================================
-HRESULT CKerosene::Init()
+HRESULT CBullet::Init()
 {
 	//テクスチャ取得
 	CTexture* pTexture = CManager::GetInstance()->GetTexture();
@@ -40,9 +40,11 @@ HRESULT CKerosene::Init()
 //=============================================
 //更新
 //=============================================
-void CKerosene::Update()
+void CBullet::Update()
 {
-	m_nCount++;
+	CMoveBillboard::Update();
+
+	m_nLife++;
 
 	//敵との当たり判定
 	for (int i = 0; i < MAX_PRIORITY; i++)
@@ -58,14 +60,21 @@ void CKerosene::Update()
 			if (pObj->GetType() == CObject::OBJECT_TYPE_ENEMY)
 			{
 				CEnemy* pEnemy = dynamic_cast<CEnemy*>(pObj);
-				pEnemy->Damage(1);
+
+				//円の中に入ったらダメージ
+				if (JudgeBallCollision(GetPos(), pEnemy->GetPos(), SIZE_RADIUS * 2.0f))
+				{
+					pEnemy->Damage(1);
+					Uninit();
+				}
+
 			}
 
 			pObj = pNext;							//ポインタを進める
 		}
 	}
 
-	if (m_nCount > TIME_END)
+	if (m_nLife > LIFE)
 	{
 		Uninit();
 	}
@@ -74,12 +83,13 @@ void CKerosene::Update()
 //=============================================
 //生成
 //=============================================
-CKerosene* CKerosene::Create(D3DXVECTOR3 pos)
+CBullet* CBullet::Create(D3DXVECTOR3 pos, float angle)
 {
-	CKerosene* pObject = new CKerosene(3);
+	CBullet* pObject = new CBullet(3);
 	pObject->SetPos(pos);
-	pObject->SetSize({ SIZE_RADIUS * 2.0f, 0.0f, SIZE_RADIUS * 2.0f });
+	pObject->SetSize({ SIZE_RADIUS, SIZE_RADIUS,0.0f });
 	pObject->SetVtx(D3DXVECTOR3(0.0f, 1.0f, 0.0f));
 	pObject->Init();
+	pObject->SetMove(D3DXVECTOR3(sinf(angle) * SPEED, 0.0f, cosf(angle) * SPEED));
 	return pObject;
 }
