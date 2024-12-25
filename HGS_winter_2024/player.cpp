@@ -5,6 +5,7 @@
 //
 //=============================================
 #include "player.h"
+#include "UI_player_life.h"
 #include "manager.h"
 #include "player_state.h"
 
@@ -22,8 +23,12 @@ const float CPlayer::DEFAULT_COOLTIME = 120.0f;
 //=============================================
 CPlayer::CPlayer(int nPriority):CCharacter(nPriority)
 ,m_pPlayerState(nullptr)		//ステートポインター初期化
+<<<<<<< HEAD
+,m_LifeUI(nullptr)
+=======
 ,m_fAttackCoolTime(0.0f)		//クールタイム
 ,m_fAttackCoolCnt(0.0f)			//クールタイムカウント
+>>>>>>> aca345994a80ef3cda6c7e1ef51159d7e4a59e4d
 {
 }
 
@@ -71,6 +76,10 @@ HRESULT CPlayer::Init()
 	//パーツ読み込み
 	Load_Parts("data\\TEXT\\motion_HGSPlayer.txt");
 
+	CCharacter::SetLife(PLAYER_LIFE);
+
+	m_LifeUI = UI_PlayerLife::Create({ 150.0f,SCREEN_HEIGHT - 30.0f,0.0f }, PLAYER_LIFE);
+
 	SetMotion(MOTION_NEUTRAL);
 	return S_OK;
 }
@@ -89,6 +98,15 @@ void CPlayer::Uninit()
 //=============================================
 void CPlayer::Update()
 {
+	if (CManager::GetInstance()->GetKeyboard()->GetTrigger(DIK_0) == true)
+	{
+		int nLife = CCharacter::GetLife();
+
+		nLife -= 30;
+		CCharacter::SetLife(nLife);
+		m_LifeUI->SetLife(nLife);
+	}
+
 	CCharacter::Update();
 
 	if (m_pPlayerState != nullptr)

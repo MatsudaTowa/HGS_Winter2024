@@ -390,3 +390,61 @@ LPDIRECT3DVERTEXBUFFER9& CObject2D::GetVtxBuff()
 	return m_pVtxBuff;
 }
 
+//=============================================
+//ゲージ処理
+//=============================================
+void CObject2D::UpdateGauge()
+{
+	float fWidth = (m_size.x / m_MaxGauge) * m_GaugeValue;
+	//対角線の長さを算出
+	float fLength = sqrtf(fWidth * fWidth + m_size.y * m_size.y) / 2.0f;
+	//対角線の角度を算出
+	float fAngle = atan2f(fWidth, m_size.y);
+
+	//テクスチャの端を算出
+	float fGaugeTex = ((1.0f / m_MaxGauge) * m_GaugeValue);
+	float SetPos = m_pos.x + (fWidth * 0.5f) - m_size.x * 0.5f;
+
+	CRenderer* pRender = CManager::GetInstance()->GetRenderer();
+
+	LPDIRECT3DDEVICE9 pDevice = pRender->GetDevice();
+	if (m_pVtxBuff == nullptr)
+	{
+		pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * 4, D3DUSAGE_WRITEONLY, FVF_VERTEX_2D, D3DPOOL_MANAGED, &m_pVtxBuff, NULL);
+	}
+
+	VERTEX_2D* pVtx;
+
+	//頂点バッファをロックし頂点情報へのポインタを取得
+	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
+	//頂点座標の設定
+
+	//頂点座標の設定
+	pVtx[0].pos.x = SetPos + sinf(m_rot.z - (D3DX_PI - fAngle)) * (fLength);
+	pVtx[0].pos.y = m_pos.y + cosf(m_rot.z - (D3DX_PI - fAngle)) * (fLength);
+	pVtx[0].pos.z = 0.0f;
+	pVtx[1].pos.x = SetPos + sinf(m_rot.z + (D3DX_PI - fAngle)) * (fLength);
+	pVtx[1].pos.y = m_pos.y + cosf(m_rot.z + (D3DX_PI - fAngle)) * (fLength);
+	pVtx[1].pos.z = 0.0f;
+	pVtx[2].pos.x = SetPos + sinf(m_rot.z - fAngle) * (fLength);
+	pVtx[2].pos.y = m_pos.y + cosf(m_rot.z - fAngle) * (fLength);
+	pVtx[2].pos.z = 0.0f;
+	pVtx[3].pos.x = SetPos + sinf(m_rot.z + fAngle) * (fLength);
+	pVtx[3].pos.y = m_pos.y + cosf(m_rot.z + fAngle) * (fLength);
+	pVtx[3].pos.z = 0.0f;
+
+	//頂点カラーの設定
+	pVtx[0].col = m_col;
+	pVtx[1].col = m_col;
+	pVtx[2].col = m_col;
+	pVtx[3].col = m_col;
+
+	pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
+	pVtx[1].tex = D3DXVECTOR2(1.0f, 0.0f);
+	pVtx[2].tex = D3DXVECTOR2(0.0f, 1.0f);
+	pVtx[3].tex = D3DXVECTOR2(1.0f, 1.0f);
+	//頂点バッファのアンロック
+	m_pVtxBuff->Unlock();
+}
+
+
