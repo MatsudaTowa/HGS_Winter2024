@@ -61,7 +61,7 @@ public:
 	static CObject* Getobject(int nPri,int nIdx);
 	static CObject* Getobject(int nPri);
 
-	CObject* GetNextobject() {return m_pNext}
+	CObject* GetNextobject() { return m_pNext; }
 
 	OBJECT_TYPE GetType();
 
