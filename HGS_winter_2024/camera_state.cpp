@@ -83,6 +83,9 @@ const float CThirdView::THIRDVIEW_CORRECT_X = 20.0f;
 const float CThirdView::THIRDVIEW_CORRECT_Y = 105.0f;
 const float CThirdView::THIRDVIEW_CORRECT_Z = 20.0f;
 
+//距離
+const float CThirdView::THIRDVIEW_LENGTH = 120.0f;
+
 //サードパーソンビュー時のXの最大可動域
 const float CThirdView::MAX_TURN_X = 0.5f;
 //サードパーソンビュー時のXの最小可動域
@@ -106,18 +109,21 @@ CThirdView::~CThirdView()
 //=============================================
 void CThirdView::ThirdPersonView(CCamera* camera)
 {
-	for (int nCnt = 0; nCnt < CObject::MAX_OBJECT; nCnt++)
+	camera->SetLength(THIRDVIEW_LENGTH);
+	//プライオリティの数だけ周回
+	for (int i = 0; i < MAX_PRIORITY; i++)
 	{
-		//オブジェクト取得
-		CObject* pObj = CObject::Getobject(CPlayer::PLAYER_PRIORITY, nCnt);
-		if (pObj != nullptr)
-		{//ヌルポインタじゃなければ
-			//タイプ取得
-			CObject::OBJECT_TYPE type = pObj->GetType();
-			if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
+		CObject* pObj = CObject::Getobject(i);    //先頭取得
+
+		//最大数が不明なのでwhileを使用
+		while (pObj != nullptr)
+		{
+			CObject* pNext = pObj->GetNextobject();    //次のポインタを取得
+
+			//プレイヤーを見つけて速度を上げる
+			if (pObj->GetType() == CObject::OBJECT_TYPE_PLAYER)
 			{
 				CPlayer* pPlayer = dynamic_cast<CPlayer*>(pObj);
-
 				//注視点取得
 				D3DXVECTOR3 posR = camera->GetPosR();
 
@@ -137,13 +143,9 @@ void CThirdView::ThirdPersonView(CCamera* camera)
 
 				//マウス情報取得
 				CInputMouse* pMouse = CManager::GetInstance()->GetMouse();
-				//現在のシーンを取得 TODO:シーン参照するな
-				CScene::MODE pScene = CScene::GetSceneMode();
-				if (pScene != CScene::MODE::MODE_TITLE)
-				{
-					rot.y += pMouse->GetMouseMove().x * 0.001f;
-					rot.x += pMouse->GetMouseMove().y * 0.001f;
-				}
+
+				rot.y += pMouse->GetMouseMove().x * 0.001f;
+				rot.x += pMouse->GetMouseMove().y * 0.001f;
 
 				if (rot.x <= MIN_TURN_X)
 				{
@@ -161,6 +163,8 @@ void CThirdView::ThirdPersonView(CCamera* camera)
 				//視点代入
 				camera->SetPosV(posV);
 			}
+
+			pObj = pNext;  //ポインタを進める
 		}
 	}
 }

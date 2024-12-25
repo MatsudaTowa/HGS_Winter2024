@@ -13,6 +13,9 @@ const D3DXVECTOR3 CPlayer::PLAYER_SPAWN_POS = { 0.0f, 0.5f, 0.0f };
 //スポーン方向
 const D3DXVECTOR3 CPlayer::PLAYER_SPAWN_ROT = { 0.0f, 3.14f, 0.0f };
 
+//通常のクールタイム
+const float CPlayer::DEFAULT_COOLTIME = 120.0f;
+
 //=============================================
 //コンストラクタ
 //=============================================
@@ -43,6 +46,10 @@ HRESULT CPlayer::Init()
 	{
 		//m_pPlayerState = new CDefaultState;
 	}
+
+	//クールタイム代入
+	m_fAttackCoolTime = DEFAULT_COOLTIME;
+
 	//移動量初期化
 	D3DXVECTOR3 move = VEC3_RESET_ZERO;
 
@@ -80,6 +87,8 @@ void CPlayer::Uninit()
 void CPlayer::Update()
 {
 	CCharacter::Update();
+
+	Input();
 
 	Motion(GetNumParts()); //モーション処理
 
@@ -158,4 +167,67 @@ void CPlayer::DebugPos()
 	//テキストの描画
 	pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_LEFT, D3DCOLOR_RGBA(255, 0, 0, 255));
 #endif // _DEBUG
+}
+
+//=============================================
+//入力処理
+//=============================================
+void CPlayer::Input()
+{
+	CInputMouse* pMouse = CManager::GetInstance()->GetMouse();
+
+	CInputKeyboard* pKeyboard = CManager::GetInstance()->GetKeyboard();
+
+	CCamera* pCamera = CManager::GetInstance()->GetCamera();
+
+	//移動の方向の単位ベクトル変数
+	D3DXVECTOR3 vecDirection(0.0f, 0.0f, 0.0f);
+	if (pKeyboard->GetPress(DIK_W))
+	{
+		vecDirection.z += 1.0f;
+	}
+	if (pKeyboard->GetPress(DIK_S))
+	{
+		vecDirection.z -= 1.0f;
+	}
+	if (pKeyboard->GetPress(DIK_A))
+	{
+		vecDirection.x -= 1.0f;
+	}
+	if (pKeyboard->GetPress(DIK_D))
+	{
+		vecDirection.x += 1.0f;
+	}
+
+	float rotMoveY = CManager::GetInstance()->GetCamera()->GetRot().y + atan2f(vecDirection.x, vecDirection.z);
+
+	if (vecDirection.x == 0.0f && vecDirection.z == 0.0f)
+	{ // 動いてない。
+		SetMotion(CPlayer::MOTION_NEUTRAL);
+	}
+	else
+	{
+		SetMotion(CPlayer::MOTION_MOVE);
+	}
+
+	//移動量
+	D3DXVECTOR3 move = GetMove();
+
+	if (vecDirection.x == 0.0f && vecDirection.z == 0.0f)
+	{ // 動いてない。
+		move.x = 0.0f;
+		move.z = 0.0f;
+	}
+	else
+	{
+		move.x += sinf(rotMoveY) * GetSpeed();
+		move.z += cosf(rotMoveY) * GetSpeed();
+	}
+	//親クラスからrotを取得
+	D3DXVECTOR3 rot = GetRot();
+	rot.y = rotMoveY + D3DX_PI;
+	//rotを代入
+	SetRot(rot);
+	//移動量代入
+	SetMove(move);
 }

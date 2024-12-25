@@ -22,8 +22,7 @@ public:
 	static const int PLAYER_PRIORITY = 8; //描画順
 	static const char* MODEL_FAIL; //モデルのファイルパス
 
-	static const D3DXVECTOR3 PLAYER_SPAWN_POS; //スポーン位置
-	static const D3DXVECTOR3 PLAYER_SPAWN_ROT; //スポーン方向
+
 	//モーションの種類の列挙
 	enum Motion_Type
 	{
@@ -45,6 +44,12 @@ public:
 
 	void ChangePlayerState(CPlayerState* state);
 
+	//クールタイム設定
+	void SetAttackCoolTime(float cooltime)
+	{
+		m_fAttackCoolTime = cooltime;
+	}
+
 private:
 
 	//プレイヤーの移動関連
@@ -53,11 +58,20 @@ private:
 	static const int IGNORE_COLLISION_FRAME; //当たり判定無視フレーム
 	static const int SMOKE_RECAST_FRAME; //スモーク復活フレーム
 	static const float DEADZONE_Y; //これを過ぎたらプレイヤー破棄
+	static const float DEFAULT_COOLTIME; //デフォルトのクールタイム
 
-	CPlayerState* m_pPlayerState;
+	static const D3DXVECTOR3 PLAYER_SPAWN_POS; //スポーン位置
+	static const D3DXVECTOR3 PLAYER_SPAWN_ROT; //スポーン方向
 
 	void ReSpawn(); //リスポーン
 
 	void DebugPos();
+
+	void Input(); //入力処理
+
+	CPlayerState* m_pPlayerState;
+
+	float m_fAttackCoolTime;	//クールタイム
+
 };
 #endif

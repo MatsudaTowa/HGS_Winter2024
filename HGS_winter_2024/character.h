@@ -125,6 +125,8 @@ private:
 
 	static const float GRAVITY_MOVE; //重力値
 	static const float GRAVITY_MAX; //重力最大値
+	static const float DAMPING_COEFFICIENT; // 移動抵抗
+
 	bool m_bLanding; //着地してるかどうか
 	bool m_bWay; //どっち向いてるか(true:右false:左)
 	bool m_bLoopFinish; //ループモーションが終わったか
@@ -136,7 +138,7 @@ private:
 	int m_nKeySetCnt; //キー切り替えカウント
 	int m_nJumpCnt; //ジャンプカウント
 	int m_Motion; //モーション(各オブジェクトから列挙を受け取る)
-	float m_Speed; //スピード
+	float m_speed; //スピード
 	float m_Jump; //ジャンプ
 	CHARACTER_STATE m_State; //プレイヤー状態
 	D3DXCOLOR m_col; //カラー
