@@ -43,6 +43,7 @@ HRESULT CGame::Init()
 
     CEnemy::Create({ 5.0f,0.5f,100.0f }, VEC3_RESET_ZERO, CEnemy::ENEMY_TYPE_WEAK);
 
+    CManager::GetInstance()->GetSound()->PlaySound(CSound::SOUND_LABEL_BGM_GAME);
     return S_OK;
 }
 
@@ -51,6 +52,7 @@ HRESULT CGame::Init()
 //=============================================
 void CGame::Uninit()
 {
+    CManager::GetInstance()->GetSound()->StopSound(CSound::SOUND_LABEL_BGM_GAME);
 	CObject::ReleaseAll();
 }
 
