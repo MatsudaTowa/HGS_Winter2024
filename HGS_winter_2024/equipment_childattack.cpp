@@ -8,6 +8,7 @@
 #include "equipment_childattack.h"
 #include "object.h"
 #include "player.h"
+#include "child.h"
 
 //=============================================
 //‰Šú‰»
@@ -33,7 +34,5 @@ void CEquipment_ChildAttack::Update()
 
 	//•Ï”éŒ¾
 	CPlayer* pPlayer = GetPlayer();
-
-	//“S–C‚Ì’e‚ð¶¬—\’è(Œü‚«‚ÍƒvƒŒƒCƒ„[AƒXƒs[ƒh‚à)
-	pPlayer->GetRot();
+	CChild::Create({ pPlayer->GetPos().x, 30.0f, pPlayer->GetPos().z });
 }

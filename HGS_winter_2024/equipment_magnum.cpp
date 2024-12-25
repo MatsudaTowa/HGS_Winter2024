@@ -8,6 +8,7 @@
 #include "equipment_magnum.h"
 #include "object.h"
 #include "player.h"
+#include "bullet001.h"
 
 //=============================================
 //‰Šú‰»
@@ -22,9 +23,16 @@ void CEquipment_Magnum::Init()
 //=============================================
 void CEquipment_Magnum::Update()
 {
-	//•Ï”éŒ¾
-	CPlayer* pPlayer = GetPlayer();
+	m_Count++;
 
-	//“S–C‚Ì’e‚ð¶¬—\’è(Œü‚«‚ÍƒvƒŒƒCƒ„[AƒXƒs[ƒh‚à)
-	pPlayer->GetRot();
+	if (m_Count > TIME_SHOT)
+	{
+		m_Count = 0;
+
+		//•Ï”éŒ¾
+		CPlayer* pPlayer = GetPlayer();
+
+		//“S–C‚Ì’e‚ð¶¬—\’è(Œü‚«‚ÍƒvƒŒƒCƒ„[AƒXƒs[ƒh‚à)
+		CBullet001::Create({ pPlayer->GetPos().x, 30.0f, pPlayer->GetPos().z }, pPlayer->GetRot().y + D3DX_PI);
+	}
 }

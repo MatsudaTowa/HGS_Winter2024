@@ -71,6 +71,8 @@ void CExp::Update()
 			if (pObj->GetType() == CObject::OBJECT_TYPE_PLAYER)
 			{
 				CPlayer* pPlayer = dynamic_cast<CPlayer*>(pObj);
+				pPlayer->AddExp(m_Info.Value);
+				Uninit();
 			}
 
 			pObj = pNext;							//ポインタを進める

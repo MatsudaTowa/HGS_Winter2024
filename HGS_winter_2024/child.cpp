@@ -57,6 +57,34 @@ void CChild::Update()
 	GetRot().x -= 0.1f;
 
 	CObjectX::Update();
+
+	//敵との当たり判定
+	for (int i = 0; i < MAX_PRIORITY; i++)
+	{
+		CObject* pObj = CObject::Getobject(i);	//先頭取得
+
+		//最大数が不明なのでwhileを使用
+		while (pObj != nullptr)
+		{
+			CObject* pNext = pObj->GetNextobject();	//次のポインタを取得
+
+			//敵を見つけて速度を上げる
+			if (pObj->GetType() == CObject::OBJECT_TYPE_ENEMY)
+			{
+				CEnemy* pEnemy = dynamic_cast<CEnemy*>(pObj);
+
+				//円の中に入ったらダメージ
+				if (JudgeBallCollision(GetPos(), pEnemy->GetPos(), 20.0f * 2.0f))
+				{
+					pEnemy->Damage(1);
+					Uninit();
+				}
+
+			}
+
+			pObj = pNext;							//ポインタを進める
+		}
+	}
 }
 
 //=============================================

@@ -12,10 +12,15 @@
 class CEquipment_Kerosene : public CEquipment
 {
 public:
-	CEquipment_Kerosene() {}				//コンストラクタ
+	static constexpr int TIME_SHOT{ 30 };
+
+	CEquipment_Kerosene() : m_nCount(0){}				//コンストラクタ
 	~CEquipment_Kerosene() override {}		//デストラクタ
 
 	void Init() override;	//初期化
 	void Update() override;	//更新
+
+private:
+	int m_nCount;
 };
 #endif
