@@ -14,7 +14,7 @@ class CBullet : public CMoveBillboard
 {
 public:
 
-	static constexpr float SIZE_RADIUS{ 30.0f };
+	static constexpr float SIZE_RADIUS{ 10.0f };
 	static constexpr int LIFE{ 300 };
 	static constexpr float SPEED{ 10.0f };
 
