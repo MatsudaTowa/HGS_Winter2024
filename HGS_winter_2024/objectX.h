@@ -39,6 +39,12 @@ public:
 		m_pos = pos;
 	}
 
+	//oldpos代入
+	void SetOldPos(D3DXVECTOR3 oldpos)
+	{
+		m_oldpos = oldpos;
+	}
+
 	//moveの代入
 	void SetMove(D3DXVECTOR3 move)
 	{
@@ -80,8 +86,11 @@ public:
 	//posの取得
 	D3DXVECTOR3& GetPos();
 
+	//oldposの取得
+	D3DXVECTOR3& GetOldPos() { return m_oldpos; }
+
 	//moveの取得
-	D3DXVECTOR3& GetPos() { return m_move; }
+	D3DXVECTOR3& GetMove() { return m_move; }
 
 	//rotの取得
 	D3DXVECTOR3& GetRot();
@@ -108,15 +117,15 @@ public:
 	D3DXCOLOR& GetCol();
 
 private:
-
 	LPDIRECT3DTEXTURE9 m_pTexture[MAX_TEX]; //テクスチャへのポインタ
 
-	D3DXVECTOR3 m_scale;
-	D3DXVECTOR3 m_pos;
-	D3DXVECTOR3 m_move;
-	D3DXVECTOR3 m_rot;
-	D3DXVECTOR3 m_minpos; //pos最小値
-	D3DXVECTOR3 m_maxpos; //pos最大値
+	D3DXVECTOR3 m_scale;	//サイズ
+	D3DXVECTOR3 m_pos;		//位置
+	D3DXVECTOR3 m_oldpos;	//過去の位置
+	D3DXVECTOR3 m_move;		//移動量
+	D3DXVECTOR3 m_rot;		//方向
+	D3DXVECTOR3 m_minpos;	//pos最小値
+	D3DXVECTOR3 m_maxpos;	//pos最大値
 
 	D3DXMATRIX m_mtxWorld; //ワールドマトリックス
 	

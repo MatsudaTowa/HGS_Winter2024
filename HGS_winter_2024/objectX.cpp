@@ -82,10 +82,11 @@ void CObjectX::Uninit()
 //=============================================
 void CObjectX::Update()
 {
+	//‰ß‹‚ÌˆÊ’uİ’è
+	m_oldpos = m_pos;
+
 	//ˆÚ“®—Ê‚ğˆÊ’u‚É’Ç‰Á
-	D3DXVECTOR3 pos = GetPos();
-	pos += m_move;
-	SetPos(pos);
+	m_pos += m_move;
 }
 
 //=============================================

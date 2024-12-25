@@ -22,20 +22,18 @@ CCharacter::CCharacter(int nPriority):
 	CObjectX(nPriority),
 	m_bLanding(false),
 	m_bWay(false),
-	m_move(D3DXVECTOR3(0.0f,0.0f,0.0f)),
-	m_nLife(0),
-	m_nStateCnt(0),
-	m_oldpos(D3DXVECTOR3(0.0f,0.0f,0.0f)),
+	m_nLife(INT_ZERO),
+	m_nStateCnt(INT_ZERO),
 	m_State(CCharacter::CHARACTER_STATE::CHARACTER_NORMAL), 
-	m_PartsCnt(0), 
-	m_nMotionFrameCnt(0), 
-	m_nKeySetCnt(0), 
-	m_Motion(0), 
+	m_PartsCnt(INT_ZERO),
+	m_nMotionFrameCnt(INT_ZERO),
+	m_nKeySetCnt(INT_ZERO),
+	m_Motion(INT_ZERO),
 	m_bLoopFinish(),
 	m_Speed(), 
 	m_Jump(),
 	m_MotionSet(),
-	m_nJumpCnt(0)
+	m_nJumpCnt(INT_ZERO)
 {//イニシャライザーでプライオリティ設定、各メンバ変数初期化
 }
 
@@ -85,24 +83,6 @@ void CCharacter::Update()
 	{
 		m_apModel[nCnt]->SetOldPos({ m_apModel[nCnt]->GetMtxWorld()._41,m_apModel[nCnt]->GetMtxWorld()._42,m_apModel[nCnt]->GetMtxWorld()._43 });
 	}
-
-	//重力処理
-	Gravity();
-
-	//位置取得
-	D3DXVECTOR3 pos = GetPos();
-
-	//移動量を更新(減速）
-	m_move *= 1.0f - 0.3f;
-
-	//過去の位置に今の位置を代入
-	m_oldpos = pos;
-
-	//移動量追加
-	pos += m_move;
-
-	//座標を更新
-	SetPos(pos);
 
 	//最大最小値取得
 	D3DXVECTOR3 minpos = GetMinPos();
@@ -467,43 +447,6 @@ void CCharacter::SetMotion(int Motion)
 			m_apModel[nCntParts]->m_rot = m_MotionSet[Motion].keySet[0].key[nCntParts].rot;
 		}
 	}
-}
-
-
-//=============================================
-//重力処理
-//=============================================
-void CCharacter::Gravity()
-{
-    if (m_move.y < GRAVITY_MAX)
-    {
-        m_move.y -= GRAVITY_MOVE;
-    }
-}
-
-//=============================================
-//ジャンプ処理
-//=============================================
-void CCharacter::Jump()
-{
-	m_move.y = m_Jump; //ジャンプ力代入
-	m_bLanding = false; //空中状態
-}
-
-//=============================================
-//移動量取得
-//=============================================
-D3DXVECTOR3& CCharacter::GetMove()
-{
-    return m_move;
-}
-
-//=============================================
-//過去の位置取得
-//=============================================
-D3DXVECTOR3& CCharacter::GetOldPos()
-{
-    return m_oldpos;
 }
 
 //=============================================

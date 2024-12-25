@@ -19,7 +19,8 @@ public:
 	static const int CHARACTER_PRIORITY = 20;
 	static const int MAX_MOTION = 5;
 	static const int MAX_PARTS = 64; //最大パーツ数
-	static const float  BOSS_FIELD_X; //ボス戦のX座標
+	static const float BOSS_FIELD_X; //ボス戦のX座標
+	static const float KILL_Y;	//これより下に行ったら殺す
 
 	struct RayHitInfo
 	{
@@ -45,20 +46,6 @@ public:
 	void Load_Parts(const char* FileName);
 	void Motion(int NumParts); //モーション処理
 	void SetMotion(int Motion); //引数で指定したモーションに切り替える
-	void Gravity(); //重力処理
-	void Jump(); //ジャンプ処理
-
-	//移動量代入
-	void SetMove(D3DXVECTOR3 move)
-	{
-		m_move = move;
-	}
-
-	//oldpos代入
-	void SetOldPos(D3DXVECTOR3 oldpos)
-	{
-		m_oldpos = oldpos;
-	}
 
 	//着地してるかどうかを代入
 	void SetLanding(bool bLanding)
@@ -102,9 +89,6 @@ public:
 		m_bLoopFinish = bFinish;
 	}
 
-	//移動量取得
-	D3DXVECTOR3& GetMove();
-
 	//過去の位置取得
 	D3DXVECTOR3& GetOldPos();
 
@@ -141,8 +125,6 @@ private:
 
 	static const float GRAVITY_MOVE; //重力値
 	static const float GRAVITY_MAX; //重力最大値
-	D3DXVECTOR3 m_move; //速度
-	D3DXVECTOR3 m_oldpos; //過去の位置
 	bool m_bLanding; //着地してるかどうか
 	bool m_bWay; //どっち向いてるか(true:右false:左)
 	bool m_bLoopFinish; //ループモーションが終わったか
