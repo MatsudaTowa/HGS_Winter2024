@@ -18,16 +18,16 @@ bool JudgeBallCollision(D3DXVECTOR3 pos1, D3DXVECTOR3 pos2, float length);	//â~Ç
 float Ratio(float value, float max);	//äÑçáÇéZèo
 
 //ÉJÉâÅ[èâä˙âª
-#define COLOR_RESET_ZERO (0.0f,0.0f,0.0f,0.0f)
-#define COLOR_RESET_ONE (1.0f,1.0f,1.0f,1.0f)
+#define COLOR_RESET_ZERO (D3DXVECTOR3(0.0f,0.0f,0.0f,0.0f))
+#define COLOR_RESET_ONE (D3DXVECTOR3(1.0f,1.0f,1.0f,1.0f))
 
 //í∏ì_3Dèâä˙âª
-#define VEC3_RESET_ZERO (0.0f,0.0f,0.0f)
-#define VEC3_RESET_ONE (1.0f,1.0f,1.0f)
+#define VEC3_RESET_ZERO (D3DXVECTOR3(0.0f,0.0f,0.0f))
+#define VEC3_RESET_ONE (D3DXVECTOR3(1.0f,1.0f,1.0f))
 
 //í∏ì_2Dèâä˙âª
-#define VEC2_RESET_ZERO (0.0f,0.0f)
-#define VEC2_RESET_ONE (1.0f,1.0f)
+#define VEC2_RESET_ZERO (D3DXVECTOR3(0.0f,0.0f))
+#define VEC2_RESET_ONE (D3DXVECTOR3(1.0f,1.0f))
 
 //îºâ~
 #define HALF_PI	(D3DX_PI * 0.5f)

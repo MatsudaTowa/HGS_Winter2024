@@ -23,6 +23,7 @@ public:
 	void Draw() override;
 
 private:
+	static const D3DXVECTOR3 FIELD_SIZE; //フィールドサイズ
 	int m_nResultDelay; //リザルトへのディレイ
 	void LoadBlock(const std::string* pFileName);
 };

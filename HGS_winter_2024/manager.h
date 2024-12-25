@@ -16,6 +16,7 @@
 #include "scene.h"
 #include "fade.h"
 #include "sound.h"
+#include "useful.h"
 
 class CManager
 {
