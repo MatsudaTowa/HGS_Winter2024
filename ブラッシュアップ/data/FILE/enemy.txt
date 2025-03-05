@@ -1,0 +1,125 @@
+#==============================================================================
+#
+# エネミーの情報[enemy.txt]
+# Author : MATSUDA TOWA
+#
+#==============================================================================
+SCRIPT			# この行は絶対消さないこと！
+
+#------------------------------------------------------------------------------
+# エネミー数
+#------------------------------------------------------------------------------
+NUM_ENEMY = 10
+
+#------------------------------------------------------------------------------
+# エネミー情報
+#------------------------------------------------------------------------------
+ENEMYSET
+	POS = -700.0 30.5 0.0f
+	ROT = 0.0 0.0 0.0
+	TYPE = 0
+END_ENEMYSET
+
+ENEMYSET
+	POS = -600.0 10.5 0.0f
+	ROT = 0.0 0.0 0.0
+	TYPE = 0
+END_ENEMYSET
+
+ENEMYSET
+	POS = -500.0 10.5 0.0f
+	ROT = 0.0 0.0 0.0
+	TYPE = 0
+END_ENEMYSET
+
+
+ENEMYSET
+	POS = -400.0 10.5 0.0f
+	ROT = 0.0 0.0 0.0
+	TYPE = 1
+END_ENEMYSET
+
+ENEMYSET
+	POS = -200.0 10.5 0.0f
+	ROT = 0.0 0.0 0.0
+	TYPE = 0
+END_ENEMYSET
+
+ENEMYSET
+	POS = 50.0 10.5 0.0f
+	ROT = 0.0 0.0 0.0
+	TYPE = 1
+END_ENEMYSET
+
+ENEMYSET
+	POS = 300.0 10.5 0.0f
+	ROT = 0.0 0.0 0.0
+	TYPE = 1
+END_ENEMYSET
+
+ENEMYSET
+	POS = 350.0 90.0 1.0f
+	ROT = 0.0 0.0 0.0
+	TYPE = 2
+END_ENEMYSET
+
+ENEMYSET
+	POS = 360.0 90.0 1.0f
+	ROT = 0.0 0.0 0.0
+	TYPE = 2
+END_ENEMYSET
+
+ENEMYSET
+	POS = 370.0 90.0 1.0f
+	ROT = 0.0 0.0 0.0
+	TYPE = 2
+END_ENEMYSET
+
+ENEMYSET
+	POS = 380.0 90.0 1.0f
+	ROT = 0.0 0.0 0.0
+	TYPE = 2
+END_ENEMYSET
+
+ENEMYSET
+	POS = 390.0 90.0 1.0f
+	ROT = 0.0 0.0 0.0
+	TYPE = 2
+END_ENEMYSET
+
+ENEMYSET
+	POS = 400.0 90.0 1.0f
+	ROT = 0.0 0.0 0.0
+	TYPE = 2
+END_ENEMYSET
+
+ENEMYSET
+	POS = 410.0 90.0 1.0f
+	ROT = 0.0 0.0 0.0
+	TYPE = 2
+END_ENEMYSET
+
+ENEMYSET
+	POS = 420.0 90.0 1.0f
+	ROT = 0.0 0.0 0.0
+	TYPE = 2
+END_ENEMYSET
+
+ENEMYSET
+	POS = 430.0 90.0 1.0f
+	ROT = 0.0 0.0 0.0
+	TYPE = 2
+END_ENEMYSET
+
+ENEMYSET
+	POS = 440.0 90.0 1.0f
+	ROT = 0.0 0.0 0.0
+	TYPE = 2
+END_ENEMYSET
+
+ENEMYSET
+	POS = 800.0 35.0 0.0f
+	ROT = 0.0 1.57 0.0
+	TYPE = 3
+END_ENEMYSET
+END		# この行は絶対消さないこと！
