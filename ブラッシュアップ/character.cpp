@@ -414,7 +414,7 @@ void CCharacter::Load_Parts(const char* FileName)
 //=============================================
 //ÉÇÅ[ÉVÉáÉìèàóù
 //=============================================
-void CCharacter::Motion(int NumParts)
+void CCharacter::Motion()
 {
 	D3DXVECTOR3 MovePos[MAX_PARTS];
 	D3DXVECTOR3 MoveRot[MAX_PARTS];

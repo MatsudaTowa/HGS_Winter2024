@@ -52,7 +52,7 @@ public:
 	void MotionDraw();
 
 	void Load_Parts(const char* FileName);
-	void Motion(int NumParts); //モーション処理
+	void Motion(); //モーション処理
 	void SetMotion(int Motion); //引数で指定したモーションに切り替える
 	void Gravity(); //重力処理
 	void Jump(); //ジャンプ処理

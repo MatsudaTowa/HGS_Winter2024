@@ -99,7 +99,7 @@ void CPlayer::Update()
 		m_pPlayerState->Attack(this);
 	}
 
-	Motion(GetNumParts()); //モーション処理
+	Motion(); //モーション処理
 }
 
 //=============================================
