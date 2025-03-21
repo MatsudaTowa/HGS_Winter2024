@@ -17,7 +17,7 @@ class CEquipment
 public:
 
 	//関数
-	CEquipment() {}				//コンストラクタ
+	CEquipment() : m_nLevel(0){}//コンストラクタ
 	virtual ~CEquipment() {} 	//デストラクタ
 	virtual void Effect() = 0;	//装備の効果処理(プレイヤーを引数に)
 
