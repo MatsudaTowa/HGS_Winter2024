@@ -60,7 +60,6 @@ void CModel_Parts::Unload()
 //=============================================
 void CModel_Parts::BindXFile(LPD3DXBUFFER pBuffMat, DWORD dwNumMat, LPD3DXMESH pMesh)
 {
-
 	pBuffMat->AddRef();
 	pMesh->AddRef();
 
@@ -68,11 +67,34 @@ void CModel_Parts::BindXFile(LPD3DXBUFFER pBuffMat, DWORD dwNumMat, LPD3DXMESH p
 	m_ModelInfo->dwNumMat = dwNumMat;
 	m_ModelInfo->pMesh = pMesh;
 
+	D3DXMATERIAL* pMat; //マテリアルポインタ
+
+	if (m_ModelInfo->pBuffMat != nullptr)
+	{
+		pMat = (D3DXMATERIAL*)pBuffMat->GetBufferPointer();
+
+		for (int nCntMat = INT_ZERO; nCntMat < (int)m_ModelInfo->dwNumMat; nCntMat++)
+		{
+			if (pMat[nCntMat].pTextureFilename == NULL)
+			{
+				continue;
+			}
+
+			LPDIRECT3DDEVICE9 pDevice = CManager::GetInstance()->GetRenderer()->GetDevice();
+			//テクスチャの読み込み
+			D3DXCreateTextureFromFile(pDevice,
+				pMat[nCntMat].pTextureFilename,
+				&m_pTexture[nCntMat]
+			);
+			
+		}
+	}
+
 	int nNumVtx; //頂点数
 	DWORD sizeFVF; //頂点フォーマットのサイズ
 	BYTE* pVtxBuff; //頂点バッファのポインタ
 
-		//頂点数の取得
+	//頂点数の取得
 	nNumVtx = m_ModelInfo->pMesh->GetNumVertices();
 	//頂点フォーマットのサイズを取得
 	sizeFVF = D3DXGetFVFVertexSize(m_ModelInfo->pMesh->GetFVF());
