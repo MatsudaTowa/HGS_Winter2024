@@ -32,7 +32,7 @@ CTitle::~CTitle()
 //=============================================
 HRESULT CTitle::Init()
 {
-	CManager::GetInstance()->GetSound()->PlaySound(CSound::SOUND_LABEL::SOUND_LABEL_BGM_TITLE);
+	//CManager::GetInstance()->GetSound()->PlaySound(CSound::SOUND_LABEL::SOUND_LABEL_BGM_TITLE);
 
     return S_OK;
 }
@@ -55,7 +55,7 @@ void CTitle::Update()
     CInputPad* pPad = CManager::GetInstance()->GetPad();
     CInputMouse* pMouse = CManager::GetInstance()->GetMouse();
 
-    if (pKeyboard->GetTrigger(DIK_RETURN) || pPad->GetTrigger(CInputPad::JOYKEY::JOYKEY_A) || pMouse->GetTrigger(0))
+    if (pKeyboard->GetTrigger(DIK_RETURN) || pPad->GetTrigger(CInputPad::JOYKEY::JOYPAD_A) || pMouse->GetTrigger(0))
     {
 		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE::MODE_GAME);
     }

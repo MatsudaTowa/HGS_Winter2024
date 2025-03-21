@@ -23,5 +23,6 @@ public:
 	void Update() override;
 	void Draw() override;
 private:
+	static const D3DXVECTOR3 FIELD_SIZE; //フィールドサイズ
 };
 #endif

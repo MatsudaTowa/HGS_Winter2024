@@ -8,14 +8,7 @@
 // サウンドの情報
 const CSound::SOUNDINFO CSound::m_aSoundInfo[CSound::SOUND_LABEL::SOUND_LABEL_MAX] =
 {
-	{"data/SOUND/BGM/title.wav", -1,0.7f},         //BGM0
-	{"data/SOUND/BGM/in_game.wav", -1,0.3f},         //BGM1
-	{"data/SOUND/SE/hit.wav", 0,1.0f},         //HitSE
-	{"data/SOUND/SE/shot.wav", 0,0.4f},         //HitSE
-	{"data/SOUND/SE/tackle.wav", 0,0.4f},         //TackleSE
-	{"data/SOUND/SE/break.wav", 0,0.4f},         //壊れるSE
-	{"data/SOUND/SE/blink.wav", 0,0.4f},         //ブリンクSE
-	{"data/SOUND/SE/smoke.wav", 0,0.4f},         //スモークSE
+	{"data/SOUND/BGM/InGame.wav", -1,0.3f},         //BGM1
 };
 
 CSound::CSound()

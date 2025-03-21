@@ -98,7 +98,7 @@ void CCharacter::Update()
 	//位置取得
 	D3DXVECTOR3 pos = GetPos();
 
-	if (m_bLanding)
+	//if (m_bLanding)
 	{
 		//移動量を更新(減速）
 		m_move *= FLOAT_ONE - MOVE_FRICTION;
@@ -213,7 +213,7 @@ void CCharacter::Load_Parts(const char* FileName)
 	{
 		fscanf(pFile, "%s", aDataSearch); //検索
 
-		if (!strcmp(aDataSearch, "END"))
+		if (!strcmp(aDataSearch, "END_SCRIPT"))
 		{//読み込みを終了
 			fclose(pFile);
 			break;

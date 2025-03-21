@@ -16,15 +16,8 @@ public:
 	// サウンド一覧
 	//*****************************************************************************
 	enum SOUND_LABEL
-	{
-		SOUND_LABEL_BGM_TITLE = 0,		// BGM0
-		SOUND_LABEL_BGM_GAME,		// BGM1
-		SOUND_LABEL_SE_HIT,		// HitSE
-		SOUND_LABEL_SE_SHOT,		// ShotSE
-		SOUND_LABEL_SE_TACKLE,		// タックルSE
-		SOUND_LABEL_SE_BREAK,		// 壊れるSE
-		SOUND_LABEL_SE_BLINK,		// 壊れるSE
-		SOUND_LABEL_SE_SMOKE,		// スモークSE
+	{		
+		SOUND_LABEL_BGM_GAME = 0,		// BGM1
 		SOUND_LABEL_MAX
 	};
 

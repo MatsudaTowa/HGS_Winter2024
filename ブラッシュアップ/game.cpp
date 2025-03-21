@@ -11,6 +11,11 @@
 #include "objectX.h"
 #include "field.h"
 #include "manager.h"
+#include "field.h"
+#include "player.h"
+
+//床のサイズ
+const D3DXVECTOR3 CGame::FIELD_SIZE = { 10000.0f,0.0f,10000.0f };
 
 //=============================================
 //コンストラクタ
@@ -32,6 +37,10 @@ CGame::~CGame()
 HRESULT CGame::Init()
 {
 	CManager::GetInstance()->GetSound()->PlaySound(CSound::SOUND_LABEL_BGM_GAME);
+
+	CField::Create(VEC3_RESET_ZERO, FIELD_SIZE);
+
+	CPlayer::Create();
 
 	return S_OK;
 }

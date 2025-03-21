@@ -51,7 +51,7 @@ void CResult::Update()
 
     if (pKeyboard->GetTrigger(DIK_RETURN) 
         || pMouse->GetTrigger(0)
-        || pPad->GetTrigger(CInputPad::JOYKEY::JOYKEY_A))
+        || pPad->GetTrigger(CInputPad::JOYKEY::JOYPAD_A))
     {
         //ƒ^ƒCƒgƒ‹‚É–ß‚é
         CManager::GetInstance()->GetFade()->SetFade(CScene::MODE::MODE_TITLE);
