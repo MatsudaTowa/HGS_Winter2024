@@ -6,6 +6,7 @@
 //=============================================
 #include "player.h"
 #include "player_state.h"
+#include "gamemanager.h"
 
 //スポーン位置
 const D3DXVECTOR3 CPlayer::PLAYER_SPAWN_POS = { 0.0f, 0.5f, 0.0f };
@@ -67,6 +68,10 @@ HRESULT CPlayer::Init()
 	CCharacter::SetLife(PLAYER_LIFE);
 
 	SetMotion(MOTION_NEUTRAL);
+
+	//プレイヤー自身をマネージャーに代入
+	CGameManager::GetInstance()->SetPlayer(this);
+
 	return S_OK;
 }
 
