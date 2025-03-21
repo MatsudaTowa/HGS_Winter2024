@@ -1,3 +1,4 @@
+
 //=============================================
 //
 //3DTemplate[camera.h]
@@ -12,13 +13,16 @@
 #include "camera_state.h"
 
 class CCameraState;
+class CFreeView;
 class CCamera
 {
 public:
-	//カメラタイプ宣言 TODO:ステートパターンで
+	//カメラタイプ宣言
 	enum CANERA_TYPE
 	{
-		TYPE_DEBUG,
+		TYPE_FREE = 0,
+		TYPE_LOCK,
+		TYPE_TPS,
 		TYPE_MAX,
 	};
 
@@ -27,83 +31,53 @@ public:
 	HRESULT Init();
 	void Uninit();
 	void Update();
+	void InputMove();
 	void SetCamera();
 	void ResetCamera();
-
-	void InputMove();
 
 	void ChangeCameraState(CCameraState* state);
 
 	//方向取得
-	inline void SetRot(D3DXVECTOR3 rot)
+	void SetRot(D3DXVECTOR3 rot)
 	{
 		m_rot = rot;
 	}
 	//視点取得
-	inline void SetPosV(D3DXVECTOR3 posV)
+	void SetPosV(D3DXVECTOR3 posV)
 	{
 		m_posV = posV;
 	}
 	//注視点取得
-	inline void SetPosR(D3DXVECTOR3 posR)
+	void SetPosR(D3DXVECTOR3 posR)
 	{
 		m_posR = posR;
 	}
 
-	inline void SetLength(float length)
+	void SetLength(float length)
 	{
 		m_fLength = length;
 	}
 
 	//方向取得
-	inline D3DXVECTOR3 GetRot()
-	{
-		return m_rot;
-	}
-
+	D3DXVECTOR3 GetRot();
 	//視点取得
-	inline D3DXVECTOR3 GetPosV()
-	{
-		return m_posV;
-	}
+	D3DXVECTOR3 GetPosV();
 	//注視点取得
-	inline D3DXVECTOR3 GetPosR()
-	{
-		return m_posR;
-	}
+	D3DXVECTOR3 GetPosR();
 
-	inline float& GetLength()
-	{
-		return m_fLength;
-	}
+	float& GetLength();
 
 	//カメラのデバック表示
 	void DebugCameraDraw();
 
 	CCameraState* m_pCameraState;
 private:
-	static constexpr float DEFAULT_MOVE = 1.0f; //通常時の移動
-	static constexpr float DAMPING_COEFFICIENT = 0.2f; //移動抵抗
 
-	static constexpr float DEFAULT_LENGTH_Y = 200.0f; //通常状態のYの距離
-	static constexpr float DEFAULT_LENGTH_Z = 500.0f; //通常状態のZの距離
-
-	static constexpr float BIRDVIEW_LENGTH_Y = 300.0f; //バードビュー時のYの距離
-
-	static constexpr float SIDEVIEW_LENGTH_X = 20.0f; //サイドビュー時のXの距離
-	static constexpr float SIDEVIEW_LENGTH_Y = 50.0f; //サイドビュー時のYの距離
-	static constexpr float SIDEVIEW_LENGTH_Z = 200.0f; //サイドビュー時のZの距離
-
-	static constexpr float THIRDVIEW_CORRECT_X = 20.0f; //サードパーソンビュー時の補正値X
-	static constexpr float THIRDVIEW_CORRECT_Y = 105.0f; //サードパーソンビュー時の補正値Y
-	static constexpr float THIRDVIEW_CORRECT_Z = 20.0f; //サードパーソンビュー時の補正値Z
-
-	static constexpr float MOUSE_SENS = 0.001f; //デフォルトのマウス感度
-
-	static constexpr float MAX_TURN_X = 0.5f; //サードパーソンビュー時のXの最大可動域
-	static constexpr float MIN_TURN_X = -0.15f; //サードパーソンビュー時のXの最小可動域
+	void CameraMove(); //カメラ移動処理
 
 	void CameraTurn(); //カメラ回転処理
+
+	CFreeView* m_pFreeView;
 
 	D3DXVECTOR3 m_posV; //視点
 	D3DXVECTOR3 m_posR; //注視点

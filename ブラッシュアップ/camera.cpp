@@ -9,22 +9,38 @@
 #include "manager.h"
 #include "object.h"
 
+//カメラの設定用名前空間
+namespace CameraInfo
+{
+	const float DEFAULT_MOVE = 1.0f;				// 通常時の移動
+	const float DAMPING_COEFFICIENT = 0.2f;			// 移動抵抗
+
+	const float DEFAULT_LENGTH_Y = 200.0f;			//通常状態のYの距離
+	const float DEFAULT_LENGTH_Z = 500.0f;			//通常状態のZの距離
+
+	const float BIRDVIEW_LENGTH_Y = 300.0f;			//バードビュー時のYの距離
+
+	const float MAX_TURN_X = 0.5f;					//サードパーソンビュー時のXの最大可動域
+	const float MIN_TURN_X = -0.15f;				//サードパーソンビュー時のXの最小可動域
+}
+
 //=============================================
 //コンストラクタ
 //=============================================
-CCamera::CCamera():
-m_fAngle(FLOAT_ZERO),
-m_fLength(FLOAT_ZERO),
-m_moveR(VEC3_RESET_ZERO),
-m_moveV(VEC3_RESET_ZERO),
-m_mtxProjection(),
-m_mtxView(),
-m_pCameraState(),
-m_posR(VEC3_RESET_ZERO),
-m_posV(VEC3_RESET_ZERO),
-m_rot(VEC3_RESET_ZERO),
-m_rotmove(VEC3_RESET_ZERO),
-m_vecU(VEC3_RESET_ZERO)
+CCamera::CCamera() :
+	m_fAngle(FLOAT_ZERO),
+	m_fLength(FLOAT_ZERO),
+	m_moveR({ VEC3_RESET_ZERO }),
+	m_moveV({ VEC3_RESET_ZERO }),
+	m_mtxProjection(),
+	m_mtxView(),
+	m_pFreeView(),
+	m_pCameraState(),
+	m_posR({ VEC3_RESET_ZERO }),
+	m_posV({ VEC3_RESET_ZERO }),
+	m_rot({ VEC3_RESET_ZERO }),
+	m_rotmove({ VEC3_RESET_ZERO }),
+	m_vecU({ VEC3_RESET_ZERO })
 {
 }
 
@@ -42,18 +58,18 @@ HRESULT CCamera::Init()
 {
 	if (m_pCameraState == nullptr)
 	{
-		m_pCameraState = new CFreeView;
+		m_pCameraState = new CThirdView;
 	}
 	m_posV = D3DXVECTOR3(0.0f, 200.0f, -180.0f); //視点
-	m_posR = D3DXVECTOR3(VEC3_RESET_ZERO); //注視
+	m_posR = D3DXVECTOR3(0.0f, 0.0f, 0.0f); //注視
 
 	m_vecU = D3DXVECTOR3(0.0f, 1.0f, 0.0f); //上方向ベクトル
 
-	m_moveV = D3DXVECTOR3(VEC3_RESET_ZERO); //視点移動量
-	m_moveR = D3DXVECTOR3(VEC3_RESET_ZERO); //注視点移動量
+	m_moveV = D3DXVECTOR3(0.0f, 0.0f, 0.0f); //視点移動量
+	m_moveR = D3DXVECTOR3(0.0f, 0.0f, 0.0f); //注視点移動量
 
-	m_rot = D3DXVECTOR3(VEC3_RESET_ZERO); //角度
-	m_rotmove = D3DXVECTOR3(VEC3_RESET_ZERO); //回転量
+	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f); //角度
+	m_rotmove = D3DXVECTOR3(0.0f, 0.0f, 0.0f); //回転量
 
 	D3DXVECTOR3 vecCamera = m_posR - m_posV;
 	m_fLength = sqrtf(vecCamera.y * vecCamera.y + vecCamera.z * vecCamera.z);
@@ -80,39 +96,23 @@ void CCamera::Uninit()
 //=============================================
 void CCamera::Update()
 {
-	//キーボード情報取得
-	CInputKeyboard* pKeyboard = GET_INPUT_KEYBOARD;
+	using namespace CameraInfo;	//名前空間の使用宣言
 
 	if (m_pCameraState != nullptr)
 	{
-		m_pCameraState->ThirdView(this);
 		m_pCameraState->FreeView(this);
-		m_pCameraState->Ult(this);
+		m_pCameraState->LockView(this);
+		m_pCameraState->ThirdPersonView(this);
 	}
 
 	//マウス情報取得
-	CInputMouse* pMouse = GET_INPUT_MOUSE;
-
-	m_rot.y += pMouse->GetMouseMove().x * MOUSE_SENS;
-	m_rot.x += pMouse->GetMouseMove().y * MOUSE_SENS;
-
-	m_posV = m_posR + D3DXVECTOR3(-m_fLength * cosf(m_rot.x) * sinf(m_rot.y),
-		m_fLength * sinf(m_rot.x),
-		-m_fLength * cosf(m_rot.x) * cosf(m_rot.y));
-
-	if (m_rot.x <= MIN_TURN_X)
-	{
-		m_rot.x = MIN_TURN_X;
-	}
-	if (m_rot.x >= MAX_TURN_X)
-	{
-		m_rot.x = MAX_TURN_X;
-	}
+	CInputMouse* pMouse = CManager::GetInstance()->GetMouse();
+	m_rot.y += pMouse->GetMouseMove().x * 0.001f;
+	m_rot.x += pMouse->GetMouseMove().y * 0.001f;
 
 	if (m_rot.y > D3DX_PI)
 	{
 		m_rot.y = -D3DX_PI;
-		//		m_rot.y -= D3DX_PI* 2.0f;
 	}
 
 	if (m_rot.y < -D3DX_PI)
@@ -123,7 +123,6 @@ void CCamera::Update()
 	if (m_rot.x > D3DX_PI)
 	{
 		m_rot.x = -D3DX_PI;
-		//		m_rot.y -= D3DX_PI* 2.0f;
 	}
 
 	if (m_rot.x < -D3DX_PI)
@@ -131,18 +130,85 @@ void CCamera::Update()
 		m_rot.x = D3DX_PI;
 	}
 
+	m_posV = m_posR + D3DXVECTOR3(-m_fLength * cosf(m_rot.x) * sinf(m_rot.y),
+		m_fLength * sinf(m_rot.x),
+		-m_fLength * cosf(m_rot.x) * cosf(m_rot.y));
+
 	m_posV += m_moveV;
 	m_posR += m_moveR;
 
 	//移動量を更新(減速）
-	m_moveV.x += (FLOAT_ZERO - m_moveV.x) * DAMPING_COEFFICIENT;
-	m_moveV.y += (FLOAT_ZERO - m_moveV.y) * DAMPING_COEFFICIENT;
-	m_moveV.z += (FLOAT_ZERO - m_moveV.z) * DAMPING_COEFFICIENT;
+	m_moveV.x += (0.0f - m_moveV.x) * DAMPING_COEFFICIENT;
+	m_moveV.y += (0.0f - m_moveV.y) * DAMPING_COEFFICIENT;
+	m_moveV.z += (0.0f - m_moveV.z) * DAMPING_COEFFICIENT;
 
-	m_moveR.x += (FLOAT_ZERO - m_moveR.x) * DAMPING_COEFFICIENT;
-	m_moveR.y += (FLOAT_ZERO - m_moveR.y) * DAMPING_COEFFICIENT;
-	m_moveR.z += (FLOAT_ZERO - m_moveR.z) * DAMPING_COEFFICIENT;
+	m_moveR.x += (0.0f - m_moveR.x) * DAMPING_COEFFICIENT;
+	m_moveR.y += (0.0f - m_moveR.y) * DAMPING_COEFFICIENT;
+	m_moveR.z += (0.0f - m_moveR.z) * DAMPING_COEFFICIENT;
 
+}
+
+//=============================================
+//入力処理
+//=============================================
+void CCamera::InputMove()
+{
+	using namespace CameraInfo;	//名前空間の使用宣言
+
+	//キーボード情報取得
+	CInputKeyboard* pKeyboard = CManager::GetInstance()->GetKeyboard();
+
+	if (pKeyboard->GetPress(DIK_A) == true)
+	{
+		m_moveV.x -= sinf(D3DX_PI / 2 + m_rot.y) * DEFAULT_MOVE;
+		m_moveR.x -= sinf(D3DX_PI / 2 + m_rot.y) * DEFAULT_MOVE;
+
+		m_moveV.z -= cosf(D3DX_PI / 2 + m_rot.y) * DEFAULT_MOVE;
+		m_moveR.z -= cosf(D3DX_PI / 2 + m_rot.y) * DEFAULT_MOVE;
+
+	}
+
+	if (pKeyboard->GetPress(DIK_D) == true)
+	{
+		m_moveV.x += sinf(D3DX_PI / 2 + m_rot.y) * DEFAULT_MOVE;
+		m_moveR.x += sinf(D3DX_PI / 2 + m_rot.y) * DEFAULT_MOVE;
+
+		m_moveV.z += cosf(D3DX_PI / 2 + m_rot.y) * DEFAULT_MOVE;
+		m_moveR.z += cosf(D3DX_PI / 2 + m_rot.y) * DEFAULT_MOVE;
+
+	}
+
+	if (pKeyboard->GetPress(DIK_W) == true)
+	{
+		m_moveV.x -= sinf(D3DX_PI + m_rot.y) * DEFAULT_MOVE;
+		m_moveR.x -= sinf(D3DX_PI + m_rot.y) * DEFAULT_MOVE;
+
+		m_moveV.z -= cosf(D3DX_PI + m_rot.y) * DEFAULT_MOVE;
+		m_moveR.z -= cosf(D3DX_PI + m_rot.y) * DEFAULT_MOVE;
+
+	}
+
+	if (pKeyboard->GetPress(DIK_S) == true)
+	{
+		m_moveV.x += sinf(D3DX_PI + m_rot.y) * DEFAULT_MOVE;
+		m_moveR.x += sinf(D3DX_PI + m_rot.y) * DEFAULT_MOVE;
+
+		m_moveV.z += cosf(D3DX_PI + m_rot.y) * DEFAULT_MOVE;
+		m_moveR.z += cosf(D3DX_PI + m_rot.y) * DEFAULT_MOVE;
+	}
+
+
+	if (pKeyboard->GetPress(DIK_SPACE))
+	{
+		m_moveV.y += 1.0f;
+		m_moveR.y += 1.0f;
+	}
+
+	if (pKeyboard->GetPress(DIK_LSHIFT))
+	{
+		m_moveV.y -= 1.0f;
+		m_moveR.y -= 1.0f;
+	}
 }
 
 //=============================================
@@ -150,8 +216,8 @@ void CCamera::Update()
 //=============================================
 void CCamera::SetCamera()
 {
-	//デバイス取得
-	LPDIRECT3DDEVICE9 pDevice = GET_DEVICE;
+	CRenderer* pRender = CManager::GetInstance()->GetRenderer();
+	LPDIRECT3DDEVICE9 pDevice = pRender->GetDevice();
 
 	//プロジェクションマトリックスの初期化
 	D3DXMatrixIdentity(&m_mtxProjection);
@@ -191,15 +257,15 @@ void CCamera::SetCamera()
 void CCamera::ResetCamera()
 {
 	m_posV = D3DXVECTOR3(0.0f, 30.0f, -180.0f); //視点
-	m_posR = D3DXVECTOR3(VEC3_RESET_ZERO); //注視
+	m_posR = D3DXVECTOR3(0.0f, 0.0f, 0.0f); //注視
 
 	m_vecU = D3DXVECTOR3(0.0f, 1.0f, 0.0f); //上方向ベクトル
 
-	m_moveV = D3DXVECTOR3(VEC3_RESET_ZERO); //視点移動量
-	m_moveR = D3DXVECTOR3(VEC3_RESET_ZERO); //注視点移動量
+	m_moveV = D3DXVECTOR3(0.0f, 0.0f, 0.0f); //視点移動量
+	m_moveR = D3DXVECTOR3(0.0f, 0.0f, 0.0f); //注視点移動量
 
-	m_rot = D3DXVECTOR3(VEC3_RESET_ZERO); //角度
-	m_rotmove = D3DXVECTOR3(VEC3_RESET_ZERO); //回転量
+	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f); //角度
+	m_rotmove = D3DXVECTOR3(0.0f, 0.0f, 0.0f); //回転量
 
 	D3DXVECTOR3 vecCamera = m_posR - m_posV;
 	m_fLength = sqrtf(vecCamera.y * vecCamera.y + vecCamera.z * vecCamera.z);
@@ -210,30 +276,46 @@ void CCamera::ResetCamera()
 }
 
 //=============================================
+//カメラの状態変更
+//=============================================
+void CCamera::ChangeCameraState(CCameraState* state)
+{
+	//今のステートを消し引数のステートに切り替える
+	if (m_pCameraState != nullptr)
+	{
+		delete m_pCameraState;
+		m_pCameraState = state;
+	}
+}
+
+//=============================================
 //カメラ移動量
 //=============================================
-void CCamera::InputMove()
+void CCamera::CameraMove()
 {
+	using namespace CameraInfo;	//名前空間の使用宣言
+
 	//キーボード情報取得
-	CInputKeyboard* pKeyboard = GET_INPUT_KEYBOARD;
+	CInputKeyboard* pKeyboard = CManager::GetInstance()->GetKeyboard();
+	D3DXVECTOR3 vecDirection(0.0f, 0.0f, 0.0f);
 
 	if (pKeyboard->GetPress(DIK_J) == true)
 	{
-		m_moveV.x -= sinf(HALF_PI + m_rot.y) * DEFAULT_MOVE;
-		m_moveR.x -= sinf(HALF_PI + m_rot.y) * DEFAULT_MOVE;
+		m_moveV.x -= sinf(D3DX_PI / 2 + m_rot.y) * DEFAULT_MOVE;
+		m_moveR.x -= sinf(D3DX_PI / 2 + m_rot.y) * DEFAULT_MOVE;
 
-		m_moveV.z -= cosf(HALF_PI + m_rot.y) * DEFAULT_MOVE;
-		m_moveR.z -= cosf(HALF_PI + m_rot.y) * DEFAULT_MOVE;
+		m_moveV.z -= cosf(D3DX_PI / 2 + m_rot.y) * DEFAULT_MOVE;
+		m_moveR.z -= cosf(D3DX_PI / 2 + m_rot.y) * DEFAULT_MOVE;
 
 	}
 
 	if (pKeyboard->GetPress(DIK_L) == true)
 	{
-		m_moveV.x += sinf(HALF_PI + m_rot.y) * DEFAULT_MOVE;
-		m_moveR.x += sinf(HALF_PI + m_rot.y) * DEFAULT_MOVE;
+		m_moveV.x += sinf(D3DX_PI / 2 + m_rot.y) * DEFAULT_MOVE;
+		m_moveR.x += sinf(D3DX_PI / 2 + m_rot.y) * DEFAULT_MOVE;
 
-		m_moveV.z += cosf(HALF_PI + m_rot.y) * DEFAULT_MOVE;
-		m_moveR.z += cosf(HALF_PI + m_rot.y) * DEFAULT_MOVE;
+		m_moveV.z += cosf(D3DX_PI / 2 + m_rot.y) * DEFAULT_MOVE;
+		m_moveR.z += cosf(D3DX_PI / 2 + m_rot.y) * DEFAULT_MOVE;
 
 	}
 
@@ -254,33 +336,9 @@ void CCamera::InputMove()
 
 		m_moveV.z += cosf(D3DX_PI + m_rot.y) * DEFAULT_MOVE;
 		m_moveR.z += cosf(D3DX_PI + m_rot.y) * DEFAULT_MOVE;
+
 	}
 
-
-	if (pKeyboard->GetPress(DIK_SPACE))
-	{
-		m_moveV.y += 1.0f;
-		m_moveR.y += 1.0f;
-	}
-
-	if (pKeyboard->GetPress(DIK_LSHIFT))
-	{
-		m_moveV.y -= 1.0f;
-		m_moveR.y -= 1.0f;
-	}
-}
-
-//=============================================
-//カメラの状態変更
-//=============================================
-void CCamera::ChangeCameraState(CCameraState* state)
-{
-	//今のステートを消し引数のステートに切り替える
-	if (m_pCameraState != nullptr)
-	{
-		delete m_pCameraState;
-		m_pCameraState = state;
-	}
 }
 
 //=============================================
@@ -289,7 +347,7 @@ void CCamera::ChangeCameraState(CCameraState* state)
 void CCamera::CameraTurn()
 {
 	//キーボード情報取得
-	CInputKeyboard* pKeyboard =	GET_INPUT_KEYBOARD;
+	CInputKeyboard* pKeyboard = CManager::GetInstance()->GetKeyboard();
 	if (pKeyboard->GetPress(DIK_Q) == true)
 	{
 		m_rot.y -= 0.02f;
@@ -326,6 +384,38 @@ void CCamera::CameraTurn()
 }
 
 //=============================================
+//カメラの方向取得
+//=============================================
+D3DXVECTOR3 CCamera::GetRot()
+{
+	return m_rot;
+}
+
+//=============================================
+//カメラの視点取得
+//=============================================
+D3DXVECTOR3 CCamera::GetPosV()
+{
+	return m_posV;
+}
+
+//=============================================
+//カメラの注視点取得
+//=============================================
+D3DXVECTOR3 CCamera::GetPosR()
+{
+	return m_posR;
+}
+
+//=============================================
+//距離取得
+//=============================================
+float& CCamera::GetLength()
+{
+	return m_fLength;
+}
+
+//=============================================
 //カメラのデバッグ表示
 //=============================================
 void CCamera::DebugCameraDraw()
@@ -335,7 +425,7 @@ void CCamera::DebugCameraDraw()
 	RECT rect = { 0,0,SCREEN_WIDTH,SCREEN_HEIGHT };
 	char aStr[256];
 
-	sprintf(&aStr[0], "\n\n\n\n\n\n\n\n\n\n[camera]\nposR:%.1f,%.1f,%.1f\nposV:%.1f,%.1f,%.1f\nrot:%.1f,%.1f,%.1f"
+	sprintf(&aStr[0], "\n\n\n\n\n\n\n\n[camera]\nposR:%.1f,%.1f,%.1f\nposV:%.1f,%.1f,%.1f\nrot:%.1f,%.1f,%.1f"
 		, m_posR.x, m_posR.y, m_posR.z, m_posV.x, m_posV.y, m_posV.z, m_rot.x, m_rot.y, m_rot.z);
 	//テキストの描画
 	pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_LEFT, D3DCOLOR_RGBA(255, 0, 0, 255));

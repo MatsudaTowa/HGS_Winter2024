@@ -195,7 +195,6 @@ void CObjectX::BindXFile(LPD3DXBUFFER pBuffMat, DWORD dwNumMat, LPD3DXMESH pMesh
 					pMat[nCntMat].pTextureFilename,
 					&m_pTexture[nCntMat]
 				);
-
 			}
 		}
 	}
