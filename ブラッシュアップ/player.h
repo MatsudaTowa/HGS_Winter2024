@@ -46,11 +46,24 @@ public:
 
 	void ChangePlayerState(CPlayerState* state);
 
+	//クールカウント取得
+	inline float& GetAttackCoolCnt()
+	{
+		return m_AttackCoolTime;
+	}
+
+	//クールカウント設定
+	inline void SetAttackCoolCnt(float Cnt)
+	{
+		m_AttackCoolTime = Cnt;
+	}
+
 private:
 	static const D3DXVECTOR3 PLAYER_SPAWN_POS; //スポーン位置
 	static const D3DXVECTOR3 PLAYER_SPAWN_ROT; //スポーン方向
 	static const D3DXVECTOR3 SLOT_START_POS; //一個目のスロット生成
 	static const int MAX_EQUIPMENT = 6; //装備の最大数
+	static constexpr float DEFAULT_COOLTIME = 120.0f;
 
 	std::array<CEquipment*, MAX_EQUIPMENT> m_pEquipMent; //装備情報
 
@@ -59,6 +72,10 @@ private:
 	CPlayerState* m_pPlayerState;
 
 	D3DXVECTOR3 m_SlotPos; //スロットの位置(ずらすために変数化)
+
+	float m_AttackCoolTime;	//クールタイム
+
+	float m_AttackCoolCnt;  //アタックのクールタイムカウント
 
 	void ReSpawn(); //リスポーン
 

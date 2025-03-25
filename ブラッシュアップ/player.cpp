@@ -24,10 +24,15 @@ const char* CPlayer::MODEL_FILE = "data\\TEXT\\motion_HGSPlayer.txt";
 //コンストラクタ
 //=============================================
 CPlayer::CPlayer(int nPriority) :CCharacter(nPriority),
-m_pPlayerState(nullptr),
-m_SlotPos({VEC3_RESET_ZERO})
+m_pPlayerState(nullptr),				//プレイヤーの状態処理
+m_SlotPos(VEC3_RESET_ZERO),				//スロットの位置
+m_AttackCoolTime(FLOAT_ZERO),			//攻撃クールタイム
+m_AttackCoolCnt(FLOAT_ZERO)				//攻撃クールタイムカウント
 {
+	//装備にnullptr代入
 	m_pEquipMent.fill(nullptr);
+
+	//
 	m_pEquipMentSlot.fill(nullptr);
 }
 

@@ -139,7 +139,7 @@ void CPlayerView::PlayerView(CCamera* camera)
 					camera->GetLength() * cosf(m_rot.x) * cosf(m_rot.y));
 
 				//•ûŒü‘ã“ü
-				camera->SetRot(m_rot);
+				camera->SetRot({m_rot.x,camera->GetRot().y,m_rot.z});
 				//’Ž‹“_‘ã“ü
 				camera->SetPosR(posR);
 				//Ž‹“_‘ã“ü

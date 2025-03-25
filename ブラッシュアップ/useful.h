@@ -64,4 +64,10 @@
 #define GET_DEVICE			(CManager::GetInstance()->GetRenderer()->GetDevice())					// デバイス情報取得
 #define GET_SOUND			(CManager::GetInstance()->GetSound())									// サウンド取得
 
+//インクリメント関数
+template <std::floating_point T>  // float, double など浮動小数点型のみ
+void increment(T& value) 
+{
+    value += 1.0;
+}
 #endif

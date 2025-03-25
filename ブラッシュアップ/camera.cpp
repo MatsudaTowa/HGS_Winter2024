@@ -99,6 +99,10 @@ void CCamera::Update()
 		m_pCameraState->PlayerView(this);
 	}
 
+	CInputPad* pPad = GET_INPUT_PAD;
+
+	m_rot.y += pPad->GetJoyStickVecR().x * 0.02f;
+
 	if (m_rot.y > D3DX_PI)
 	{
 		m_rot.y = -D3DX_PI;
@@ -327,7 +331,6 @@ void CCamera::CameraMove()
 		m_moveR.z += cosf(D3DX_PI + m_rot.y) * DEFAULT_MOVE;
 
 	}
-
 }
 
 //=============================================
