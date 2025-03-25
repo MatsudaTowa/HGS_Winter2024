@@ -6,7 +6,7 @@
 //=============================================
 #include "equipment_slot.h"
 
-const std::string CEquipMent_Slot::TEXTURE_NAME = "data\\TEXTURE\\UI_SLOT";
+const std::string CEquipMent_Slot::TEXTURE_NAME = "data\\TEXTURE\\UI_SLOT.png";
 
 //=============================================
 // コンストラクタ
@@ -34,6 +34,8 @@ HRESULT CEquipMent_Slot::Init()
 
 	//テクスチャ登録
 	BindTexture(pTexture->GetAddress(pTexture->Regist(&TEXTURE_NAME)));
+
+	SetSize({SIZE,SIZE});
 
 	//頂点設定
 	SetVtx(FLOAT_ONE);
@@ -78,6 +80,8 @@ CEquipMent_Slot* CEquipMent_Slot::Create(D3DXVECTOR3 pos)
 	if (pEquipment_slot == nullptr) { return nullptr; }
 
 	pEquipment_slot->SetPos(pos);	//位置設定
+
+	pEquipment_slot->Init();
 
 	return pEquipment_slot;
 }

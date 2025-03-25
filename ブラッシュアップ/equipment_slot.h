@@ -14,6 +14,7 @@ class CEquipMent_Slot :public CObject2D
 {
 public:
 	static const int PRIORITY = 20;  //ï`âÊèá
+	static constexpr float SIZE = 30.0f;	//ÉTÉCÉY
 
 	CEquipMent_Slot(int nPriority = PRIORITY);
 	~CEquipMent_Slot() override;

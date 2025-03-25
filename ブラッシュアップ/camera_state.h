@@ -17,7 +17,7 @@ class CCameraState
 public:
 	virtual void FreeView(CCamera* camera); //自由旋回
 	virtual void LockView(CCamera* camera); //視点ロック(配置はこっちで)
-	virtual void ThirdPersonView(CCamera* camera); //3人称視点
+	virtual void PlayerView(CCamera* camera); //3人称視点
 };
 
 //=============================================
@@ -44,23 +44,24 @@ private:
 };
 
 //=============================================
-//三人称カメラ
+//プレイヤーカメラ
 //=============================================
-class CThirdView : public CCameraState
+class CPlayerView : public CCameraState
 {
 public:
-	CThirdView();
-	~CThirdView();
-	virtual void ThirdPersonView(CCamera* camera)override;
+	CPlayerView();
+	~CPlayerView();
+	virtual void PlayerView(CCamera* camera)override;
 private:
-	static const float THIRDVIEW_CORRECT_X; //サードパーソンビュー時の補正値X
-	static const float THIRDVIEW_CORRECT_Y; //サードパーソンビュー時の補正値Y
-	static const float THIRDVIEW_CORRECT_Z; //サードパーソンビュー時の補正値Z
+	static const float PLAYERVIEW_CORRECT_X; //プレイヤービュー時の補正値X
+	static const float PLAYERVIEW_CORRECT_Y; //プレイヤービュー時の補正値Y
+	static const float PLAYERVIEW_CORRECT_Z; //プレイヤービュー時の補正値Z
 
-	static const float THIRDVIEW_LENGTH;	//サードビュー時の距離
+	static const float PLAYERVIEW_LENGTH;	//プレイヤービュー時の距離
 
-	static const float MAX_TURN_X; //サードパーソンビュー時のXの最大可動域
-	static const float MIN_TURN_X; //サードパーソンビュー時のXの最小可動域
+	static const D3DXVECTOR3 START_ROT;		//プレイヤービュー時の開始方向
+
+	D3DXVECTOR3 m_rot;		//TODO:カメラにあるのに？
 };
 
 #endif // !_PLAYER_STATE_H

@@ -26,7 +26,7 @@ void CCameraState::LockView(CCamera* camera)
 //=============================================
 //三人称処理(親では何もしない)
 //=============================================
-void CCameraState::ThirdPersonView(CCamera* camera)
+void CCameraState::PlayerView(CCamera* camera)
 {
 }
 
@@ -79,38 +79,37 @@ void CLockView::LockView(CCamera* camera)
 	}
 }
 
-//サードビュー時の補正値
-const float CThirdView::THIRDVIEW_CORRECT_X = 20.0f;
-const float CThirdView::THIRDVIEW_CORRECT_Y = 115.0f;
-const float CThirdView::THIRDVIEW_CORRECT_Z = 20.0f;
+//プレイヤービュー時の補正値
+const float CPlayerView::PLAYERVIEW_CORRECT_X = 20.0f;
+const float CPlayerView::PLAYERVIEW_CORRECT_Y = 155.0f;
+const float CPlayerView::PLAYERVIEW_CORRECT_Z = 20.0f;
 
 //距離
-const float CThirdView::THIRDVIEW_LENGTH = 200.0f;
+const float CPlayerView::PLAYERVIEW_LENGTH = 280.0f;
 
-//サードパーソンビュー時のXの最大可動域
-const float CThirdView::MAX_TURN_X = 0.5f;
-//サードパーソンビュー時のXの最小可動域
-const float CThirdView::MIN_TURN_X = -0.15f;
+const D3DXVECTOR3 CPlayerView::START_ROT = { 0.7f,0.0f,0.0f };
+
 //=============================================
 //コンストラクタ
 //=============================================
-CThirdView::CThirdView()
+CPlayerView::CPlayerView()
 {
+	m_rot = START_ROT;
 }
 
 //=============================================
 //デストラクタ
 //=============================================
-CThirdView::~CThirdView()
+CPlayerView::~CPlayerView()
 {
 }
 
 //=============================================
-//三人称カメラ処理
+//プレイヤーカメラ処理
 //=============================================
-void CThirdView::ThirdPersonView(CCamera* camera)
+void CPlayerView::PlayerView(CCamera* camera)
 {
-	camera->SetLength(THIRDVIEW_LENGTH);
+	camera->SetLength(PLAYERVIEW_LENGTH);
 	//プライオリティの数だけ周回
 	for (int i = 0; i < MAX_PRIORITY; i++)
 	{
@@ -131,34 +130,16 @@ void CThirdView::ThirdPersonView(CCamera* camera)
 				//視点取得
 				D3DXVECTOR3 posV = camera->GetPosV();
 
-				//方向取得
-				D3DXVECTOR3 rot = camera->GetRot();
-
 				posR.x = pPlayer->GetPos().x;
-				posR.y = pPlayer->GetPos().y + THIRDVIEW_CORRECT_Y;
+				posR.y = pPlayer->GetPos().y + PLAYERVIEW_CORRECT_Y;
 				posR.z = pPlayer->GetPos().z;
 
-				posV = posR + D3DXVECTOR3(-camera->GetLength() * cosf(rot.x) * sinf(rot.y),
-					camera->GetLength() * sinf(rot.x),
-					-camera->GetLength() * cosf(rot.x) * cosf(rot.y));
-
-				//マウス情報取得
-				CInputMouse* pMouse = CManager::GetInstance()->GetMouse();
-
-				rot.y += pMouse->GetMouseMove().x * 0.001f;
-				rot.x += pMouse->GetMouseMove().y * 0.001f;
-
-				if (rot.x <= MIN_TURN_X)
-				{
-					rot.x = MIN_TURN_X;
-				}
-				if (rot.x >= MAX_TURN_X)
-				{
-					rot.x = MAX_TURN_X;
-				}
+				posV = posR + D3DXVECTOR3(camera->GetLength() * cosf(m_rot.x) * sinf(m_rot.y),
+					camera->GetLength() * sinf(m_rot.x),
+					camera->GetLength() * cosf(m_rot.x) * cosf(m_rot.y));
 
 				//方向代入
-				camera->SetRot(rot);
+				camera->SetRot(m_rot);
 				//注視点代入
 				camera->SetPosR(posR);
 				//視点代入

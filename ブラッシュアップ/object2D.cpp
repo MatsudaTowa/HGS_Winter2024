@@ -14,7 +14,7 @@
 CObject2D::CObject2D(int nPriority):CObject(nPriority)
 , m_pos(VEC3_RESET_ZERO)		//座標の初期化
 , m_rot(VEC3_RESET_ZERO)		//方向の初期化
-, m_col(COLOR_NONE)	//色の初期化
+, m_col(COLOR_WHITE)	//色の初期化
 , m_size(VEC2_RESET_ZERO)			//サイズの初期化
 , m_tex_pos(VEC2_RESET_ZERO)		//テクスチャ座標の初期化
 {

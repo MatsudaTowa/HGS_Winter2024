@@ -12,7 +12,10 @@
 const D3DXVECTOR3 CPlayer::PLAYER_SPAWN_POS = { 0.0f, 0.5f, 0.0f };
 
 //スポーン方向
-const D3DXVECTOR3 CPlayer::PLAYER_SPAWN_ROT = { 0.0f, 3.14f, 0.0f };
+const D3DXVECTOR3 CPlayer::PLAYER_SPAWN_ROT = { 0.0f, 0.0f, 0.0f };
+
+//スロットの開始位置
+const D3DXVECTOR3 CPlayer::SLOT_START_POS = { 500.0f, 690.0f,0.0f };
 
 //モデルファイル
 const char* CPlayer::MODEL_FILE = "data\\TEXT\\motion_HGSPlayer.txt";
@@ -21,7 +24,8 @@ const char* CPlayer::MODEL_FILE = "data\\TEXT\\motion_HGSPlayer.txt";
 //コンストラクタ
 //=============================================
 CPlayer::CPlayer(int nPriority) :CCharacter(nPriority),
-m_pPlayerState(nullptr)
+m_pPlayerState(nullptr),
+m_SlotPos({VEC3_RESET_ZERO})
 {
 	m_pEquipMent.fill(nullptr);
 	m_pEquipMentSlot.fill(nullptr);
@@ -32,6 +36,25 @@ m_pPlayerState(nullptr)
 //=============================================
 CPlayer::~CPlayer()
 {
+	//装備関連削除
+	for (int nCnt = 0; nCnt < MAX_EQUIPMENT; ++nCnt)
+	{
+		//装備削除
+		if (m_pEquipMent[nCnt] != nullptr)
+		{
+			delete m_pEquipMent[nCnt];
+			m_pEquipMent[nCnt] = nullptr;
+		}
+
+		//装備のスロット終了
+		if (m_pEquipMentSlot[nCnt] != nullptr)
+		{
+			m_pEquipMentSlot[nCnt]->Uninit();
+			m_pEquipMentSlot[nCnt] = nullptr;
+		}
+	}
+
+	//ステート削除
 	if (m_pPlayerState != nullptr)
 	{
 		delete m_pPlayerState;
@@ -45,6 +68,19 @@ HRESULT CPlayer::Init()
 {
 	CCharacter::Init();
 
+	m_SlotPos = SLOT_START_POS;
+
+	for (int nCnt = 0; nCnt < MAX_EQUIPMENT; ++nCnt)
+	{
+		//装備のスロット生成
+		if (m_pEquipMentSlot[nCnt] == nullptr)
+		{
+			m_pEquipMentSlot[nCnt] = CEquipMent_Slot::Create(m_SlotPos);
+		}
+
+		m_SlotPos.x += CEquipMent_Slot::SIZE * 2;
+	}
+
 	if (m_pPlayerState == nullptr)
 	{
 		m_pPlayerState = new CMoveState;
@@ -56,13 +92,13 @@ HRESULT CPlayer::Init()
 	//カメラ情報取得
 	CCamera* pCamera = GET_CAMERA;
 
-	//カメラの方向設定
-	pCamera->SetRot(VEC3_RESET_ZERO);
-
 	//ムーブ値代入
 	SetMove(move);
 
+	//位置設定
 	SetPos(PLAYER_SPAWN_POS);
+
+	//方向設定
 	SetRot(PLAYER_SPAWN_ROT);
 
 	//パーツ読み込み
@@ -193,22 +229,6 @@ void CPlayer::Input()
 	//移動の方向の単位ベクトル変数
 	D3DXVECTOR3 vecDirection(VEC3_RESET_ZERO);
 
-	if (pKeyboard->GetPress(DIK_W))
-	{
-		vecDirection.z += 1.0f;
-	}
-	if (pKeyboard->GetPress(DIK_S))
-	{
-		vecDirection.z -= 1.0f;
-	}
-	if (pKeyboard->GetPress(DIK_A))
-	{
-		vecDirection.x -= 1.0f;
-	}
-	if (pKeyboard->GetPress(DIK_D))
-	{
-		vecDirection.x += 1.0f;
-	}
 	vecDirection = { pInput->GetJoyStickVecL().x,0.0f, pInput->GetJoyStickVecL().y };
 
 	float rotMoveY = CManager::GetInstance()->GetCamera()->GetRot().y + atan2f(vecDirection.x, vecDirection.z);

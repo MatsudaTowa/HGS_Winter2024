@@ -49,6 +49,7 @@ public:
 private:
 	static const D3DXVECTOR3 PLAYER_SPAWN_POS; //スポーン位置
 	static const D3DXVECTOR3 PLAYER_SPAWN_ROT; //スポーン方向
+	static const D3DXVECTOR3 SLOT_START_POS; //一個目のスロット生成
 	static const int MAX_EQUIPMENT = 6; //装備の最大数
 
 	std::array<CEquipment*, MAX_EQUIPMENT> m_pEquipMent; //装備情報
@@ -56,6 +57,8 @@ private:
 	std::array<CEquipMent_Slot*, MAX_EQUIPMENT> m_pEquipMentSlot; //装備スロット
 
 	CPlayerState* m_pPlayerState;
+
+	D3DXVECTOR3 m_SlotPos; //スロットの位置(ずらすために変数化)
 
 	void ReSpawn(); //リスポーン
 

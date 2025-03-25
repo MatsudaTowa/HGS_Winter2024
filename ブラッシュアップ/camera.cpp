@@ -58,20 +58,14 @@ HRESULT CCamera::Init()
 {
 	if (m_pCameraState == nullptr)
 	{
-		m_pCameraState = new CThirdView;
+		m_pCameraState = new CPlayerView;
 	}
-	m_posV = D3DXVECTOR3(0.0f, 200.0f, -180.0f); //視点
-	m_posR = D3DXVECTOR3(0.0f, 0.0f, 0.0f); //注視
 
 	m_vecU = D3DXVECTOR3(0.0f, 1.0f, 0.0f); //上方向ベクトル
 
-	m_moveV = D3DXVECTOR3(0.0f, 0.0f, 0.0f); //視点移動量
-	m_moveR = D3DXVECTOR3(0.0f, 0.0f, 0.0f); //注視点移動量
+	D3DXVECTOR3 vecCamera = m_posR - m_posV;	//カメラの方向ベクトル
 
-	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f); //角度
-	m_rotmove = D3DXVECTOR3(0.0f, 0.0f, 0.0f); //回転量
-
-	D3DXVECTOR3 vecCamera = m_posR - m_posV;
+	//ベクトルから距離を取得
 	m_fLength = sqrtf(vecCamera.y * vecCamera.y + vecCamera.z * vecCamera.z);
 
 	//対角線の角度を算出する
@@ -102,13 +96,8 @@ void CCamera::Update()
 	{
 		m_pCameraState->FreeView(this);
 		m_pCameraState->LockView(this);
-		m_pCameraState->ThirdPersonView(this);
+		m_pCameraState->PlayerView(this);
 	}
-
-	//マウス情報取得
-	CInputMouse* pMouse = CManager::GetInstance()->GetMouse();
-	m_rot.y += pMouse->GetMouseMove().x * 0.001f;
-	m_rot.x += pMouse->GetMouseMove().y * 0.001f;
 
 	if (m_rot.y > D3DX_PI)
 	{
