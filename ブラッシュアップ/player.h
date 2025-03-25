@@ -10,6 +10,8 @@
 #include "main.h"
 #include "model_parts.h"
 #include "character.h"
+#include "equipment.h"
+#include "equipment_slot.h"
 
 class CPlayerState;
 
@@ -47,6 +49,11 @@ public:
 private:
 	static const D3DXVECTOR3 PLAYER_SPAWN_POS; //スポーン位置
 	static const D3DXVECTOR3 PLAYER_SPAWN_ROT; //スポーン方向
+	static const int MAX_EQUIPMENT = 6; //装備の最大数
+
+	std::array<CEquipment*, MAX_EQUIPMENT> m_pEquipMent; //装備情報
+
+	std::array<CEquipMent_Slot*, MAX_EQUIPMENT> m_pEquipMentSlot; //装備スロット
 
 	CPlayerState* m_pPlayerState;
 

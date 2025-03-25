@@ -64,6 +64,9 @@ void CObject2D::Uninit()
 //=============================================
 void CObject2D::Update()
 {
+#ifdef _DEBUG
+
+#endif // _DEBUG
 }
 
 //=============================================
@@ -165,42 +168,6 @@ void CObject2D::SetVtx(float rhw, float fAngle, float fLength)
 
 	//頂点バッファをロックし頂点情報へのポインタを取得
 	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
-	//for (int nCnt = 0; nCnt < MAX_OBJECT; nCnt++)
-	//{
-	//	//オブジェクト取得
-	//	CObject* pObj = CObject::Getobject(4, nCnt);
-	//	if (pObj != nullptr)
-	//	{//ヌルポインタじゃなければ
-	//		//タイプ取得
-	//		CObject::OBJECT_TYPE type = pObj->GetType();
-	//		if (type == CObject::OBJECT_TYPE::OBJECT_TYPE_PLAYER)
-	//		{
-	//			//頂点座標の設定
-	//			pVtx[0].pos = D3DXVECTOR3(m_pos.x + sinf(m_rot.z - (D3DX_PI - fAngle)) * fLength
-	//				, m_pos.y + cosf(m_rot.z - (D3DX_PI - fAngle)) * fLength
-	//				,0.0f);
-
-	//			//頂点座標の設定
-	//			pVtx[1].pos = D3DXVECTOR3(m_pos.x + sinf(m_rot.z + (D3DX_PI - fAngle)) * fLength
-	//				, m_pos.y + cosf(m_rot.z - (D3DX_PI - fAngle)) * fLength
-	//				, 0.0f);
-
-	//			//頂点座標の設定
-	//			pVtx[2].pos = D3DXVECTOR3(m_pos.x + sinf(m_rot.z - (D3DX_PI - fAngle)) * fLength
-	//				, m_pos.y
-	//				, 0.0f);
-
-	//			//頂点座標の設定
-	//			pVtx[3].pos = D3DXVECTOR3(m_pos.x + sinf(m_rot.z + (D3DX_PI - fAngle)) * fLength
-	//				, m_pos.y
-	//				, 0.0f);
-	//		}
-	//		else
-	//		{
-
-	//		}
-	//	}
-	//}
 
 	//頂点座標の設定
 	pVtx[0].pos = D3DXVECTOR3(m_pos.x + sinf(m_rot.z - (D3DX_PI - fAngle)) * fLength

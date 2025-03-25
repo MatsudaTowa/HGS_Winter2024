@@ -13,6 +13,8 @@
 #include<stdio.h>
 #include <string>
 #include <vector>
+#include <list>
+#include <array>
 #include <random>
 #include<iostream>
 #include <algorithm>

@@ -10,6 +10,7 @@
 #define _USEFUL_H_
 
 #include "main.h"
+#include "manager.h"
 
 //0‰Šú‰»—p
 #define INT_ZERO (0)

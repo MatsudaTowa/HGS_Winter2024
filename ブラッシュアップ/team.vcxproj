@@ -157,6 +157,7 @@
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="camera_state.cpp" />
     <ClCompile Include="character.cpp" />
+    <ClCompile Include="equipment_slot.cpp" />
     <ClCompile Include="fade.cpp" />
     <ClCompile Include="field.cpp" />
     <ClCompile Include="game.cpp" />
@@ -193,6 +194,8 @@
     <ClInclude Include="camera.h" />
     <ClInclude Include="camera_state.h" />
     <ClInclude Include="character.h" />
+    <ClInclude Include="equipment.h" />
+    <ClInclude Include="equipment_slot.h" />
     <ClInclude Include="fade.h" />
     <ClInclude Include="field.h" />
     <ClInclude Include="game.h" />

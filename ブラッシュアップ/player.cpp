@@ -14,6 +14,7 @@ const D3DXVECTOR3 CPlayer::PLAYER_SPAWN_POS = { 0.0f, 0.5f, 0.0f };
 //スポーン方向
 const D3DXVECTOR3 CPlayer::PLAYER_SPAWN_ROT = { 0.0f, 3.14f, 0.0f };
 
+//モデルファイル
 const char* CPlayer::MODEL_FILE = "data\\TEXT\\motion_HGSPlayer.txt";
 
 //=============================================
@@ -22,6 +23,8 @@ const char* CPlayer::MODEL_FILE = "data\\TEXT\\motion_HGSPlayer.txt";
 CPlayer::CPlayer(int nPriority) :CCharacter(nPriority),
 m_pPlayerState(nullptr)
 {
+	m_pEquipMent.fill(nullptr);
+	m_pEquipMentSlot.fill(nullptr);
 }
 
 //=============================================
