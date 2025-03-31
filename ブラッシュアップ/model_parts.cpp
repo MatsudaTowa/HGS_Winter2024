@@ -99,8 +99,9 @@ void CModel_Parts::BindXFile(LPD3DXBUFFER pBuffMat, DWORD dwNumMat, LPD3DXMESH p
 	//頂点フォーマットのサイズを取得
 	sizeFVF = D3DXGetFVFVertexSize(m_ModelInfo->pMesh->GetFVF());
 
-	m_minpos = D3DXVECTOR3(100000.0f, 1000000.0f, 1000000.0f); //モデルの最小位置
-	m_maxpos = D3DXVECTOR3(-100000.0f, -1000000.0f, -100000.0f); //モデルの最大位置
+	// 1 * 10^5
+	m_minpos = D3DXVECTOR3(1e5f, 1e5f, 1e5f); //モデルの最小位置
+	m_maxpos = D3DXVECTOR3(-1e5f, -1e5f, -1e5f); //モデルの最大位置
 
 	//頂点バッファのロック
 	m_ModelInfo->pMesh->LockVertexBuffer(D3DLOCK_READONLY, (void**)&pVtxBuff);

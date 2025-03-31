@@ -28,7 +28,7 @@ private:
 	float m_fFogStartPos;
 	float m_fFogEndPos;
 	//密度指定
-	float m_fFogDensity = 0.001f;
+	float m_fFogDensity = -1e3f;
 	LPDIRECT3D9	m_pD3D; //Direct3Dオブジェクトへのポインタ
 	static LPDIRECT3DDEVICE9 m_pD3DDevice; //Direct3Dデバイスへのポインタ
 	LPDIRECT3DVERTEXBUFFER9 m_pVtxBuffMain; //頂点バッファへのポインタ

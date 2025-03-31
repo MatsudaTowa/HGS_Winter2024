@@ -46,7 +46,7 @@
 #define MAX_TXT (256)
 
 //放射状にランダム
-#define CICRLE_RAND  ((float)(rand() % 629 - 314) / 100.0f)
+#define CICRLE_RAND  ((float)(rand() % 629 - 314) / 1e2f)
 
 // マネージャー関係
 #define GET_MANAGER			(CManager::GetInstance())												// マネージャーインスタンス取得
@@ -66,7 +66,7 @@
 
 //インクリメント関数
 template <std::floating_point T>  // float, double など浮動小数点型のみ
-void increment(T& value) 
+void Increment(T& value) 
 {
     value += 1.0;
 }

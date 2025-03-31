@@ -162,7 +162,7 @@ void CPlayer::Uninit()
 //=============================================
 void CPlayer::Update()
 {
-	increment(m_AttackCoolCnt);
+	Increment(m_AttackCoolCnt);
 
 	if (m_AttackCoolCnt > m_AttackCoolTime)
 	{

@@ -208,8 +208,8 @@ void CObjectX::BindXFile(LPD3DXBUFFER pBuffMat, DWORD dwNumMat, LPD3DXMESH pMesh
 	//頂点フォーマットのサイズを取得
 	sizeFVF = D3DXGetFVFVertexSize(m_pMesh->GetFVF());
 
-	m_minpos = D3DXVECTOR3(100000.0f, 1000000.0f, 1000000.0f); //モデルの最小位置に値が入るよう極端な値代入
-	m_maxpos = D3DXVECTOR3(-100000.0f, -1000000.0f, -100000.0f); //モデルの最大位置に値が入るよう極端な値代入
+	m_minpos = D3DXVECTOR3(1e5f, 1e5f, 1e5f); //モデルの最小位置に値が入るよう極端な値代入
+	m_maxpos = D3DXVECTOR3(-1e5f, -1e5f, -1e5f); //モデルの最大位置に値が入るよう極端な値代入
 
 	//頂点バッファのロック
 	m_pMesh->LockVertexBuffer(D3DLOCK_READONLY, (void**)&pVtxBuff);

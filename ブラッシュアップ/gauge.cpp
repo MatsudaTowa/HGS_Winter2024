@@ -144,7 +144,7 @@ CGauge_2D* CGauge_2D::Create(D3DXVECTOR3 pos, int Max, GAUGE_TYPE type)
 		pGauge2D = new CExpGauge;
 		break;
 	default:
-		assert("範囲外のゲージタイプです");
+		assert(false && "範囲外のゲージタイプです");
 		break;
 	}
 
