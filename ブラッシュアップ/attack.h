@@ -17,9 +17,10 @@ class CAttack
 public:
 
 	//関数
-	CAttack() : m_nDamage(0) {}//コンストラクタ
-	virtual ~CAttack() {} 	//デストラクタ
-	virtual void Attack();	//攻撃処理
+	CAttack() : m_nDamage(0) {}							//コンストラクタ
+	virtual ~CAttack() {}								//デストラクタ
+	virtual void Attack();								//攻撃処理
+	virtual void Attack(D3DXVECTOR3 pos, float range);	//位置指定の攻撃処理
 
 	void SetDamage(int damage) { m_nDamage = damage; }	//ダメージの設定
 

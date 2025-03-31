@@ -10,6 +10,7 @@
 
 //ヘッダーのインクルード
 #include "player.h"
+#include "enemymanager.h"
 
 //ゲームマネージャークラス
 class CGameManager
@@ -31,13 +32,15 @@ public:
 		return &instance;
 	}
 
-	void SetPlayer(CPlayer* player) { m_pPlayer = player; }	//プレイヤーの設定
-	CPlayer* GetPlayer() { return m_pPlayer; }				//プレイヤーの取得
+	void SetPlayer(CPlayer* player) { m_pPlayer = player; }		//プレイヤーの設定
+	CPlayer* GetPlayer() { return m_pPlayer; }					//プレイヤーの取得
+	CEnemyManager* GetEnemyManager() { return m_pEnemyManager; }//エネミーマネージャーの取得
 
 private:
 
 	//変数
 	CPlayer* m_pPlayer;
+	CEnemyManager* m_pEnemyManager;
 };
 
 #endif
