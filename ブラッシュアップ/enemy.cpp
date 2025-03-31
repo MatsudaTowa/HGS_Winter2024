@@ -55,7 +55,7 @@ HRESULT CEnemy::Init()
 	SetMotion(MOTION_NEUTRAL);
 
 	//プレイヤー自身をマネージャーに代入
-	CGameManager::GetInstance()->SetEnemy(this);
+	CGameManager::GetInstance()->GetEnemyManager()->Regist(this);
 
 	return S_OK;
 }
