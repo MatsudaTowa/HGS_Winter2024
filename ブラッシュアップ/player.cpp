@@ -15,7 +15,7 @@ const D3DXVECTOR3 CPlayer::PLAYER_SPAWN_POS = { 0.0f, 0.5f, 0.0f };
 const D3DXVECTOR3 CPlayer::PLAYER_SPAWN_ROT = { 0.0f, 0.0f, 0.0f };
 
 //スロットの開始位置
-const D3DXVECTOR3 CPlayer::SLOT_START_POS = { 500.0f, 690.0f,0.0f };
+const D3DXVECTOR3 CPlayer::SLOT_START_POS = { 490.0f, 690.0f,0.0f };
 
 //モデルファイル
 const char* CPlayer::MODEL_FILE = "data\\TEXT\\motion_HGSPlayer.txt";
@@ -25,6 +25,8 @@ const char* CPlayer::MODEL_FILE = "data\\TEXT\\motion_HGSPlayer.txt";
 //=============================================
 CPlayer::CPlayer(int nPriority) :CCharacter(nPriority),
 m_pPlayerState(nullptr),				//プレイヤーの状態処理
+m_pHpGauge(nullptr),					//プレイヤーの体力UI
+m_pExpGauge(nullptr),					//プレイヤーの経験値UI
 m_SlotPos(VEC3_RESET_ZERO),				//スロットの位置
 m_AttackCoolTime(FLOAT_ZERO),			//攻撃クールタイム
 m_AttackCoolCnt(FLOAT_ZERO)				//攻撃クールタイムカウント
@@ -32,7 +34,7 @@ m_AttackCoolCnt(FLOAT_ZERO)				//攻撃クールタイムカウント
 	//装備にnullptr代入
 	m_pEquipMent.fill(nullptr);
 
-	//
+	//UIの枠にnullptr代入
 	m_pEquipMentSlot.fill(nullptr);
 }
 
@@ -59,10 +61,23 @@ CPlayer::~CPlayer()
 		}
 	}
 
+	if (m_pHpGauge != nullptr)
+	{
+		m_pHpGauge->Uninit();
+		m_pHpGauge = nullptr;
+	}
+
+	if (m_pExpGauge != nullptr)
+	{
+		m_pExpGauge->Uninit();
+		m_pExpGauge = nullptr;
+	}
+
 	//ステート削除
 	if (m_pPlayerState != nullptr)
 	{
 		delete m_pPlayerState;
+		m_pPlayerState = nullptr;
 	}
 }
 
@@ -73,6 +88,7 @@ HRESULT CPlayer::Init()
 {
 	CCharacter::Init();
 
+	//スロットの最初に位置設定
 	m_SlotPos = SLOT_START_POS;
 
 	for (int nCnt = 0; nCnt < MAX_EQUIPMENT; ++nCnt)
@@ -90,6 +106,9 @@ HRESULT CPlayer::Init()
 	{
 		m_pPlayerState = new CMoveState;
 	}
+
+	//通常のクールタイム設定
+	m_AttackCoolTime = DEFAULT_COOLTIME;
 
 	//移動量初期化
 	D3DXVECTOR3 move = VEC3_RESET_ZERO;
@@ -110,6 +129,16 @@ HRESULT CPlayer::Init()
 	Load_Parts(MODEL_FILE);
 
 	CCharacter::SetLife(PLAYER_LIFE);
+
+	if (m_pHpGauge == nullptr)
+	{
+		m_pHpGauge = CGauge_2D::Create({ SCREEN_WIDTH * 0.5f,SCREEN_HEIGHT - 80.0f,0.0f }, PLAYER_LIFE, CGauge_2D::GAUGE_LIFE);
+	}
+
+	if (m_pExpGauge == nullptr)
+	{
+		m_pExpGauge = CGauge_2D::Create({ SCREEN_WIDTH * 0.5f,10.0f,0.0f }, (float)ITEM_UI_UNLOCK_EXP, CGauge_2D::GAUGE_EXP);
+	}
 
 	SetMotion(MOTION_NEUTRAL);
 
@@ -133,6 +162,23 @@ void CPlayer::Uninit()
 //=============================================
 void CPlayer::Update()
 {
+	increment(m_AttackCoolCnt);
+
+	if (m_AttackCoolCnt > m_AttackCoolTime)
+	{
+		m_AttackCoolCnt = 0;
+	}
+
+	if (m_pHpGauge != nullptr)
+	{
+		m_pHpGauge->SetValue(GetLife());
+	}
+
+	if (m_pExpGauge != nullptr)
+	{
+		m_pExpGauge->SetValue(m_fExp);
+	}
+
 	CCharacter::Update();
 
 	Input();
@@ -258,4 +304,14 @@ void CPlayer::Input()
 	SetRot(rot);
 	//移動量代入
 	SetMove(move);
+
+#ifdef _DEBUG
+	if (pKeyboard->GetTrigger(DIK_0))
+	{
+		int nLife = GetLife();
+		nLife -= 10;
+		SetLife(nLife);
+	}
+#endif // _DEBUG
+
 }

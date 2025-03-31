@@ -12,6 +12,7 @@
 #include "character.h"
 #include "equipment.h"
 #include "equipment_slot.h"
+#include "hp_gauge.h"
 
 class CPlayerState;
 
@@ -23,7 +24,7 @@ public:
 	static const int PLAYER_LIFE = 150; //体力
 	static const int PLAYER_PRIORITY = 8; //描画順
 	static const char* MODEL_FILE; //モデルのファイルパス
-	//static constexpr float LEVEL_WINDOW = 50.0f;
+	static constexpr float ITEM_UI_UNLOCK_EXP = 50.0f;	//アイテム選択画面に遷移するまでに必要な経験値の量
 
 	//モーションの種類の列挙
 	enum Motion_Type
@@ -58,12 +59,28 @@ public:
 		m_AttackCoolTime = Cnt;
 	}
 
+	//経験値取得
+	inline float& GetExp()
+	{
+		return m_fExp;
+	}
+
+	//経験値追加
+	inline void AddExp(float exp)
+	{
+		if (m_fExp < ITEM_UI_UNLOCK_EXP)
+		{
+			m_fExp += exp;
+		}
+	}
+
 private:
 	static const D3DXVECTOR3 PLAYER_SPAWN_POS; //スポーン位置
 	static const D3DXVECTOR3 PLAYER_SPAWN_ROT; //スポーン方向
 	static const D3DXVECTOR3 SLOT_START_POS; //一個目のスロット生成
 	static const int MAX_EQUIPMENT = 6; //装備の最大数
 	static constexpr float DEFAULT_COOLTIME = 120.0f;
+	static constexpr float LEVEL_EXP = 1.05f;
 
 	std::array<CEquipment*, MAX_EQUIPMENT> m_pEquipMent; //装備情報
 
@@ -71,11 +88,16 @@ private:
 
 	CPlayerState* m_pPlayerState;
 
+	CGauge_2D* m_pHpGauge;	//体力ゲージ
+	CGauge_2D* m_pExpGauge;	//経験値ゲージ
+
 	D3DXVECTOR3 m_SlotPos; //スロットの位置(ずらすために変数化)
 
 	float m_AttackCoolTime;	//クールタイム
 
 	float m_AttackCoolCnt;  //アタックのクールタイムカウント
+
+	float m_fExp; //経験値
 
 	void ReSpawn(); //リスポーン
 

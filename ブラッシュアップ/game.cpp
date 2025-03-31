@@ -13,6 +13,8 @@
 #include "manager.h"
 #include "field.h"
 #include "player.h"
+#include "exp.h"
+#include "gamemanager.h"
 
 //°‚ÌƒTƒCƒY
 const D3DXVECTOR3 CGame::FIELD_SIZE = { 10000.0f,0.0f,10000.0f };
@@ -68,8 +70,18 @@ void CGame::Update()
 	{
 		CManager::GetInstance()->GetFade()->SetFade(CScene::MODE::MODE_RESULT);
 	}
+
+	if (pKeyboard->GetTrigger(DIK_SPACE))
+	{
+		CExp::Create(VEC3_RESET_ZERO, CExp::EXP_TYPE_LOW);
+	}
 	
 #endif // _DEBUG
+
+	if (CGameManager::GetInstance()->GetPlayer()->GetLife() <= 0)
+	{
+		GET_FADE->SetFade(CScene::MODE::MODE_RESULT);
+	}
 
 }
 

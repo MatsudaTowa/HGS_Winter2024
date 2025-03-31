@@ -70,4 +70,8 @@ void increment(T& value)
 {
     value += 1.0;
 }
+
+//当たり判定系
+//円の当たり判定(位置、位置、判定する長さ)
+bool JudgeBallCollision(D3DXVECTOR3 pos1, D3DXVECTOR3 pos2, float length);
 #endif
