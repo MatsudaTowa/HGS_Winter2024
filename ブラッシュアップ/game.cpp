@@ -92,6 +92,67 @@ void CGame::Update()
 		GET_FADE->SetFade(CScene::MODE::MODE_RESULT);
 	}
 
+	SelectItem();
+}
+
+//=============================================
+//アイテム選択
+//=============================================
+void CGame::SelectItem()
+{
+	if (CGameManager::GetInstance()->GetPlayer()->GetExp() >= CPlayer::ITEM_UI_UNLOCK_EXP)
+	{
+		CGameManager::GetInstance()->GetPlayer()->ResetExp();
+
+		//アイテム選択画面へ
+		m_bItemChoice = true;
+
+		//アイテム選択中なら止める、ゲーム中なら止めない
+		UpdateObjectDecision(m_bItemChoice);
+
+		if (m_pLevelupSelect == nullptr)
+		{
+			m_pLevelupSelect = CLevelupSelect::Create();
+		}
+	}
+
+	if (m_pLevelupSelect != nullptr)
+	{
+		m_pLevelupSelect->Update();
+
+		if (m_pLevelupSelect->GetEnd())
+		{
+			////敵との当たり判定
+			//for (int i = 0; i < MAX_PRIORITY; i++)
+			//{
+			//	CObject* pObj = CObject::Getobject(i);	//先頭取得
+
+			//	//最大数が不明なのでwhileを使用
+			//	while (pObj != nullptr)
+			//	{
+			//		CObject* pNext = pObj->GetNextobject();	//次のポインタを取得
+
+			//		//敵を見つけて速度を上げる
+			//		if (pObj->GetType() == CObject::OBJECT_TYPE_PLAYER)
+			//		{
+			//			CPlayer* pPlayer = dynamic_cast<CPlayer*>(pObj);
+			//			pPlayer->SetSoubi(m_pLevelupSelect->GetSelect());
+			//		}
+
+			//		pObj = pNext;							//ポインタを進める
+			//	}
+			//}
+
+			//アイテム選択画面へ
+			m_bItemChoice = false;
+
+			//アイテム選択中なら止める、ゲーム中なら止めない
+			UpdateObjectDecision(m_bItemChoice);
+
+			m_pLevelupSelect->Uninit();
+			m_pLevelupSelect = nullptr;
+		}
+	}
 }
 
 //=============================================

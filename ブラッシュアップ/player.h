@@ -74,6 +74,12 @@ public:
 		}
 	}
 
+	//経験値リセット
+	inline void ResetExp()
+	{
+		m_fExp = 0.0f;
+	}
+
 private:
 	static const D3DXVECTOR3 PLAYER_SPAWN_POS; //スポーン位置
 	static const D3DXVECTOR3 PLAYER_SPAWN_ROT; //スポーン方向

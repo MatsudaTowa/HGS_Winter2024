@@ -162,6 +162,8 @@ void CPlayer::Uninit()
 //=============================================
 void CPlayer::Update()
 {
+	CCharacter::Update();
+
 	Increment(m_AttackCoolCnt);
 
 	if (m_AttackCoolCnt > m_AttackCoolTime)
@@ -179,15 +181,13 @@ void CPlayer::Update()
 		m_pExpGauge->SetValue(m_fExp);
 	}
 
-	CCharacter::Update();
-
-	Input();
-
 	if (m_pPlayerState != nullptr)
 	{
 		m_pPlayerState->Move(this);
 		m_pPlayerState->Attack(this);
 	}
+
+	Input();
 
 	Motion(); //ƒ‚[ƒVƒ‡ƒ“ˆ—
 }
