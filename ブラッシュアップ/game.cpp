@@ -146,12 +146,11 @@ void CGame::SelectItem()
 			//アイテム選択画面へ
 			m_bItemChoice = false;
 
-			//アイテム選択中なら止める、ゲーム中なら止めない
-			UpdateObjectDecision(m_bItemChoice);
-
 			m_pLevelupSelect->Uninit();
 			m_pLevelupSelect = nullptr;
 		}
+		//アイテム選択中なら止める、ゲーム中なら止めない
+		UpdateObjectDecision(m_bItemChoice);
 	}
 }
 
