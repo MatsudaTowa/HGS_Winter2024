@@ -22,7 +22,7 @@ const D3DXVECTOR3 CGame::FIELD_SIZE = { 10000.0f,0.0f,10000.0f };
 //=============================================
 //コンストラクタ
 //=============================================
-CGame::CGame()
+CGame::CGame():m_bPause(false)
 {
 }
 
@@ -65,6 +65,7 @@ void CGame::Update()
 #ifdef _DEBUG
 	CInputKeyboard* pKeyboard = GET_INPUT_KEYBOARD;
 	CInputMouse* pMouse = GET_INPUT_MOUSE;
+	CInputPad* pPad = GET_INPUT_PAD;
 
 	if (pKeyboard->GetTrigger(DIK_RETURN) || pMouse->GetTrigger(0))
 	{
@@ -78,11 +79,44 @@ void CGame::Update()
 	
 #endif // _DEBUG
 
+	if (pKeyboard->GetTrigger(DIK_P)|| pPad->GetTrigger(CInputPad::JOYPAD_START))
+	{
+		SetPause();
+
+		//ポーズ中なら止める、ゲーム中なら止めない
+		UpdateObjectDecision(m_bPause);
+	}
+
 	if (CGameManager::GetInstance()->GetPlayer()->GetLife() <= 0)
 	{
 		GET_FADE->SetFade(CScene::MODE::MODE_RESULT);
 	}
 
+}
+
+//=============================================
+//オブジェクトの更新を行うか決定
+//=============================================
+void CGame::UpdateObjectDecision(bool bStop)
+{
+	//敵との当たり判定
+	for (int i = 0; i < MAX_PRIORITY; i++)
+	{
+		CObject* pObj = CObject::Getobject(i);	//先頭取得
+
+		//最大数が不明なのでwhileを使用
+		while (pObj != nullptr)
+		{
+			CObject* pNext = pObj->GetNextobject();	//次のポインタを取得
+
+			if (pObj->GetStop() != bStop)
+			{
+				pObj->SetStop(bStop);
+			}
+
+			pObj = pNext;							//ポインタを進める
+		}
+	}
 }
 
 //=============================================

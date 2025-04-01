@@ -21,8 +21,13 @@ public:
 	HRESULT Init() override;
 	void Uninit() override;
 	void Update() override;
+	void UpdateObjectDecision(bool bStop); //オブジェクトの更新を行うか決定
 	void Draw() override;
+
+	inline bool GetPause() { return m_bPause; }
+	inline void SetPause() { m_bPause = m_bPause ? false : true; }
 private:
 	static const D3DXVECTOR3 FIELD_SIZE; //フィールドサイズ
+	bool m_bPause;	//ポーズ中か
 };
 #endif

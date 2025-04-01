@@ -70,14 +70,19 @@ public:
 
 	OBJECT_TYPE m_type;
 
-	void SetDeath() { m_bDeath = true; }//オブジェクトの死亡フラグを立てる
-	bool GetDeath() { return m_bDeath; }//オブジェクトの死亡判定の取得
+	inline void SetDeath() { m_bDeath = true; }//オブジェクトの死亡フラグを立てる
+	inline bool GetDeath() { return m_bDeath; }//オブジェクトの死亡判定の取得
+
+	inline void SetStop(bool bStop) { m_bStop = bStop; }//オブジェクトの処理を止めるかを設定
+	inline bool GetStop() { return m_bStop; }//オブジェクトの処理を止めるかを取得
 
 protected:
 	void Release(); //自分自身の解放
 
 private:
 	static CObject* m_apObject[MAX_PRIORITY][MAX_OBJECT];
+
+	bool m_bStop;	//処理を止めるか
 
 	int m_nPriority; //描画優先度
 
