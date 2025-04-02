@@ -118,7 +118,10 @@ void CGame::SelectItem()
 
 	if (m_pLevelupSelect != nullptr)
 	{
-		m_pLevelupSelect->Update();
+		if (!m_bPause)
+		{
+			m_pLevelupSelect->Update();
+		}
 
 		if (m_pLevelupSelect->GetEnd())
 		{

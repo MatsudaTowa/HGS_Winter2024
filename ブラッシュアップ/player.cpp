@@ -312,6 +312,11 @@ void CPlayer::Input()
 		nLife -= 10;
 		SetLife(nLife);
 	}
+
+	if (pKeyboard->GetTrigger(DIK_9))
+	{
+		AddExp(ITEM_UI_UNLOCK_EXP);
+	}
 #endif // _DEBUG
 
 }

@@ -13,13 +13,12 @@
 //=============================================
 void CLevelupSelect::Uninit()
 {
-	for (auto& itr : m_pSelect) 
+	for (auto& itr : m_pSelect)
 	{//選択UIのサイズ分回す(参照にしてこの中で削除)
-		if (itr != nullptr)
-		{
-			itr->Uninit();
-			itr = nullptr;
-		}
+		if (itr == nullptr) { continue; }
+
+		itr->Uninit();
+		itr = nullptr;
 	}
 }
 
@@ -39,6 +38,10 @@ void CLevelupSelect::Update()
 		{
 			m_nSelect--;
 		}
+		else if (m_nSelect <= 0)
+		{
+			m_nSelect = 2;
+		}
 	}
 	else if (pKeyboard->GetTrigger(DIK_DOWN)
 		|| pPad->GetTrigger(CInputPad::JOYPAD_DPAD_DOWN))
@@ -48,20 +51,29 @@ void CLevelupSelect::Update()
 		{
 			m_nSelect++;
 		}
+		else if (m_nSelect >= 2)
+		{
+			m_nSelect = 0;
+		}
 	}
 
-	for (int i = 0; i < NUM_SELECT; i++)
-	{
-		if (m_nSelect == i)
+	int nCnt = 0;
+
+	for (auto& itr : m_pSelect)
+	{//選択UIのサイズ分回す(参照にしてこの中で削除)
+
+		if (m_nSelect == nCnt)
 		{
-			m_pSelect[i]->SetColor({ 1.0f, 1.0f, 1.0f, 1.0f });
+			itr->SetColor({ 1.0f, 1.0f, 1.0f, 1.0f });
 		}
 		else
 		{
-			m_pSelect[i]->SetColor({ 0.2f, 0.2f, 0.2f, 1.0f });
+			itr->SetColor({ 0.2f, 0.2f, 0.2f, 1.0f });
 		}
 
-		m_pSelect[i]->SetVtx(1.0f);
+		itr->SetVtx(1.0f);
+
+		++nCnt;
 	}
 
 	if (pKeyboard->GetTrigger(DIK_M)
@@ -77,10 +89,20 @@ void CLevelupSelect::Update()
 CLevelupSelect* CLevelupSelect::Create()
 {
 	CLevelupSelect* pLevelupSelect = new CLevelupSelect;
+
+	std::vector<int> selectedNumbers; // 選ばれた数値を保存するリスト
 	
 	for (int i = 0; i < NUM_SELECT; i++)
 	{
-		int nRand = (rand() % 9); //ランダム
+		int nRand = 0;
+
+		// 重複しないランダム値を取得
+		do 
+		{//一致したらループする
+			nRand = rand() % 9;
+		} while (std::find(selectedNumbers.begin(), selectedNumbers.end(), nRand) != selectedNumbers.end());
+
+		selectedNumbers.push_back(nRand); // 使用済みリストに追加
 
 		if (pLevelupSelect->m_pSelect[i] == nullptr)
 		{
