@@ -91,23 +91,28 @@ CLevelupSelect* CLevelupSelect::Create()
 	CLevelupSelect* pLevelupSelect = new CLevelupSelect;
 
 	std::vector<int> selectedNumbers; // 選ばれた数値を保存するリスト
-	
-	for (int i = 0; i < NUM_SELECT; i++)
-	{
+
+	int nCnt = 0;
+
+	for (auto& itr : pLevelupSelect->m_pSelect)
+	{//選択UIのサイズ分回す(参照にしてこの中で削除)
+
 		int nRand = 0;
 
 		// 重複しないランダム値を取得
-		do 
+		do
 		{//一致したらループする
 			nRand = rand() % 9;
 		} while (std::find(selectedNumbers.begin(), selectedNumbers.end(), nRand) != selectedNumbers.end());
 
 		selectedNumbers.push_back(nRand); // 使用済みリストに追加
 
-		if (pLevelupSelect->m_pSelect[i] == nullptr)
+		if (pLevelupSelect->m_pSelect[nCnt] == nullptr)
 		{
-			pLevelupSelect->m_pSelect[i] = CUi_Select::Create({ SCREEN_WIDTH * 0.5f, 200.0f + 150.0f * i, 0.0f }, nRand);
+			pLevelupSelect->m_pSelect[nCnt] = CUi_Select::Create({ SCREEN_WIDTH * 0.5f, 200.0f + 150.0f * nCnt, 0.0f }, nRand);
 		}
+
+		++nCnt;
 	}
 	
 	return pLevelupSelect;
