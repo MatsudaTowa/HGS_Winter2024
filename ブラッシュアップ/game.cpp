@@ -13,6 +13,7 @@
 #include "manager.h"
 #include "field.h"
 #include "player.h"
+#include "enemy.h"
 #include "exp.h"
 #include "gamemanager.h"
 
@@ -43,6 +44,8 @@ HRESULT CGame::Init()
 	CField::Create(VEC3_RESET_ZERO, FIELD_SIZE);
 
 	CPlayer::Create();
+
+	CEnemy::Create();
 
 	return S_OK;
 }

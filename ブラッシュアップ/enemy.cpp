@@ -44,6 +44,8 @@ HRESULT CEnemy::Init()
 	//カメラの方向設定
 	pCamera->SetRot(VEC3_RESET_ZERO);
 
+	SetPos({50.0f, 1.0f, 50.0f});
+
 	//ムーブ値代入
 	SetMove(move);
 
