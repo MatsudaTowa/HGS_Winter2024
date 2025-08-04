@@ -7,8 +7,8 @@
 #ifndef _MAIN_H_ //これが定義されてないとき
 
 #define _MAIN_H_
+//ライブラリ宣言
 #include "renderer.h"
-
 //ライブラリのリンク
 #pragma comment(lib,"d3d9.lib") //描画処理に必要
 #pragma comment(lib,"d3dx9.lib") //↑の拡張ライブラリ
@@ -16,6 +16,7 @@
 #pragma	comment(lib,"winmm.lib")
 #pragma comment(lib,"dinput8.lib")
 #pragma comment(lib,"xinput.lib")
+#pragma comment (lib,"ws2_32.lib")
 
 //頂点情報(2D)の構造体を定義
 typedef struct

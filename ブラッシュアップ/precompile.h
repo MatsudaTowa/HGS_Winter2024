@@ -6,6 +6,10 @@
 //=============================================
 #ifndef PRECOMPILE_H_
 #define PRECOMPILE_H_
+#define _WINSOCK_DEPRECATED_NO_WARNINGS
+
+#include <winsock2.h>
+
 #include <windows.h>
 #include <string.h>
 #include<Mmsystem.h>
@@ -20,6 +24,7 @@
 #include <algorithm>
 #include <stdlib.h>
 #include <crtdbg.h>
+
 //#define new ::new(_NORMAL_BLOCK, __FILE__, __LINE__)
 
 #define DIRECTINPUT_VERSION (0x0800) //åxçêëŒèàóp

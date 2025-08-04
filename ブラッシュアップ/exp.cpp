@@ -6,6 +6,7 @@
 //=============================================
 #include "exp.h"
 #include "player.h"
+#include "gamemanager.h"
 
 //経験値の情報
 const CExp::ExpInfo CExp::Info[EXP_TYPE_MAX] =
@@ -56,30 +57,14 @@ void CExp::Update()
 {
 	CObjectX::Update();
 
-	//敵との当たり判定
-	for (int i = 0; i < MAX_PRIORITY; i++)
+
+	CPlayer* pPlayer = CGameManager::GetInstance()->GetPlayer();
+	if (JudgeBallCollision(GetPos(), pPlayer->GetPos(), 20.0f))
 	{
-		CObject* pObj = CObject::Getobject(i);	//先頭取得
-
-		//最大数が不明なのでwhileを使用
-		while (pObj != nullptr)
-		{
-			CObject* pNext = pObj->GetNextobject();	//次のポインタを取得
-
-			//敵を見つけて速度を上げる
-			if (pObj->GetType() == CObject::OBJECT_TYPE_PLAYER)
-			{
-				CPlayer* pPlayer = dynamic_cast<CPlayer*>(pObj);
-				if (JudgeBallCollision(GetPos(), pPlayer->GetPos(), 20.0f))
-				{
-					pPlayer->AddExp(m_Info.Value);
-					Uninit();
-				}
-			}
-
-			pObj = pNext;							//ポインタを進める
-		}
+		pPlayer->AddExp(m_Info.Value);
+		Uninit();
 	}
+
 }
 
 //=============================================

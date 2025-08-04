@@ -16,6 +16,8 @@
 #include "scene.h"
 #include "fade.h"
 #include "sound.h"
+#include "tcp_client.h"
+
 class CManager
 {
 public:
@@ -60,6 +62,8 @@ public:
 	CSound* GetSound();
 	//フェード取得
 	CFade* GetFade();
+	//クライアント取得
+	CTcpClient* GetClient();
 private:
 
 	CScene* m_pScene; //現在のシーン
@@ -74,7 +78,7 @@ private:
 	CModel* m_pModel;
 	CSound* m_pSound;
 	CFade* m_pFade;
-
+	CTcpClient* m_pClient;
 };
 
 #endif

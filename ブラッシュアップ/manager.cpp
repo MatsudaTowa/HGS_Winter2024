@@ -54,6 +54,20 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 		m_pRenderer = new CRenderer();
 		m_pRenderer->Init(hWnd,bWindow);
 	}
+	if (m_pClient == nullptr)
+	{
+		WSADATA wsaData;
+		//winsockの初期化処理
+		int nErr = WSAStartup(WINSOCK_VERSION, &wsaData);
+		if (nErr != 0)
+		{
+			//エラーメッセージ表示
+			printf("winsock初期化エラー");
+		}
+
+		CTcpClient* pTcpClient = new CTcpClient;
+		pTcpClient->Init("127.0.0.1", 22333);
+	}
 	if (m_pKeyboard == nullptr)
 	{
 		m_pKeyboard = new CInputKeyboard();
@@ -149,6 +163,15 @@ void CManager::Uninit()
 		m_pTexture->Unload();
 		delete m_pTexture;
 		m_pTexture = nullptr;
+	}
+	if (m_pClient != nullptr)
+	{
+		m_pClient->Uninit();
+		delete m_pClient;
+		m_pClient = nullptr;
+
+		//WinSock終了(main関数)
+		WSACleanup();
 	}
 
 	if (m_pModel != nullptr)
@@ -345,4 +368,12 @@ CSound* CManager::GetSound()
 CFade* CManager::GetFade()
 {
 	return m_pFade;
+}
+
+//=============================================
+//クライアント取得
+//=============================================
+CTcpClient* CManager::GetClient()
+{
+	return m_pClient;
 }

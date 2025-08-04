@@ -157,6 +157,8 @@
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="camera_state.cpp" />
     <ClCompile Include="character.cpp" />
+    <ClCompile Include="enemy.cpp" />
+    <ClCompile Include="enemymanager.cpp" />
     <ClCompile Include="equipment_slot.cpp" />
     <ClCompile Include="exp.cpp" />
     <ClCompile Include="exp_gauge.cpp" />
@@ -167,6 +169,7 @@
     <ClCompile Include="gauge.cpp" />
     <ClCompile Include="hp_gauge.cpp" />
     <ClCompile Include="input.cpp" />
+    <ClCompile Include="levelupselect.cpp" />
     <ClCompile Include="light.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="manager.cpp" />
@@ -189,8 +192,10 @@
     <ClCompile Include="scene.cpp" />
     <ClCompile Include="shadow.cpp" />
     <ClCompile Include="sound.cpp" />
+    <ClCompile Include="tcp_client.cpp" />
     <ClCompile Include="texture.cpp" />
     <ClCompile Include="title.cpp" />
+    <ClCompile Include="ui_select.cpp" />
     <ClCompile Include="useful.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -198,6 +203,8 @@
     <ClInclude Include="camera.h" />
     <ClInclude Include="camera_state.h" />
     <ClInclude Include="character.h" />
+    <ClInclude Include="enemy.h" />
+    <ClInclude Include="enemymanager.h" />
     <ClInclude Include="equipment.h" />
     <ClInclude Include="equipment_slot.h" />
     <ClInclude Include="exp.h" />
@@ -209,6 +216,7 @@
     <ClInclude Include="gauge.h" />
     <ClInclude Include="hp_gauge.h" />
     <ClInclude Include="input.h" />
+    <ClInclude Include="levelupselect.h" />
     <ClInclude Include="light.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="manager.h" />
@@ -228,8 +236,10 @@
     <ClInclude Include="scene.h" />
     <ClInclude Include="shadow.h" />
     <ClInclude Include="sound.h" />
+    <ClInclude Include="tcp_client.h" />
     <ClInclude Include="texture.h" />
     <ClInclude Include="title.h" />
+    <ClInclude Include="ui_select.h" />
     <ClInclude Include="useful.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
