@@ -112,6 +112,13 @@ public:
 	{
 		m_ShadowSize = shadow_size;
 	}
+
+	//ヒット判定のサイズ設定
+	inline void SetHitSize(float size)
+	{
+		m_fHitRadius = size;
+	}
+
 	//移動量取得
 	inline D3DXVECTOR3& GetMove()
 	{
@@ -177,6 +184,12 @@ public:
 		return m_nJumpCnt;
 	}
 
+	//ヒット判定のサイズ取得
+	inline float& GetHitSize()
+	{
+		return m_fHitRadius;
+	}
+
 	//パーツ
 	CModel_Parts* m_apModel[MAX_PARTS];
 
@@ -186,6 +199,7 @@ private:
 	static constexpr float GRAVITY_MAX = 100.0f; //重力最大値
 	static constexpr float SHADOW_POS_Y = 0.5f; //影のY座標(地面から少し浮かす)
 	static constexpr float MOVE_FRICTION = 0.3f; //移動抵抗
+	static constexpr float SIZE_HIT_RADIUS = 10.0f;	//ヒットサイズの半径
 
 	D3DXVECTOR3 m_move; //速度
 	D3DXVECTOR3 m_oldpos; //過去の位置
@@ -203,6 +217,7 @@ private:
 	CHARACTER_STATE m_State; //プレイヤー状態
 	D3DXCOLOR m_col; //カラー
 	D3DXVECTOR3 m_ShadowSize; //影のサイズ
+	float m_fHitRadius;	//ヒット判定の半径
 
 	CShadow* m_pShadow; //影
 

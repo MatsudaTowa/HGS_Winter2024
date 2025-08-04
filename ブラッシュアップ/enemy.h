@@ -11,6 +11,10 @@
 //ヘッダーのインクルード
 #include "model_parts.h"
 #include "character.h"
+#include "behavior_enemy.h"
+
+//前方宣言
+class CBehavior_Enemy;
 
 //エネミークラス
 class CEnemy :public CCharacter
@@ -39,8 +43,18 @@ public:
 	void Uninit();						//終了処理
 	void Update();						//更新処理
 	void Draw();						//描画処理
+	void SetBehavior(CBehavior_Enemy* behavior);	//行動の設定
 
 	//エネミーの作成
 	static CEnemy* Create();
+
+private:
+
+	//関数
+	bool CheckHitPlayer();				//プレイヤーとのヒット確認
+	void HitPlayer();					//プレイヤーのヒット処理
+
+	//変数
+	CBehavior_Enemy* m_Behavior;	//行動クラス
 };
 #endif

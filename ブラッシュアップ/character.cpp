@@ -27,7 +27,8 @@ m_Jump(),														//ジャンプ力
 m_MotionSet(),													//モーション設定
 m_nJumpCnt(INT_ZERO),											//ジャンプ数
 m_pShadow(),													//影のポインタ
-m_ShadowSize(VEC3_RESET_ZERO)						//影のサイズ
+m_ShadowSize(VEC3_RESET_ZERO),						//影のサイズ
+m_fHitRadius(FLOAT_ZERO)										//ヒット半径
 {//イニシャライザーでプライオリティ設定、各メンバ変数初期化
 }
 
@@ -62,6 +63,9 @@ HRESULT CCharacter::Init()
 	m_Motion = -1;
 	//ループモーション終わってる判定に
 	m_bLoopFinish = true;
+
+	//ヒットサイズの設定
+	m_fHitRadius = SIZE_HIT_RADIUS;
 
 	//親クラスの初期化
 	CObjectX::Init();

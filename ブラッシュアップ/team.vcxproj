@@ -153,6 +153,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="behavior_enemy_chase.cpp" />
     <ClCompile Include="billboard.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="camera_state.cpp" />
@@ -199,6 +200,8 @@
     <ClCompile Include="useful.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="behavior_enemy.h" />
+    <ClInclude Include="behavior_enemy_chase.h" />
     <ClInclude Include="billboard.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="camera_state.h" />

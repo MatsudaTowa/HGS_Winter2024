@@ -8,6 +8,7 @@
 //ƒCƒ“ƒNƒ‹[ƒh
 #include "enemy.h"
 #include "gamemanager.h"
+#include "behavior_enemy_chase.h"
 
 //’è”
 const std::string CEnemy::MODEL_FILE = "data\\TEXT\\motion_HGSPlayer.txt";	//“Ç‚Ýž‚Þƒtƒ@ƒCƒ‹(“G‚Ìƒ‚ƒfƒ‹‚ª‚È‚¢‚Ì‚Å‰¼‚ÅƒvƒŒƒCƒ„[‚ðo‚·)
@@ -15,7 +16,8 @@ const std::string CEnemy::MODEL_FILE = "data\\TEXT\\motion_HGSPlayer.txt";	//“Ç‚
 //=============================================
 //ƒRƒ“ƒXƒgƒ‰ƒNƒ^
 //=============================================
-CEnemy::CEnemy(int nPriority) :CCharacter(nPriority)
+CEnemy::CEnemy(int nPriority) :CCharacter(nPriority),
+	m_Behavior(nullptr)
 {
 
 }
@@ -56,8 +58,11 @@ HRESULT CEnemy::Init()
 
 	SetMotion(MOTION_NEUTRAL);
 
-	//ƒvƒŒƒCƒ„[Ž©g‚ðƒ}ƒl[ƒWƒƒ[‚É‘ã“ü
+	//Ž©g‚ðƒ}ƒl[ƒWƒƒ[‚É‘ã“ü
 	CGameManager::GetInstance()->GetEnemyManager()->Regist(this);
+
+	//s“®‚Ì‘ã“ü
+	SetBehavior(new CBehavior_Enemy_Chase(this));
 
 	return S_OK;
 }
@@ -69,6 +74,8 @@ void CEnemy::Uninit()
 {
 	//eƒNƒ‰ƒX‚ÌI—¹ˆ—‚ðŒÄ‚Ô
 	CCharacter::Uninit();
+
+	delete m_Behavior;
 }
 
 //=============================================
@@ -78,6 +85,15 @@ void CEnemy::Update()
 {
 	//ƒLƒƒƒ‰ƒNƒ^[‚ÌXV
 	CCharacter::Update();	
+
+	//s“®‚ÌXV
+	m_Behavior->Behavior(this);
+
+	//ƒvƒŒƒCƒ„[‚Æ‚ÌƒqƒbƒgŠm”F
+	if (CheckHitPlayer())
+	{
+		HitPlayer();	//ƒqƒbƒgˆ—
+	}
 
 	//ƒ‚[ƒVƒ‡ƒ“ˆ—
 	Motion();				
@@ -107,4 +123,51 @@ CEnemy* CEnemy::Create()
 	pEnemy->Init(); //‰Šú‰»ˆ—
 
 	return pEnemy;
+}
+
+//=============================================
+//s“®‚ÌÝ’è
+//=============================================
+void CEnemy::SetBehavior(CBehavior_Enemy* behavior)
+{
+	//’†g‚Ì”jŠü
+	if (m_Behavior != nullptr)
+	{
+		delete m_Behavior;
+		m_Behavior = nullptr;
+	}
+
+	//‘ã“ü
+	m_Behavior = behavior;
+}
+
+//=============================================
+//ƒvƒŒƒCƒ„[‚Æ‚ÌƒqƒbƒgŠm”F
+//=============================================
+bool CEnemy::CheckHitPlayer()
+{
+	//ƒvƒŒƒCƒ„[‚ÌŽæ“¾
+	CPlayer* pPlayer = CGameManager::GetInstance()->GetPlayer();
+
+	//ƒvƒŒƒCƒ„[‚Ì‹——£‚ðŽZo
+	D3DXVECTOR3 PlayerPos = pPlayer->GetPos();		//ƒvƒŒƒCƒ„[‚ÌˆÊ’u‚ðŽæ“¾
+	D3DXVECTOR3 Pos = GetPos();						//Ž©•ª‚ÌˆÊ’u‚ðŽæ“¾
+
+	//‹——£ŒvŽZ
+	float fDistance = sqrtf((PlayerPos.x - Pos.x) * (PlayerPos.x - Pos.x) + (PlayerPos.z - Pos.z) * (PlayerPos.z - Pos.z));	//ŒvŽZ
+
+	//ŽŸ‚ÌˆÚs”¼Œa“à‚È‚ç^
+	if (fDistance > CCharacter::GetHitSize() * 2) return false;
+}
+
+//=============================================
+//ƒvƒŒƒCƒ„[‚Æ‚Ìƒqƒbƒgˆ—
+//=============================================
+void CEnemy::HitPlayer()
+{
+	//ƒvƒŒƒCƒ„[‚ÌŽæ“¾
+	CPlayer* pPlayer = CGameManager::GetInstance()->GetPlayer();
+
+	//‘Ì—Í‚ðŒ¸‚ç‚·
+	pPlayer->SetLife(pPlayer->GetLife() - 1);
 }
