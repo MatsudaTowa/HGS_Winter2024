@@ -398,3 +398,4 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+/HGS_winter_2024/HGS_winter_2024.vcxproj
